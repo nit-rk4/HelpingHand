@@ -1,10 +1,7 @@
-# PHP Folder
+# /php
 
-All logic PHP files go here — things that handle data, not pages.
+This folder is for PHP files that handle the backend logic. This **should not** contain full HTML pages. Just backend logic and scripts.
 
-Examples:
-- login.php (handles login submission)
-- submit_request.php
-- approve_request.php
-
-Don't put full HTML pages here. Use `/pages` for that.
+Note:
+- Try to structure your code to be modular and reusable as much as you can
+- Write comments explaining your code so that frontend developers can understand better.
