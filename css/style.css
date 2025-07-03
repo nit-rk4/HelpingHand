@@ -108,4 +108,71 @@ li, a, input {
 /* ------------------------------
    HELP BOARD STYLES
 --------------------------------- */
+/* help board components */
+.request-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    padding: 120 20px;
+    width: min(90%, 1200px);
+    margin-inline: auto;
+}
+
+.request {
+    padding: 0 20px;
+    border-radius: 10px;
+}
+
+/* help board styling */
+.request:nth-child(3) {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+}
+
+.short-box p {
+    max-height: 4.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+}
+
+.long-box p {
+    max-height: 4.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+}
+
+.grid-col-span-2 {
+    grid-column: span 2;
+}
+
+.bg-yellow {
+    background: #fff59f
+}
+
+.bg-blue {
+    background: #cbdbff;
+}
+
+.bg-green {
+    background: #b5dfbc;
+}
+
+.text-yellow {
+    color: #aba044;
+}
+
+.text-blue {
+    color: #6c89cb;
+}
+
+.text-green {
+    color: #588b60;
+}
 
