@@ -27,6 +27,14 @@ h1 {
   margin-bottom: 20px;
 }
 
+.page-header {
+    padding-top: 160px;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 72px;
+    color: #1e2f4b;
+}
+
 /* --------------------------
    NAVBAR 
 --------------------------- */
@@ -220,3 +228,236 @@ h1 {
 /* ------------------------------
    HELP BOARD STYLES
 --------------------------------- */
+/* help board components */
+.helpboard-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    padding: 120 20px;
+    width: min(90%, 1200px);
+    margin-inline: auto;
+    padding-bottom: 100px
+}
+
+.helpboard {
+    display: flex;
+    padding: 16px;
+    border-radius: 10px;
+    overflow: hidden;
+    min-height: 220px;
+    box-sizing: border-box;
+}
+
+/* help board content styling */
+.helpboard-content {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.helpboard-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.helpboard-image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.helpboard-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: black;
+    margin: 0;
+}
+
+.helpboard-title a {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+}
+
+.helpboard-title a:hover {
+    color: rgb(110, 110, 110);
+    text-decoration: underline;
+}
+
+.long-box .helpboard-content {
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.long-box .helpboard-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.short-box, .long-box p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.short-box p {
+    max-height: 4.5em;
+    -webkit-line-clamp: 3; 
+}
+
+.long-box p {
+    -webkit-line-clamp: 10; 
+}
+
+/* help board box styling */
+.helpboard:nth-child(3) {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+}
+
+.helpboard:nth-child(6) {
+    grid-column: 1;
+    grid-row: 2 / span 2;
+}
+
+.helpboard-text p:last-of-type {
+    font-size: 0.95em;
+    color: #1e2f4b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-height: 1.5em;
+    max-height: 4.5em;
+}
+
+.grid-col-span-2 {
+    grid-column: span 2;
+}
+
+.bg-yellow {
+    background: #fff59f
+}
+
+.bg-blue {
+    background: #cbdbff;
+}
+
+.bg-green {
+    background: #b5dfbc;
+}
+
+.text-yellow {
+    color: #aba044;
+}
+
+.text-blue {
+    color: #6c89cb;
+}
+
+.text-green {
+    color: #588b60;
+}
+
+/* ------------------------------
+   HELP BOARD - SPECIFIC REQUEST
+--------------------------------- */
+/* help board - specific request */
+.req-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 15%;
+    padding-right: 15%;
+    position: relative;
+    width: 100%;
+}
+
+.req-page .container {
+    display: flex;
+    align-items: stretch;
+    gap: 40px;
+}
+
+.req-page .image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.req-page .image-container img {
+    width: 300px;
+    max-width: 300px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.req-page .page-header {
+    padding-top: 160px;
+    padding-bottom: 50px;
+    font-size: 48px;
+    text-align: left;
+    color: #1e2f4b;
+}
+
+.req-page .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.req-page .content h2{
+    font-size: 26px;
+    font-weight: normal;
+    color:#6c89cb;
+    padding-bottom: 10px;
+}
+
+.req-page .content p {
+    font-size: 16px;
+    color:#1e2f4b;
+}
+
+.req-page .contact-info {
+    padding-top:20px;
+}
+
+.req-page .button-wrapper {
+  margin-top: 40px;
+}
+
+.req-page button {
+    padding: 10px 15px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(108, 137, 203, 1);
+    box-shadow: 0px 1px 20px rgba(100, 100, 100, 0.3);
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.req-page button:hover {
+    background-color: rgb(145, 165, 209);
+    box-shadow: 0px 1px 20px rgba(136, 136, 136, 0.8);
+}
