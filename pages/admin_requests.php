@@ -7,8 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-
-  <!--Navbar-->
+  
   <header class="navbar" id="nav-color">
     <div class="nav-left">
       <img class="logo" src="assets/logo.svg" alt="HelpingHand Logo" />
@@ -60,7 +59,7 @@
         </div>
       </div>
 
-      <!-- Requests Table -->
+      <!-- Requests  -->
       <div class="requests-table">
         <div class="request-row header">
           <input type="checkbox" />
