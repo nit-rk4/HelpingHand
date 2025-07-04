@@ -115,6 +115,123 @@ li, a, input {
    ADMIN MENU STYLES
 --------------------------------- */
 
+/* --------------------------
+   ADMIN PAGE LAYOUT
+--------------------------- */
+.container {
+  display: flex;
+  padding-top: 0px; /* space for fixed navbar */
+}
+
+.sidebar {
+  background: #fbd0d9;
+  padding: 20px;
+  width: 200px;
+  min-height: 100vh;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.sidebar li.active,
+.sidebar li:hover {
+  background-color: #ffebee;
+  font-weight: bold;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background-color: #fff;
+}
+
+/* --------------------------
+   TABS + FILTER BAR
+--------------------------- */
+.tabs-filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background-color: #fce2e6;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tab.active {
+  background-color: #ffb2b2;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --------------------------
+   REQUEST 
+--------------------------- */
+.requests-table {
+  background: #fffaf2;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+.request-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.request-row.header {
+  background-color: #fff3e6;
+  font-weight: bold;
+}
+
+.request-row input[type="checkbox"] {
+  margin-right: 15px;
+}
+
+.request-row span {
+  flex: 1;
+}
+
+.request-row .title {
+  flex: 2;
+}
+
+.request-row .desc {
+  flex: 3;
+  font-style: italic;
+  color: #666;
+}
+
+.request-row:hover {
+  background-color: #fff0f0;
+}
+
+
 /* ------------------------------
    HELP BOARD STYLES
 --------------------------------- */
