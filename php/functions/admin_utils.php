@@ -33,7 +33,7 @@ function approveRequest($conn, $requestID){
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    if ($row = mysqli_fetch_assoc($result)){
+    if ($row = mysqli_fetch_assoc($result)){ //If request ID exists
         //Assigns fetched data into variables
         $tier = $row['tier'];
         $forInterview = $row['for_interview'];
@@ -66,5 +66,7 @@ function approveRequest($conn, $requestID){
         return "[!] Request not found.";
     }
 }
+
+
 
 ?>
