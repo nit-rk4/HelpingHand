@@ -122,7 +122,7 @@ function cancelInterview($conn, $interviewId) {
     return $success_delete && $success_reset;
 }
 
-function rescheduleInterview($conn, $interviewId, $newDatetime) {
+function scheduleInterview($conn, $interviewId, $newDatetime) {
     if (!preg_match('/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/', $newDatetime)) {
         return "[!] Invalid date format. Use YYYY-MM-DD HH:MM:SS";
     }
