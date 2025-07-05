@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2025 at 12:08 PM
+-- Generation Time: Jul 05, 2025 at 06:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,12 +38,29 @@ CREATE TABLE `admins` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `interviews`
+--
+
+CREATE TABLE `interviews` (
+  `id` int(11) NOT NULL,
+  `request_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `scheduled_at` datetime DEFAULT NULL,
+  `conducted_by` int(11) NOT NULL,
+  `notes` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` enum('pending','scheduled','done') DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `requests`
 --
 
 CREATE TABLE `requests` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `category` varchar(50) DEFAULT NULL,
@@ -51,8 +68,8 @@ CREATE TABLE `requests` (
   `attachment_path` varchar(255) DEFAULT NULL,
   `deadline` date DEFAULT NULL,
   `status` enum('pending','approved','rejected','fulfilled','expired') DEFAULT 'pending',
-  `is_visible` tinyint(1) DEFAULT 0,
-  `for_interview` tinyint(1) DEFAULT 0,
+  `interview_status` enum('none','pending','scheduled','done') DEFAULT 'none',
+  `visible_since` datetime DEFAULT NULL,
   `parent_request_id` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -86,6 +103,15 @@ ALTER TABLE `admins`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `interviews`
+--
+ALTER TABLE `interviews`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `request_id` (`request_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `conducted_by` (`conducted_by`);
+
+--
 -- Indexes for table `requests`
 --
 ALTER TABLE `requests`
@@ -111,6 +137,12 @@ ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `interviews`
+--
+ALTER TABLE `interviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `requests`
 --
 ALTER TABLE `requests`
@@ -125,6 +157,14 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `interviews`
+--
+ALTER TABLE `interviews`
+  ADD CONSTRAINT `interviews_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `requests` (`id`),
+  ADD CONSTRAINT `interviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `interviews_ibfk_3` FOREIGN KEY (`conducted_by`) REFERENCES `admins` (`id`);
 
 --
 -- Constraints for table `requests`
