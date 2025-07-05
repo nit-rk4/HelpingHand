@@ -1,6 +1,5 @@
 <?php
 
-
 //Get requests from database with or without filters
 function getRequests($conn, $status, $tier = null){
     //No tier filter
@@ -24,6 +23,19 @@ function getRequests($conn, $status, $tier = null){
 
     return $requests;
 }
+
+function getVisibleRequests($conn){
+    $sql = "SELECT * FROM requests WHERE visible_since IS NOT NULL";
+    $result = mysqli_query($conn, $sql);
+    
+    $requests = [];
+    while ($row = mysqli_fetch_assoc($result)){
+        $requests[] = $row;
+    }
+
+    return $requests;
+}
+
 
 //Displays full details of a specific request 
 function getRequestDetails($conn, $requestID){
@@ -85,58 +97,44 @@ function searchRequestByTitle ($conn, $titleKeyword, $status = null, $tier = nul
 //Updates the status of request to 'approved'
 function approveRequest($conn, $requestID){
     //Gets tier, for_interview, and interview_completed from specific request
-    $sql = "SELECT tier, for_interview, interview_completed FROM requests WHERE id = ?";
+    $sql = "SELECT tier, interview_status, visible_since FROM requests WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $requestID);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    if ($row = mysqli_fetch_assoc($result)){ //If request ID exists
-        //Assigns fetched data into variables
-        $tier = $row['tier'];
-        $forInterview = $row['for_interview'];
-        $interviewDone = $row['interview_completed'];
-        $visibleSince = $row['visible_since'];
-
-        //Checks if tier 3 requests are eligible to be approved
-        if ($tier === '3'){
-            if (!$interviewDone){
-                //Not approved because interview must be done before approving request
-                return "[X] Interview must be completed before approving the request.";
-            }
-        }
-
-        //Checks if tier 2 requests are eligible to be approved
-        if ($tier === '2' && $forInterview && !$interviewDone){
-            //Approves request but sends a warning that the interveiw is not yet done
-            error_log("[!] Approving tier 2 request with interview not completed.");
-        }
-        if (empty($visibleSince)){
-            $update_sql = "UPDATE requests 
-                            SET status = 'approved', is_visible = 1, visible_since = NOW()
-                            WHERE id = ?";
-        } else {
-            $update_sql = "UPDATE requests 
-                            SET status = 'approved', is_visible = 1 
-                            WHERE id = ?";
-        }
-    
-        $update_stmt = mysqli_prepare($conn, $update_sql);
-        mysqli_stmt_bind_param($update_stmt, "i", $requestID);
-
-        if (mysqli_stmt_execute($update_stmt)){
-            return true; //Updating status of request is a success
-        } else {
-            return "[X] Database error: could not approve request.";
-        }
-    } else {
-        return "[!] Request not found.";
+    if (!$result || mysqli_num_rows($result) === 0){
+        return false; //Request not found
     }
+
+    $row = mysqli_fetch_assoc($result);
+    $tier = $row['tier'];
+    $interviewStatus = $row['interview_status'];
+    $visibleSince = $row['visible_since'];
+
+    if ($tier === '3' && $interviewStatus !== 'done'){
+        return false;
+    }
+
+    if ($tier === '2' && ($interviewStatus === 'pending' || $interviewStatus === 'scheduled')){
+        error_log("[!] Approving tier 2 request with incomplete interview");
+    }
+    
+    if (empty($visibleSince)){
+        $update_sql = "UPDATE requests SET status = 'approved', visible_since = NOW() WHERE id = ?";
+    } else {
+        $update_sql = "UPDATE requests SET status = 'approved' WHERE id = ?";
+    }
+
+    $update_stmt = mysqli_prepare($conn, $update_sql);
+    mysqli_stmt_bind_param($update_stmt, 'i', $requestID);
+
+    return mysqli_stmt_execute($update_stmt);
 }
 
 //Rejects a request and sets their visibility on the Help Board to 'hidden'
 function rejectRequest ($conn, $requestID){
-    $sql = "UPDATE requests SET status = 'rejected', is_visible = 0, visible_since = NULL WHERE id = ?";
+    $sql = "UPDATE requests SET status = 'rejected', visible_since = NULL WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $requestID);
     return mysqli_stmt_execute($stmt);
@@ -144,7 +142,7 @@ function rejectRequest ($conn, $requestID){
 
 function expireRequests($conn){
     $sql = "UPDATE requests
-            SET status = 'expired', is_visible = 0
+            SET status = 'expired', visible_since = NULL
             WHERE (status = 'pending' OR status = 'approved')
             AND (
                 deadline < CURDATE()
@@ -157,12 +155,14 @@ function expireRequests($conn){
 
 function hideTier1Requests($conn){
     $sql = "UPDATE requests
-            SET is_visible = 0, visible_since = NULL
+            SET visible_since = NULL
             WHERE tier = '1'
                 AND status = 'pending'
-                AND is_visible = 1
+                AND visible_since IS NOT NULL
                 AND TIMESTAMPDIFF(DAY, created_at, NOW()) >= 2";
     return mysqli_query($conn, $sql);
 }
  
+
+
 ?>
