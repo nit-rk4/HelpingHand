@@ -7,6 +7,5 @@
             <li><a href="#">About us</a></li>
         </ul>
     </nav>
-    <a class="searchbar"><input type="text" placeholder="Search..."></a>
 </div>
 
