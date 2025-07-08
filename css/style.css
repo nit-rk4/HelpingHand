@@ -113,7 +113,7 @@ h1 {
 --------------------------- */
 .container {
   display: flex;
-  padding-top: 0px; /* space for fixed navbar */
+  padding-top: 0px;
 }
 
 .sidebar {
@@ -147,7 +147,7 @@ h1 {
 }
 
 /* --------------------------
-   TABS + FILTER BAR
+   TABS 
 --------------------------- */
 .tabs-filter-container {
   display: flex;
@@ -163,6 +163,10 @@ h1 {
 }
 
 .tab {
+  transition: background-color 0.3s ease;
+}
+
+.tab {
   padding: 10px 20px;
   border: none;
   background-color: #fce2e6;
@@ -175,21 +179,9 @@ h1 {
   background-color: #ffb2b2;
 }
 
-.filter-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 /* --------------------------
-   REQUEST 
+   USER REQUEST + INTERVIEW TABLES
 --------------------------- */
-.requests-table {
-  background: #fffaf2;
-  border-radius: 10px;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
-}
-
 .request-row {
   display: flex;
   align-items: center;
@@ -202,12 +194,10 @@ h1 {
   font-weight: bold;
 }
 
-.request-row input[type="checkbox"] {
-  margin-right: 15px;
-}
-
 .request-row span {
   flex: 1;
+  min-width: 100px;
+  padding: 0 5px;
 }
 
 .request-row .title {
@@ -224,6 +214,109 @@ h1 {
   background-color: #fff0f0;
 }
 
+.request-row {
+  transition: background-color 0.2s ease;
+}
+
+.request-row {
+  cursor: pointer;
+}
+
+
+.interview-item {
+  display: none;
+}
+
+.admin-label {
+  background-color: #d32f2f;
+  color: white;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+/* ------------------------------
+   DETAILS VIEW
+--------------------------------- */
+.details-wrapper {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fffaf2;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.details-wrapper h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.details-section {
+  margin-top: 30px;
+}
+
+.details-section h3 {
+  color: #c05757;
+  margin-bottom: 12px;
+}
+
+.details-section p {
+  margin: 6px 0;
+  color: #444;
+}
+
+.details-label {
+  font-weight: 600;
+  margin-right: 5px;
+  color: #000;
+}
+
+.details-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 16px;
+}
+
+.btn-accept,
+.btn-reject {
+  padding: 12px 24px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-accept {
+  background-color: #a8ffb0;
+  color: #084d0c;
+}
+
+.btn-accept:hover {
+  background-color: #7be68c;
+}
+
+.btn-reject {
+  background-color: #ffc0c0;
+  color: #7c0000;
+}
+
+.btn-reject:hover {
+  background-color: #ff9b9b;
+}
+
+.back-link {
+  text-decoration: none;
+  color: #555;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
 
 /* ------------------------------
    HELP BOARD STYLES
