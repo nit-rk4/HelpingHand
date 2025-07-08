@@ -147,7 +147,7 @@ h1 {
 }
 
 /* --------------------------
-   TABS 
+   TABS + FILTER BAR
 --------------------------- */
 .tabs-filter-container {
   display: flex;
@@ -164,9 +164,6 @@ h1 {
 
 .tab {
   transition: background-color 0.3s ease;
-}
-
-.tab {
   padding: 10px 20px;
   border: none;
   background-color: #fce2e6;
@@ -180,13 +177,15 @@ h1 {
 }
 
 /* --------------------------
-   USER REQUEST + INTERVIEW TABLES
+   REQUEST + INTERVIEW TABLES
 --------------------------- */
 .request-row {
   display: flex;
   align-items: center;
   padding: 10px 15px;
   border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 
 .request-row.header {
@@ -198,6 +197,7 @@ h1 {
   flex: 1;
   min-width: 100px;
   padding: 0 5px;
+  font-size: 16px;
 }
 
 .request-row .title {
@@ -206,40 +206,16 @@ h1 {
 
 .request-row .desc {
   flex: 3;
-  font-style: italic;
-  color: #666;
+  font-style: normal;  
+  color: #333;         
 }
 
 .request-row:hover {
   background-color: #fff0f0;
 }
 
-.request-row {
-  transition: background-color 0.2s ease;
-}
-
-.request-row {
-  cursor: pointer;
-}
-
-
-.interview-item {
-  display: none;
-}
-
-.admin-label {
-  background-color: #d32f2f;
-  color: white;
-  padding: 4px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 20px;
-  display: inline-block;
-  margin-left: 10px;
-}
-
 /* ------------------------------
-   DETAILS VIEW
+   REQUEST DETAILS VIEW
 --------------------------------- */
 .details-wrapper {
   max-width: 900px;
