@@ -71,7 +71,10 @@ function getRequest($conn, $requestID){
 
 //Get full details of a request (for display purposes)
 function getRequestDetails($conn, $requestID){
-    $sql = "SELECT r.*, u.name AS requester_name 
+    $sql = "SELECT r.*, 
+                u.name AS requester_name,
+                u.email AS requester_email,
+                u.contact_number AS requester_contact
             FROM requests r 
             JOIN users u on r.user_id = u.id
             WHERE r.id = ?"; 
@@ -165,7 +168,7 @@ function approveRequest($conn, $requestID){
     return mysqli_stmt_execute($stmt);
 }
 
-function markForInterview   ($conn, $requestID, $userID){
+function markForInterview   ($conn, $requestID){
     $request = getRequest($conn, $requestID);
     if (!$request) return false;
 
@@ -178,7 +181,7 @@ function markForInterview   ($conn, $requestID, $userID){
     // Insert new interview record
     $insert_sql = "INSERT INTO interviews (request_id, user_id, status) VALUES (?, ?, 'pending')";
     $insert_stmt = mysqli_prepare($conn, $insert_sql);
-    mysqli_stmt_bind_param($insert_stmt, "ii", $requestID, $userID);
+    mysqli_stmt_bind_param($insert_stmt, "ii", $requestID, $request['user_id']);
     return mysqli_stmt_execute($insert_stmt);
 }
 
