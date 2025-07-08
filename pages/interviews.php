@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>HelpingHand Admin - Interviews</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../css/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
@@ -11,7 +11,7 @@
   <!-- Navbar -->
   <header class="navbar" id="nav-color">
     <div class="nav-left">
-      <img class="logo" src="assets/logo.svg" alt="HelpingHand Logo" />
+      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo" />
       <nav>
         <ul class="nav-links">
           <li><a href="#">Home</a></li>
