@@ -30,6 +30,7 @@ function getRequestsByStatus($conn, $status, $tier = null){
     return $requests;
 }
 
+//Get requests visible on the help board
 function getVisibleRequests($conn){
     $sql = "SELECT * FROM requests WHERE visible_since IS NOT NULL";
     $result = mysqli_query($conn, $sql);
@@ -42,26 +43,33 @@ function getVisibleRequests($conn){
     return $requests;
 }
 
+//Get requests of a specific user
 function getUserRequests($conn, $userID){
-
-}
-
-function getRequest($conn, $requestID){
-    $sql = "SELECT * FROM requests where id = ?";
+    $sql = "SELECT * FROM requests WHERE user_id = ? ORDER BY created_at DESC";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $requestID);
-    mysqli_execute($stmt);
+    mysqli_stmt_bind_param($stmt, 'i', $userID);
+    mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    if ($row = mysqli_fetch_assoc($result)){
-        return $row;
-    } else {
-        return null; 
+    $requests = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $requests[] = $row;
     }
+
+    return $requests;
+}
+//Get a specific request (for backend logic)
+function getRequest($conn, $requestID){
+    $sql = "SELECT * FROM requests WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $requestID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_assoc($result);
 }
 
-
-//Displays full details of a specific request 
+//Get full details of a request (for display purposes)
 function getRequestDetails($conn, $requestID){
     $sql = "SELECT r.*, u.name AS requester_name 
             FROM requests r 
@@ -87,11 +95,11 @@ function searchRequestByTitle ($conn, $titleKeyword, $status = null, $tier = nul
     $sql = "SELECT * FROM requests WHERE title LIKE ?";
     
     if ($status !== null){ //Adds additional statement if status is specified
-        $sql .+ " AND STATUS = ?";
+        $sql .= " AND STATUS = ?";
     }
 
     if ($tier !== null){ //Adds additional statement if tier is specified
-        $sql.+ " AND tier = ?";
+        $sql .= " AND tier = ?";
     }
 
     $stmt = mysqli_prepare($conn, $sql);
@@ -128,57 +136,57 @@ function searchRequestByTitle ($conn, $titleKeyword, $status = null, $tier = nul
 
 //Updates the status of request to 'approved'
 function approveRequest($conn, $requestID){
-    //Gets tier, for_interview, and interview_completed from specific request
-    $sql = "SELECT tier, interview_status, visible_since FROM requests WHERE id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $requestID);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+    $request = getRequest($conn, $requestID);
+    if (!$request) return false; // Request not found
 
-    if (!$result || mysqli_num_rows($result) === 0){
-        return false; //Request not found
-    }
+    $tier = $request['tier'];
+    $interviewStatus = $request['interview_status'];
+    $visibleSince = $request['visible_since'];
 
-    $row = mysqli_fetch_assoc($result);
-    $tier = $row['tier'];
-    $interviewStatus = $row['interview_status'];
-    $visibleSince = $row['visible_since'];
-
-    if ($tier === '3' && $interviewStatus !== 'done'){
+    // Block approval if Tier 3 and interview not done
+    if ($tier === '3' && $interviewStatus !== 'done') {
         return false;
     }
 
-    if ($tier === '2' && ($interviewStatus === 'pending' || $interviewStatus === 'scheduled')){
-        error_log("[!] Approving tier 2 request with incomplete interview");
+    // Log warning if Tier 2 marked for interview but not done
+    if ($tier === '2' && in_array($interviewStatus, ['pending', 'scheduled'])) {
+        error_log("[!] Approving Tier 2 request with incomplete interview.");
     }
-    
-    if (empty($visibleSince)){
+
+    // Update status and visibility
+    if (empty($visibleSince)) {
         $update_sql = "UPDATE requests SET status = 'approved', visible_since = NOW() WHERE id = ?";
     } else {
         $update_sql = "UPDATE requests SET status = 'approved' WHERE id = ?";
     }
 
-    $update_stmt = mysqli_prepare($conn, $update_sql);
-    mysqli_stmt_bind_param($update_stmt, 'i', $requestID);
-
-    return mysqli_stmt_execute($update_stmt);
+    $stmt = mysqli_prepare($conn, $update_sql);
+    mysqli_stmt_bind_param($stmt, 'i', $requestID);
+    return mysqli_stmt_execute($stmt);
 }
 
 function markForInterview   ($conn, $requestID, $userID){
-    $update_sql = "UPDATE requests SET interview_status = 'pending' WHERE id = ?";
-    $interviewUpdate_stmt = mysqli_prepare($conn, $update_sql);
-    mysqli_stmt_bind_param($interviewUpdate_stmt,"i",$requestID);
-    mysqli_stmt_execute($interviewUpdate_stmt);
+    $request = getRequest($conn, $requestID);
+    if (!$request) return false;
 
+    // Update request interview_status
+    $update_sql = "UPDATE requests SET interview_status = 'pending' WHERE id = ?";
+    $update_stmt = mysqli_prepare($conn, $update_sql);
+    mysqli_stmt_bind_param($update_stmt, "i", $requestID);
+    mysqli_stmt_execute($update_stmt);
+
+    // Insert new interview record
     $insert_sql = "INSERT INTO interviews (request_id, user_id, status) VALUES (?, ?, 'pending')";
     $insert_stmt = mysqli_prepare($conn, $insert_sql);
     mysqli_stmt_bind_param($insert_stmt, "ii", $requestID, $userID);
-
     return mysqli_stmt_execute($insert_stmt);
 }
 
 //Rejects a request and sets their visibility on the Help Board to 'hidden'
 function rejectRequest ($conn, $requestID){
+    $request = getRequest($conn, $requestID);
+    if (!$request) return false;
+
     $sql = "UPDATE requests SET status = 'rejected', visible_since = NULL WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $requestID);
@@ -217,6 +225,5 @@ function hideTier1Requests($conn){
     return mysqli_query($conn, $sql);
 }
  
-
 
 ?>

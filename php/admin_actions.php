@@ -5,39 +5,34 @@ require_once "functions/interview_utils.php";
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $status = 'fail'; 
+
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
-        $requestId = $_POST['request_id'];
+        $requestID = $_POST['request_id'];
 
         switch ($action) {
             case 'approve':
-                approveRequest($conn, $requestId);
+                $status = approveRequest($conn, $requestID);
                 break;
             case 'reject':
-                rejectRequest($conn, $requestId);
+                $status = rejectRequest($conn, $requestID);
                 break;
             case 'mark_for_interview':
-                $userId = $_POST['user_id']; // ID of requester
-                markForInterview($conn, $requestId, $userId);
+                if (isset($_POST['user_id'])){
+                    $userID = $_POST['user_id'];
+                    $status = markForInterview($conn, $requestID, $requestID);
+                }
                 break;
-            case 'schedule_interview':
-                $interviewId = $_POST['interview_id'];
-                $datetime = $_POST['datetime'];
-                scheduleInterview($conn, $interviewId, $datetime);
-                break;
-            case 'complete_interview':
-                $interviewId = $_POST['interview_id'];
-                $notes = $_POST['notes'] ?? null;
-                completeInterview($conn, $interviewId, $notes);
-                break;
-            case 'cancel_interview':
-                $interviewId = $_POST['interview_id'];
-                cancelInterview($conn, $interviewId);
+            default:
+                $status = 'fail';
                 break;
         }
     }
-}
 
+    header("Location: admin_requests.php?status=$status");
+    exit;
+}
 
 
 ?>
