@@ -1,5 +1,5 @@
 <div class="navbar" id="nav-color">
-    <img class="logo" src="images/logo.svg" alt="logo">
+    <img class="logo" src="../assets/logo.svg" alt="logo">
     <nav>
         <ul class="nav-links">
             <li><a href="#">Home</a></li>

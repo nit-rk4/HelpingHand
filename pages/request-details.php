@@ -34,21 +34,8 @@ $details = getRequestDetails($conn, $requestID);
 <body>
 
   <!-- NAVBAR -->
-  <header class="navbar" id="nav-color">
-    <div class="nav-left">
-      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo" />
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">About us</a></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="searchbar">
-      <input type="text" placeholder="Search..." />
-    </div>
-  </header>
+  <?php include("navbar.php"); ?>
+
 
   <!-- DETAILS WRAPPER -->
   <main class="details-wrapper">
