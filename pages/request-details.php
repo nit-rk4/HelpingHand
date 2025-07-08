@@ -33,15 +33,13 @@ $status = $_GET['status'] ?? 'pending';
     <a class="back-link" href="admin_requests.php">← Back to Requests</a>
 
     <?php
-    // Simple mock data — You can replace this later with real PHP logic or a DB.
+    // Simple mock data — can replace this with PHP logic or a DB.
     $title = "Need Help with Groceries";
     $applicant = "Juan Dela Cruz";
     $email = "juandelacruz@example.com";
     $phone = "0912 345 6789";
     $address = "123 Mabini St, Marikina City";
     $description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-    $category = "Financial Support";
-    $tier = "Tier 1";
     $amount = "₱150,000";
     ?>
 
@@ -65,8 +63,6 @@ $status = $_GET['status'] ?? 'pending';
     <!-- Support Info -->
     <div class="details-section">
       <h3>Requested Support</h3>
-      <p><span class="details-label">Category:</span><?= $category ?></p>
-      <p><span class="details-label">Tier:</span><?= $tier ?></p>
       <p><span class="details-label">Requested Amount:</span><?= $amount ?></p>
     </div>
 
