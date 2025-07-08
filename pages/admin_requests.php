@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>HelpingHand Admin - User Requests</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     .tab.active {
@@ -25,7 +26,7 @@
   <!-- Navbar -->
   <header class="navbar" id="nav-color">
     <div class="nav-left">
-      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo" />
+      <img class="logo" src="assets/logo.svg" alt="HelpingHand Logo" />
       <nav>
         <ul class="nav-links">
           <li><a href="#">Home</a></li>
@@ -39,7 +40,7 @@
     </div>
   </header>
 
-  <!-- Requests Page Layout -->
+  <!-- Page Layout -->
   <div class="container">
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -64,47 +65,51 @@
 
       <!-- Table Header -->
       <div class="request-row header">
-        <span class="user">User</span>
-        <span class="title">Request Title</span>
+        <span class="Requester">Requester</span>
+        <span class="title">Title</span>
         <span class="desc">Description</span>
+        <span class="desc">Category</span>
+        <span class="desc">Visible</span>
       </div>
 
-      <!-- Pending Requests -->
+      <!-- PENDING REQUESTS -->
       <a href="request-details.php?status=pending" class="request-row" data-status="pending">
         <span class="user">Juan Dela Cruz</span>
         <span class="title">Need Help with Groceries</span>
         <span class="desc">Lorem ipsum dolor sit amet...</span>
+        <span class="desc">Tier 1</span>
+        <span class="desc">Yes</span>
       </a>
 
       <a href="request-details.php?status=pending" class="request-row" data-status="pending">
         <span class="user">Maria Santos</span>
         <span class="title">Medical Assistance</span>
         <span class="desc">Requesting support for medication.</span>
+        <span class="desc">Tier 2</span>
+        <span class="desc">Yes</span>
       </a>
 
-      <!-- Accepted Requests -->
+      <!-- ACCEPTED REQUESTS -->
       <a href="request-details.php?status=accepted" class="request-row" data-status="accepted">
         <span class="user">Ana Lopez</span>
         <span class="title">School Support</span>
-        <span class="desc">
-          Approved for financial assistance.
-          <span class="status accepted">Accepted</span>
-        </span>
+        <span class="desc">Approved for financial assistance. <span class="status accepted">Accepted</span></span>
+        <span class="desc">Tier 2</span>
+        <span class="desc">Yes</span>
       </a>
 
-      <!-- Rejected Requests -->
+      <!-- REJECTED REQUESTS -->
       <a href="request-details.php?status=rejected" class="request-row" data-status="rejected">
         <span class="user">Mark Santos</span>
         <span class="title">Uniform Request</span>
-        <span class="desc">
-          Unable to process due to incomplete documents.
-          <span class="status rejected">Rejected</span>
-        </span>
+        <span class="desc">Unable to process due to incomplete documents. <span class="status rejected">Rejected</span></span>
+        <span class="desc">Tier 1</span>
+        <span class="desc">No</span>
       </a>
     </main>
   </div>
 
- // This block is for filtering user requests based on their status (pending, accepted, or rejected) when clicking on tab buttons.
+  <!-- Script to filter user requests by status -->
   <script>
     function filterRequests(status, clickedBtn) {
       document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
@@ -114,6 +119,7 @@
         row.style.display = row.getAttribute("data-status") === status ? "flex" : "none";
       });
     }
+
     window.addEventListener("DOMContentLoaded", () => {
       filterRequests("pending", document.querySelector(".tab.active"));
     });
