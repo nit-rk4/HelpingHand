@@ -1,7 +1,13 @@
 <?php
 
-//Get requests from database with or without filters
-function getRequests($conn, $status, $tier = null){
+/** 
+ * ------------------------------------------
+ *            FETCHING REQUESTS
+ *  ------------------------------------------
+*/
+
+//Get requests from database based on status and optional tier
+function getRequestsByStatus($conn, $status, $tier = null){
     //No tier filter
     if ($tier === null){
         $sql = "SELECT * FROM requests where status = ?";
@@ -34,6 +40,24 @@ function getVisibleRequests($conn){
     }
 
     return $requests;
+}
+
+function getUserRequests($conn, $userID){
+
+}
+
+function getRequest($conn, $requestID){
+    $sql = "SELECT * FROM requests where id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $requestID);
+    mysqli_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($result)){
+        return $row;
+    } else {
+        return null; 
+    }
 }
 
 
@@ -94,6 +118,14 @@ function searchRequestByTitle ($conn, $titleKeyword, $status = null, $tier = nul
     return $requests; 
 }
 
+
+/** 
+ * ------------------------------------------
+ *               ADMIN ACTIONS
+ *  ------------------------------------------
+*/
+
+
 //Updates the status of request to 'approved'
 function approveRequest($conn, $requestID){
     //Gets tier, for_interview, and interview_completed from specific request
@@ -132,6 +164,19 @@ function approveRequest($conn, $requestID){
     return mysqli_stmt_execute($update_stmt);
 }
 
+function markForInterview   ($conn, $requestID, $userID){
+    $update_sql = "UPDATE requests SET interview_status = 'pending' WHERE id = ?";
+    $interviewUpdate_stmt = mysqli_prepare($conn, $update_sql);
+    mysqli_stmt_bind_param($interviewUpdate_stmt,"i",$requestID);
+    mysqli_stmt_execute($interviewUpdate_stmt);
+
+    $insert_sql = "INSERT INTO interviews (request_id, user_id, status) VALUES (?, ?, 'pending')";
+    $insert_stmt = mysqli_prepare($conn, $insert_sql);
+    mysqli_stmt_bind_param($insert_stmt, "ii", $requestID, $userID);
+
+    return mysqli_stmt_execute($insert_stmt);
+}
+
 //Rejects a request and sets their visibility on the Help Board to 'hidden'
 function rejectRequest ($conn, $requestID){
     $sql = "UPDATE requests SET status = 'rejected', visible_since = NULL WHERE id = ?";
@@ -140,6 +185,14 @@ function rejectRequest ($conn, $requestID){
     return mysqli_stmt_execute($stmt);
 }
 
+
+/** 
+ * ------------------------------------------
+ *            BACKGROUND FUNCTIONS
+ *  ------------------------------------------
+*/
+
+//Expire requests that are past its deadline or its 7-day visibility
 function expireRequests($conn){
     $sql = "UPDATE requests
             SET status = 'expired', visible_since = NULL
@@ -153,6 +206,7 @@ function expireRequests($conn){
     return mysqli_stmt_execute($stmt);
 }
 
+//Hide tier 1 pending requests after 2 days
 function hideTier1Requests($conn){
     $sql = "UPDATE requests
             SET visible_since = NULL
