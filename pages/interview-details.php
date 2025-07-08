@@ -7,14 +7,14 @@ $status = $_GET['status'] ?? 'pending';
 <head>
   <meta charset="UTF-8" />
   <title>Interview Details - HelpingHand Admin</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body>
 
   <!-- NAVBAR -->
   <header class="navbar" id="nav-color">
     <div class="nav-left">
-      <img class="logo" src="assets/logo.svg" alt="HelpingHand Logo" />
+      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo" />
       <nav>
         <ul class="nav-links">
           <li><a href="#">Home</a></li>
