@@ -33,7 +33,7 @@ $status = $_GET['status'] ?? 'pending';
     <a class="back-link" href="admin_requests.php">← Back to Requests</a>
 
     <?php
-    // Sample data — can be replace this with real PHP logic or a DB.
+    // Simple mock data — You can replace this later with real PHP logic or a DB.
     $title = "Need Help with Groceries";
     $applicant = "Juan Dela Cruz";
     $email = "juandelacruz@example.com";
