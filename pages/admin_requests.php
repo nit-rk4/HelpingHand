@@ -1,3 +1,8 @@
+<?php
+  require "../php/config.php";
+  require "../php/request_utils.php"
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +63,7 @@
       <div class="tabs-filter-container">
         <div class="tabs">
           <button class="tab active" onclick="filterRequests('pending', this)">Pending Requests</button>
-          <button class="tab" onclick="filterRequests('accepted', this)">Accepted Requests</button>
+          <button class="tab" onclick="filterRequests('approved', this)">Approved Requests</button>
           <button class="tab" onclick="filterRequests('rejected', this)">Rejected Requests</button>
         </div>
       </div>
@@ -72,40 +77,25 @@
         <span class="desc">Visible</span>
       </div>
 
-      <!-- PENDING REQUESTS -->
-      <a href="request-details.php?status=pending" class="request-row" data-status="pending">
-        <span class="user">Juan Dela Cruz</span>
-        <span class="title">Need Help with Groceries</span>
-        <span class="desc">Lorem ipsum dolor sit amet...</span>
-        <span class="desc">Tier 1</span>
-        <span class="desc">Yes</span>
-      </a>
+      <?php
+        // Load requests of all 3 statuses
+        $statuses = ['pending', 'approved', 'rejected'];
 
-      <a href="request-details.php?status=pending" class="request-row" data-status="pending">
-        <span class="user">Maria Santos</span>
-        <span class="title">Medical Assistance</span>
-        <span class="desc">Requesting support for medication.</span>
-        <span class="desc">Tier 2</span>
-        <span class="desc">Yes</span>
-      </a>
-
-      <!-- ACCEPTED REQUESTS -->
-      <a href="request-details.php?status=accepted" class="request-row" data-status="accepted">
-        <span class="user">Ana Lopez</span>
-        <span class="title">School Support</span>
-        <span class="desc">Approved for financial assistance. <span class="status accepted">Accepted</span></span>
-        <span class="desc">Tier 2</span>
-        <span class="desc">Yes</span>
-      </a>
-
-      <!-- REJECTED REQUESTS -->
-      <a href="request-details.php?status=rejected" class="request-row" data-status="rejected">
-        <span class="user">Mark Santos</span>
-        <span class="title">Uniform Request</span>
-        <span class="desc">Unable to process due to incomplete documents. <span class="status rejected">Rejected</span></span>
-        <span class="desc">Tier 1</span>
-        <span class="desc">No</span>
-      </a>
+        foreach ($statuses as $status) {
+            $requests = getRequestsByStatus($conn, $status);
+            foreach ($requests as $req) {
+                $details = getRequestDetails($conn, $req['id']);
+                $visibleMark = $req['visible_since'] ? "Yes" : "No";
+                echo "<a href='request-details.php?id={$req['id']}' class='request-row' data-status='{$req['status']}'>";
+                echo "<span class='user'>" . htmlspecialchars($details['requester_name']) . "</span>";
+                echo "<span class='title'>" . htmlspecialchars($req['title']) . "</span>";
+                echo "<span class='desc'>" . htmlspecialchars($req['description']) . "</span>";
+                echo "<span class='desc'>" . htmlspecialchars($req['category']) . "</span>";
+                echo "<span class='desc'>{$visibleMark}</span>";
+                echo "</a>";
+            }
+        }
+      ?>
     </main>
   </div>
 

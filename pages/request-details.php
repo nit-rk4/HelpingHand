@@ -1,5 +1,27 @@
 <?php
-$status = $_GET['status'] ?? 'pending';
+require "../php/config.php";
+require "../php/request_utils.php";
+
+$requestID = $_GET['id'] ?? null;
+
+if (!$requestID){
+  die("Missing request ID.");
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+  if (isset($_POST['approve'])){
+    approveRequest($conn, $requestID);
+  } elseif (isset($_POST['reject'])){
+    rejectRequest($conn, $requestID);
+  } elseif (isset($_POST['mark_interview'])){
+    markForInterview($conn, $requestID);
+  }
+
+  header("Location: admin_requests.php");
+  exit();
+}
+
+$details = getRequestDetails($conn, $requestID);
 ?>
 
 <!DOCTYPE html>
@@ -33,53 +55,48 @@ $status = $_GET['status'] ?? 'pending';
     <a class="back-link" href="admin_requests.php">← Back to Requests</a>
 
     <?php
-    // Simple mock data — can replace this with PHP logic or a DB.
-    $title = "Need Help with Groceries";
-    $applicant = "Juan Dela Cruz";
-    $email = "juandelacruz@example.com";
-    $phone = "0912 345 6789";
-    $address = "123 Mabini St, Marikina City";
-    $description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-    $amount = "₱150,000";
+    $status = $details['status'];
+    $title = $details['title'];
+    $requester = $details['requester_name'];
+    $email = $details['requester_email'];
+    $phone = $details['requester_contact'];
+    $description = $details['description'];
+    $category = $details['category'];
     ?>
 
     <h2><?= $title ?></h2>
 
     <!-- Applicant Info -->
     <div class="details-section">
-      <h3>Applicant Info</h3>
-      <p><span class="details-label">Name:</span><?= $applicant ?></p>
+      <h3>Requester Info</h3>
+      <p><span class="details-label">Name:</span><?= $requester ?></p>
       <p><span class="details-label">Email:</span><?= $email ?></p>
       <p><span class="details-label">Phone:</span><?= $phone ?></p>
-      <p><span class="details-label">Address:</span><?= $address ?></p>
     </div>
 
     <!-- Request Description -->
     <div class="details-section">
       <h3>Request Description</h3>
+      <p><span class="details-label">Category:</span><?= $category ?></p>
       <p><?= $description ?></p>
     </div>
 
-    <!-- Support Info -->
     <div class="details-section">
-      <h3>Requested Support</h3>
-      <p><span class="details-label">Requested Amount:</span><?= $amount ?></p>
+      <p><strong>Status:</strong>
+        <span class="status <?= htmlspecialchars($status) ?>">
+          <?= ucfirst(htmlspecialchars($status)) ?>
+        </span>
+      </p>
     </div>
+
 
     <!-- Action Buttons or Status Display -->
     <?php if ($status === 'pending'): ?>
       <form method="post" class="details-buttons">
-        <button type="submit" name="accept" class="btn-accept">ACCEPT</button>
+        <button type="submit" name="approve" class="btn-approve">APPROVE</button>
         <button type="submit" name="reject" class="btn-reject">REJECT</button>
+        <button type="submit" name="mark_interview" class="btn-interview">FOR INTERVIEW</button>
       </form>
-    <?php else: ?>
-      <div class="details-section">
-        <p><strong>Status:</strong>
-          <span class="status <?= htmlspecialchars($status) ?>">
-            <?= ucfirst(htmlspecialchars($status)) ?>
-          </span>
-        </p>
-      </div>
     <?php endif; ?>
 
   </main>
