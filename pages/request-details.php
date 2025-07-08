@@ -62,6 +62,7 @@ $details = getRequestDetails($conn, $requestID);
     $phone = $details['requester_contact'];
     $description = $details['description'];
     $category = $details['category'];
+    $tier = $details['tier'];
     ?>
 
     <h2><?= $title ?></h2>
@@ -77,7 +78,7 @@ $details = getRequestDetails($conn, $requestID);
     <!-- Request Description -->
     <div class="details-section">
       <h3>Request Description</h3>
-      <p><span class="details-label">Category:</span><?= $category ?></p>
+      <p><span class ="details-label">Tier:</span><?= $tier ?>  |  <span class="details-label">Category:</span><?= $category ?></p>
       <p><?= $description ?></p>
     </div>
 
