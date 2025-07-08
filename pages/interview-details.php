@@ -1,5 +1,4 @@
 <?php
-// Simulate passing a status through the URL
 $status = $_GET['status'] ?? 'pending';
 ?>
 
