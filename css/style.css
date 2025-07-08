@@ -143,6 +143,11 @@ li, a, input, button {
   list-style: none;
 }
 
+.sidebar a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .sidebar li {
   margin-bottom: 10px;
   cursor: pointer;
@@ -162,10 +167,6 @@ li, a, input, button {
   background-color: #fff;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
 
 /* --------------------------
    TABS + FILTER BAR
@@ -212,6 +213,11 @@ a {
 .request-row.header {
   background-color: #fff3e6;
   font-weight: bold;
+}
+
+.request-row a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .request-row span {
