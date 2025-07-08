@@ -1,4 +1,5 @@
 <?php
+// Simulate passing a status through the URL
 $status = $_GET['status'] ?? 'pending';
 ?>
 
@@ -7,14 +8,14 @@ $status = $_GET['status'] ?? 'pending';
 <head>
   <meta charset="UTF-8" />
   <title>Interview Details - HelpingHand Admin</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
   <!-- NAVBAR -->
   <header class="navbar" id="nav-color">
     <div class="nav-left">
-      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo" />
+      <img class="logo" src="assets/logo.svg" alt="HelpingHand Logo" />
       <nav>
         <ul class="nav-links">
           <li><a href="#">Home</a></li>
@@ -33,7 +34,7 @@ $status = $_GET['status'] ?? 'pending';
     <a class="back-link" href="interviews.php">← Back to Interviews</a>
 
     <?php
-    // Sample Interview Data 
+    // Sample Interview Data
     $applicant = "Carlos Reyes";
     $date = "2025-07-10";
     $time = "2:00 PM";
@@ -56,7 +57,7 @@ $status = $_GET['status'] ?? 'pending';
       <?php endif; ?>
     </div>
 
-    <!-- Notes of the Admin after seeing the request-->
+    <!-- Notes -->
     <div class="details-section">
       <h3>Notes</h3>
       <p><?= $notes ?></p>
