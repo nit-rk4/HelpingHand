@@ -91,45 +91,6 @@ function getRequestDetails($conn, $requestID){
     }
 }
 
-//Searches for a request by keyword
-function searchRequestByTitle ($conn, $titleKeyword, $status = null, $tier = null){
-    $titleKeyword = '%'.$titleKeyword.'%';
-
-    $sql = "SELECT * FROM requests WHERE title LIKE ?";
-    
-    if ($status !== null){ //Adds additional statement if status is specified
-        $sql .= " AND STATUS = ?";
-    }
-
-    if ($tier !== null){ //Adds additional statement if tier is specified
-        $sql .= " AND tier = ?";
-    }
-
-    $stmt = mysqli_prepare($conn, $sql);
-
-    if ($status !== null && $tier !== null) { //Bind parameters if both status and tier are present
-        mysqli_stmt_bind_param($stmt, "ssi", $titleKeyword, $status, $tier);
-    } elseif ($status !== null){ //Bind parameters if only status is present
-        mysqli_stmt_bind_param($stmt, "ss", $titleKeyword, $status);
-    } elseif ($tier !== null){ //Bind parameters if only tier is present
-        mysqli_stmt_bind_param($stmt, "si", $titleKeyword, $tier);
-    } else { // Bind parameters if neither status nor tier is present
-        mysqli_stmt_bind_param($stmt,"s",$titleKeyword);
-    }
-
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    $requests = [];
-    while ($row =  mysqli_fetch_assoc($result)){
-        $requests[] = $row;
-    }
-
-    //Returns requests that satisfy the title keyword
-    return $requests; 
-}
-
-
 /** 
  * ------------------------------------------
  *               ADMIN ACTIONS
