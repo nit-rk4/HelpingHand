@@ -146,6 +146,11 @@ h1 {
   background-color: #fff;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* --------------------------
    TABS + FILTER BAR
 --------------------------- */
@@ -258,8 +263,9 @@ h1 {
   gap: 16px;
 }
 
-.btn-accept,
-.btn-reject {
+.btn-approve,
+.btn-reject,
+.btn-interview {
   padding: 12px 24px;
   font-weight: 600;
   border: none;
@@ -268,12 +274,12 @@ h1 {
   transition: background-color 0.3s ease;
 }
 
-.btn-accept {
+.btn-approve {
   background-color: #a8ffb0;
   color: #084d0c;
 }
 
-.btn-accept:hover {
+.btn-approve:hover {
   background-color: #7be68c;
 }
 
@@ -284,6 +290,15 @@ h1 {
 
 .btn-reject:hover {
   background-color: #ff9b9b;
+}
+
+.btn-interview {
+  background-color: #c0dbff;
+  color: #003366;
+}
+
+.btn-interview:hover {
+  background-color: #99c2ff;
 }
 
 .back-link {
