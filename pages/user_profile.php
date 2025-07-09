@@ -76,6 +76,18 @@
       </div>
 
       <h2 style="margin-top: 40px;">Help Count Summary</h2>
+            <div class="donut-chart-wrapper">
+        <div class="donut-chart">
+            <div class="circle">
+            <div class="mask full"></div>
+            <div class="mask half"></div>
+            </div>
+            <div class="chart-center">
+            <span>60%</span>
+            <p>Help Points</p>
+            </div>
+            </div>
+        </div>
       <div class="details-wrapper">
         <p><span class="details-label">Total Requests Submitted:</span> 3</p>
         <p><span class="details-label">Requests Fulfilled:</span> 1</p>

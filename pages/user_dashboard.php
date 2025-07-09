@@ -76,7 +76,7 @@
                 <option value="Legal & Documents">Legal & Documents</option>
                 <option value="Monetary Assistance">Monetary Assistance</option>
             </optgroup>
-        </select>
+    </select>
       </div>
 
       <div class="form-group">
