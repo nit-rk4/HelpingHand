@@ -29,10 +29,10 @@
   <div class="container">
     <aside class="sidebar">
       <ul>
-        <li class="active">Dashboard</li>
-        <li>My Requests</li>
-        <li>Profile</li>
-      </ul>
+        <li><a href="user_dashboard.php">Dashboard</a></li>
+        <li class="active"><a href="user_profile.php">Profile</a></li>
+    </ul>
+
     </aside>
 
     <main class="main-content">

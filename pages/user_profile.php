@@ -1,8 +1,11 @@
+<?php
+// /pages/user_profile.php
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HelpingHand - My Requests</title>
+  <title>User Profile - HelpingHand</title>
   <link rel="stylesheet" href="../css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -27,8 +30,8 @@
     <aside class="sidebar">
       <ul>
         <li><a href="user_dashboard.php">Dashboard</a></li>
-        <li class="active"><a href="user_profile.php">Profile</a></li>  
-        </ul>
+        <li class="active"><a href="user_profile.php">Profile</a></li>
+      </ul>
     </aside>
 
     <main class="main-content">
@@ -49,6 +52,7 @@
           <span class="deadline">Deadline</span>
         </div>
 
+        <!-- Sample Requests -->
         <div class="request-row">
           <span class="title">Food Supplies Needed</span>
           <span class="desc">Requesting rice, canned goods for my family of 5.</span>
