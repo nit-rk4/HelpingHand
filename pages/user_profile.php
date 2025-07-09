@@ -76,18 +76,26 @@
       </div>
 
       <h2 style="margin-top: 40px;">Help Count Summary</h2>
-            <div class="donut-chart-wrapper">
-        <div class="donut-chart">
-            <div class="circle">
-            <div class="mask full"></div>
-            <div class="mask half"></div>
-            </div>
-            <div class="chart-center">
-            <span>60%</span>
-            <p>Help Points</p>
-            </div>
-            </div>
-        </div>
+            <section class="help-count-section">
+  <h2>Help Count</h2>
+
+  <div class="donut-chart" role="img" aria-label="Help points distribution">
+    <div class="segment tier1" style="--value: 40;"></div>
+    <div class="segment tier2" style="--value: 30;"></div>
+    <div class="segment tier3" style="--value: 30;"></div>
+    <div class="donut-center">
+      <span class="total">100</span>
+      <span>pts</span>
+    </div>
+  </div>
+
+  <div class="donut-legend">
+    <div><span class="legend-box tier1"></span> Tier 1 (40)</div>
+    <div><span class="legend-box tier2"></span> Tier 2 (30)</div>
+    <div><span class="legend-box tier3"></span> Tier 3 (30)</div>
+  </div>
+</section>
+
       <div class="details-wrapper">
         <p><span class="details-label">Total Requests Submitted:</span> 3</p>
         <p><span class="details-label">Requests Fulfilled:</span> 1</p>
