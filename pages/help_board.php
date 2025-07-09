@@ -6,89 +6,67 @@
     <title>Help Board</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
     <?php include("navbar.php"); ?>
 
     <h1 class="page-header">Help board</h1>
 
     <main class="helpboard-grid">
-        <article class="helpboard bg-yellow short-box grid-col-span-2">
+        <article class="helpboard">
+            <img src="../assets/image.jpg" alt="sample" class="helpboard-image">
             <div class="helpboard-content">
-                <img src="images/sample1.jpg" alt="sample" class="helpboard-image">
-                <div class="helpboard-text">
-                    <h2 class="helpboard-title"><a href="request_1.php">Title</a></h2>
-                    <p class="author text-yellow">Requester Name</p>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ex, inventore quasi commodi deleniti corporis magni delectus culpa beatae mollitia est suscipit tempore harum aliquid.</p>
-                </div>
+            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+            <p class="author">Requester name</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
             </div>
         </article>
 
-        <article class="helpboard bg-blue short-box">
+        <article class="helpboard">
             <div class="helpboard-content">
-                <img src="images/sample2.jpg" alt="sample" class="helpboard-image">
-                <div class="helpboard-text">
-                    <h2 class="helpboard-title"><a href="#">Title</a></h2>
-                    <p class="author text-blue">Requester Name</p>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ex, inventore quasi commodi deleniti corporis magni delectus culpa beatae mollitia est suscipit tempore harum aliquid.</p>
-                </div>
+            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+            <p class="author">Requester name</p>
+            <p>Lorem ipsum dolor sit a eum atur ne facere rem quos nobis quaerat, totam accusantium.</p>
             </div>
         </article>
 
-        <article class="helpboard bg-green long-box">
+        <article class="helpboard">
+            <img src="../assets/image.jpg" alt="sample" class="helpboard-image">
             <div class="helpboard-content">
-                <img src="images/sample3.jpg" alt="sample" class="helpboard-image">
-                <div class="helpboard-text">
-                    <h2 class="helpboard-title"><a href="#">Title</a></h2>
-                    <p class="author text-green">Requester Name</p>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ex, inventore quasi commodi deleniti corporis magni delectus culpa beatae mollitia est suscipit tempore harum aliquid.</p>
-                </div>
+            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+            <p class="author">Requester name</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
             </div>
         </article>
 
-        <article class="helpboard bg-yellow short-box grid-col-span-2">
+        <article class="helpboard">
             <div class="helpboard-content">
-                <img src="images/sample4.jpg" alt="sample" class="helpboard-image">
-                <div class="helpboard-text">
-                    <h2 class="helpboard-title"><a href="#">Title</a></h2>
-                    <p class="author text-yellow">Requester Name</p>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ex, inventore quasi commodi deleniti corporis magni delectus culpa beatae mollitia est suscipit tempore harum aliquid.</p>
-                </div>
+            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+            <p class="author">Requester name</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
             </div>
         </article>
 
-        <article class="helpboard bg-blue short-box grid-col-span-2">
+        <article class="helpboard">
             <div class="helpboard-content">
-                <img src="images/sample5.jpg" alt="sample" class="helpboard-image">
-                <div class="helpboard-text">
-                    <h2 class="helpboard-title"><a href="#">Title</a></h2>
-                    <p class="author text-blue">Requester Name</p>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ex, inventore quasi commodi deleniti corporis magni delectus culpa beatae mollitia est suscipit tempore harum aliquid.</p>
-                </div>
+            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+            <p class="author">Requester name</p>
+            <p>Maikli lang na text</p>
             </div>
         </article>
+        
+        <article class="helpboard">
+            <div class="helpboard-content">
+            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+            <p class="author">Requester name</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. orem ipsum dolor sit amet consectetur adipisicing elit.orem ipsum dolor sit amet consectetur adipisicing elit.orem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
+            </div>
+        </article>
+        
 
-        <article class="helpboard bg-green long-box">
-            <div class="helpboard-content">
-                <img src="images/sample6.jpg" alt="sample" class="helpboard-image">
-                <div class="helpboard-text">
-                    <h2 class="helpboard-title"><a href="#">Title</a></h2>
-                    <p class="author text-green">Requester Name</p>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ex, inventore quasi commodi deleniti corporis magni delectus culpa beatae mollitia est suscipit tempore harum aliquid.</p>
-                </div>
-            </div>
-        </article>
-
-        <article class="helpboard bg-yellow short-box">
-            <div class="helpboard-content">
-                <img src="images/sample7.jpg" alt="sample" class="helpboard-image">
-                <div class="helpboard-text">
-                    <h2 class="helpboard-title"><a href="#">Title</a></h2>
-                    <p class="author text-yellow">Requester Name</p>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. In, ex, inventore quasi commodi deleniti corporis magni delectus culpa beatae mollitia est suscipit tempore harum aliquid.</p>
-                </div>
-            </div>
-        </article>
+        
     </main>
+
+
+
 </body>
 </html>
