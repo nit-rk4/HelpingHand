@@ -169,7 +169,6 @@ select:focus {
   box-shadow: 0 0 8px rgba(255, 178, 178, 0.5);
 }
 
-/* Button styles */
 .button-wrapper {
   display: flex;
   gap: 1rem;
@@ -201,6 +200,88 @@ select:focus {
 
 .button-wrapper button[type="reset"]:hover {
   background-color: #84b3ff;
+}
+
+.center-request {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.submit-request-wrapper {
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  background-color: #fff6f6;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.submit-request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.submit-request-form label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.submit-request-form input,
+.submit-request-form textarea,
+.submit-request-form select {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  background-color: #fff;
+  width: 100%;
+  resize: vertical;
+}
+
+.submit-request-form input:focus,
+.submit-request-form textarea:focus,
+.submit-request-form select:focus {
+  outline: none;
+  box-shadow: 0 0 6px rgba(255, 178, 178, 0.8);
+}
+
+.button-wrapper {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.submit-btn {
+  background-color: #ffb2b2;
+  color: #1e2f4b;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.reset-btn {
+  background-color: #ffe6e6;
+  color: #c05757;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #ffa2a2;
+}
+
+.reset-btn:hover {
+  background-color: #ffd1d1;
 }
 
 /* ----------------------------------
