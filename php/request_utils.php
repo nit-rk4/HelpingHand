@@ -8,21 +8,26 @@
 
 //Get requests from database based on status and optional tier
 function getRequestsByStatus($conn, $status, $tier = null){
-    //No tier filter
-    if ($tier === null){
-        $sql = "SELECT * FROM requests where status = ?";
+    if ($tier === null || $tier === 'all') {
+        $sql = "SELECT requests.*, users.name AS requester_name
+                FROM requests 
+                JOIN users ON requests.user_id = users.id
+                WHERE status = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $status);
-    } else { //Yes tier filter 
-        $sql = "SELECT * FROM requests WHERE status = ? AND tier = ?";
+    } else {
+        $sql = "SELECT requests.*, users.name AS requester_name
+                FROM requests 
+                JOIN users ON requests.user_id = users.id
+                WHERE status = ? AND tier = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "si", $status, $tier);
     }
 
     mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result ($stmt);
+    $result = mysqli_stmt_get_result($stmt);
 
-    $requests = []; //Creates an associative array of the requests.
+    $requests = [];
     while ($row = mysqli_fetch_assoc($result)){
         $requests[] = $row;
     }
@@ -166,18 +171,28 @@ function rejectRequest ($conn, $requestID){
 
 //Expire requests that are past its deadline or its 7-day visibility
 function expireRequests($conn){
-    $sql = "UPDATE requests
-            SET status = 'expired', visible_since = NULL
-            WHERE (status = 'pending' OR status = 'approved')
-            AND (
-                deadline < CURDATE()
-                OR (visible_since IS NOT NULL AND TIMESTAMPDIFF(DAY, visible_since, NOW()) >= 7)
-            )";
+    $checkSql = "SELECT id FROM requests
+                WHERE (status = 'pending' OR status = 'approved')
+                AND (
+                    deadline < CURDATE()
+                    OR (visible_since IS NOT NULL AND TIMESTAMPDIFF(DAY, visible_since, NOW()) >= 7)
+                )
+                LIMIT 1";
 
-    $stmt = mysqli_prepare($conn, $sql);
-    return mysqli_stmt_execute($stmt);
+    $check = mysqli_query($conn, $checkSql);
+    if (mysqli_num_rows($check) > 0) {
+        $sql = "UPDATE requests
+                SET status = 'expired', visible_since = NULL
+                WHERE (status = 'pending' OR status = 'approved')
+                AND (
+                    deadline < CURDATE()
+                    OR (visible_since IS NOT NULL AND TIMESTAMPDIFF(DAY, visible_since, NOW()) >= 7)
+                )";
+        $stmt = mysqli_prepare($conn, $sql);
+        return mysqli_stmt_execute($stmt);
+    }
+    return true;
 }
-
 //Hide tier 1 pending requests after 2 days
 function hideTier1Requests($conn){
     $sql = "UPDATE requests

@@ -1,9 +1,12 @@
 <?php
   require "../php/config.php";
   require "../php/request_utils.php";
+  require_once "../php/maintenance.php";
+  runMaintenance($conn);
+  $status = $_GET['status'] ?? 'pending';
+  $tierFilter = $_GET['tier'] ?? 'all';
 
-  expireRequests($conn);
-  hideTier1Requests($conn);
+  $requests = getRequestsByStatus($conn, $status, $tierFilter);
 ?>
 
 <!DOCTYPE html>
@@ -17,10 +20,6 @@
   <style>
     .tab.active {
       background-color: #ffb2b2;
-    }
-
-    .request-row[data-status] {
-      display: none;
     }
 
     .request-row a {
@@ -82,9 +81,9 @@
       <!-- Tabs -->
       <div class="filter-bar">
         <div class="tabs">
-          <button class="tab active" onclick="filterRequests('pending', this)">Pending</button>
-          <button class="tab" onclick="filterRequests('approved', this)">Approved</button>
-          <button class="tab" onclick="filterRequests('rejected', this)">Rejected</button>
+          <button class="tab <?= $status === 'pending' ? 'active' : '' ?>" onclick="goToStatus('pending')">Pending</button>
+          <button class="tab <?= $status === 'approved' ? 'active' : '' ?>" onclick="goToStatus('approved')">Approved</button>
+          <button class="tab <?= $status === 'rejected' ? 'active' : '' ?>" onclick="goToStatus('rejected')">Rejected</button>
         </div>
 
         <div class="tier-dropdown-filter">
@@ -109,21 +108,15 @@
 
       <?php
         // Load requests of all 3 statuses
-        $statuses = ['pending', 'approved', 'rejected'];
-
-        foreach ($statuses as $status) {
-            $requests = getRequestsByStatus($conn, $status);
-            foreach ($requests as $req) {
-                $details = getRequestDetails($conn, $req['id']);
-                $visibleMark = $req['visible_since'] ? "Yes" : "No";
-                echo "<a href='request-details.php?id={$req['id']}' class='request-row' data-status='{$req['status']}' data-tier='{$details['tier']}'>";
-                echo "<span class='user'>" . htmlspecialchars($details['requester_name']) . "</span>";
-                echo "<span class='title'>" . htmlspecialchars($req['title']) . "</span>";
-                echo "<span class='desc'>" . htmlspecialchars($req['description']) . "</span>";
-                echo "<span class='desc'>" . htmlspecialchars($req['category']) . "</span>";
-                echo "<span class='desc'>{$visibleMark}</span>";
-                echo "</a>";
-            }
+        foreach ($requests as $req) {
+          $visibleMark = $req['visible_since'] ? "Yes" : "No";
+          echo "<a href='request-details.php?id={$req['id']}' class='request-row' data-status='{$req['status']}' data-tier='{$req['tier']}'>";
+          echo "<span class='user'>" . htmlspecialchars($req['requester_name']) . "</span>";
+          echo "<span class='title'>" . htmlspecialchars($req['title']) . "</span>";
+          echo "<span class='desc'>" . htmlspecialchars($req['description']) . "</span>";
+          echo "<span class='desc'>" . htmlspecialchars($req['category']) . "</span>";
+          echo "<span class='desc'>{$visibleMark}</span>";
+          echo "</a>";
         }
       ?>
     </main>
@@ -134,29 +127,22 @@
       let currentStatus = "pending";
       let currentTier = "all";
 
-      function filterRequests(status, clickedBtn) {
-        currentStatus = status;
-        document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
-        clickedBtn.classList.add("active");
-        applyFilters();
-      }
-
       function onTierChange() {
-        currentTier = document.getElementById("tierSelect").value;
-        applyFilters();
+        const tier = document.getElementById("tierSelect").value;
+        const status = new URLSearchParams(window.location.search).get('status') || 'pending';
+        window.location.href = `admin_requests.php?status=${status}&tier=${tier}`;
       }
 
-      function applyFilters() {
-        document.querySelectorAll(".request-row[data-status]").forEach(row => {
-          const statusMatch = row.getAttribute("data-status") === currentStatus;
-          const tierMatch = currentTier === "all" || row.getAttribute("data-tier") === currentTier;
-          row.style.display = (statusMatch && tierMatch) ? "flex" : "none";
-        });
+      function goToStatus(status) {
+        const tier = document.getElementById("tierSelect").value;
+        window.location.href = `admin_requests.php?status=${status}&tier=${tier}`;
       }
 
       window.addEventListener("DOMContentLoaded", () => {
-        filterRequests("pending", document.querySelector(".tab.active"));
+        const tierSelect = document.getElementById("tierSelect");
+        tierSelect.value = "<?= htmlspecialchars($tierFilter) ?>";
       });
+
     </script>
 
 </body>
