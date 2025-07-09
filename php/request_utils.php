@@ -9,17 +9,23 @@
 //Get requests from database based on status and optional tier
 function getRequestsByStatus($conn, $status, $tier = null){
     if ($tier === null || $tier === 'all') {
-        $sql = "SELECT requests.*, users.name AS requester_name
+        $sql = "SELECT 
+                    requests.id, requests.title, requests.description,
+                    requests.status, requests.tier, requests.category,
+                    requests.visible_since, users.name AS requester_name
                 FROM requests 
                 JOIN users ON requests.user_id = users.id
-                WHERE status = ?";
+                WHERE requests.status = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $status);
     } else {
-        $sql = "SELECT requests.*, users.name AS requester_name
+        $sql = "SELECT 
+                    requests.id, requests.title, requests.description,
+                    requests.status, requests.tier, requests.category,
+                    requests.visible_since, users.name AS requester_name
                 FROM requests 
                 JOIN users ON requests.user_id = users.id
-                WHERE status = ? AND tier = ?";
+                WHERE requests.status = ? AND requests.tier = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "si", $status, $tier);
     }

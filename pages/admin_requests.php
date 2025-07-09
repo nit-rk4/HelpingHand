@@ -107,7 +107,6 @@
       </div>
 
       <?php
-        // Load requests of all 3 statuses
         foreach ($requests as $req) {
           $visibleMark = $req['visible_since'] ? "Yes" : "No";
           echo "<a href='request-details.php?id={$req['id']}' class='request-row' data-status='{$req['status']}' data-tier='{$req['tier']}'>";
