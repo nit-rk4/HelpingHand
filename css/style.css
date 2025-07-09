@@ -878,3 +878,53 @@ select:focus {
     background-color: rgb(255, 146, 146);
     box-shadow: 0px 1px 20px rgba(136, 136, 136, 0.8);
 }
+
+/* ------------------------------
+   Fix Header on Mobile View
+--------------------------------- */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    background: linear-gradient(90deg, rgba(221,106,106,0) 0%, rgba(255,178,178,1) 100%);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+  }
+
+  .nav-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .nav-links li {
+    padding: 5px 0;
+  }
+
+  .searchbar {
+    width: 100%;
+  }
+
+  .searchbar input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  .logo {
+    width: 160px;
+    height: auto;
+  }
+}
