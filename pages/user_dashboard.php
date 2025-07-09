@@ -56,7 +56,6 @@
       <div class="form-group">
         <label for="category">Category</label>
         <select id="category" name="category" required>
-          <!-- your optgroups stay unchanged -->
         </select>
       </div>
 
@@ -66,7 +65,7 @@
       </div>
 
       <div class="button-wrapper">
-        <button type="submit" class="submit-btn">Submit</button>
+        <button type="submit" class="submit-btn" name="submit-request">Submit</button>
         <button type="reset" class="reset-btn">Reset</button>
       </div>
     </form>
