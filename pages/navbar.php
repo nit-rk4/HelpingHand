@@ -1,11 +1,11 @@
 <div class="navbar" id="nav-color">
-    <img class="logo" src="images/logo.svg" alt="logo">
+    <a href="/HelpingHand/"><img class="logo" src="../assets/logo.svg" alt="logo"></a>
     <nav>
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
+            <li><a href="/HelpingHand/">Home</a></li>
             <li><a href="#">Contact</a></li>
             <li><a href="#">About us</a></li>
         </ul>
     </nav>
-    <a class="searchbar"><input type="text" placeholder="Search..."></a>
 </div>
+

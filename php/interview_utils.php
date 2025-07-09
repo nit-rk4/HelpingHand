@@ -45,20 +45,6 @@ function getInterviewDetails($conn, $interviewID){
     }
 }
 
-//Searches for a request by keyword
-
-function markForInterview   ($conn, $requestID, $userID){
-    $update_sql = "UPDATE requests SET interview_status = 'pending' WHERE id = ?";
-    $interviewUpdate_stmt = mysqli_prepare($conn, $update_sql);
-    mysqli_stmt_bind_param($interviewUpdate_stmt,"i",$requestID);
-    mysqli_stmt_execute($interviewUpdate_stmt);
-
-    $insert_sql = "INSERT INTO interviews (request_id, user_id, status) VALUES (?, ?, 'pending')";
-    $insert_stmt = mysqli_prepare($conn, $insert_sql);
-    mysqli_stmt_bind_param($insert_stmt, "ii", $requestID, $userID);
-
-    return mysqli_stmt_execute($insert_stmt);
-}
 
 function completeInterview($conn, $interviewID, $notes = null){
     $check_sql = "SELECT request_id, status FROM interviews WHERE id = ?";
