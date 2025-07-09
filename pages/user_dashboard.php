@@ -1,27 +1,30 @@
-<?php
-// /pages/user_dashboard.php
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>User Dashboard - HelpingHand</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8" />
+  <title>HelpingHand - User Dashboard</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
   <header class="navbar">
     <div class="nav-left">
-      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo">
+      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo" />
       <nav>
         <ul class="nav-links">
           <li><a href="#">Home</a></li>
           <li><a href="#">Help Board</a></li>
+          <li><a href="#">About</a></li>
         </ul>
       </nav>
+    </div>
+    <div class="searchbar">
+      <input type="text" placeholder="Search..." />
     </div>
   </header>
 
   <div class="container">
+    <!-- Sidebar -->
     <aside class="sidebar">
       <ul>
         <li class="active">Dashboard</li>
@@ -29,83 +32,60 @@
       </ul>
     </aside>
 
+    <!-- Main Content -->
     <main class="main-content">
-      <h1>User Dashboard</h1>
+      <h1>Submit a New Request</h1>
 
-      <!-- Request Form -->
-      <form action="" method="post" enctype="multipart/form-data" class="details-wrapper">
-        <h2>Submit a New Help Request</h2>
+      <form action="../php/submit_request.php" method="POST" enctype="multipart/form-data" class="details-wrapper">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" required />
+        </div>
 
-        <label class="details-label">Title</label>
-        <input type="text" name="title" required />
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="5" required></textarea>
+        </div>
 
-        <label class="details-label">Description</label>
-        <textarea name="description" rows="5" required></textarea>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">-- Select Category --</option>
+            <optgroup label="Tier 1">
+              <option value="Home/Tech Help">Home/Tech Help</option>
+              <option value="Escort/Babysitting">Escort/Babysitting</option>
+              <option value="Volunteer Support">Volunteer Support</option>
+              <option value="Errand">Errand</option>
+              <option value="Lost Item">Lost Item</option>
+              <option value="Tutoring/Academic Help">Tutoring/Academic Help</option>
+            </optgroup>
+            <optgroup label="Tier 2">
+              <option value="Food & Essentials">Food & Essentials</option>
+              <option value="School Supplies">School Supplies</option>
+              <option value="Goods Donations">Goods Donations</option>
+            </optgroup>
+            <optgroup label="Tier 3">
+              <option value="Medical Assistance">Medical Assistance</option>
+              <option value="Legal & Documents">Legal & Documents</option>
+              <option value="Monetary Assistance">Monetary Assistance</option>
+            </optgroup>
+          </select>
+        </div>
 
-        <label class="details-label">Category</label>
-        <select name="category" required>
-          <optgroup label="Tier 1">
-            <option>Home/Tech Help</option>
-            <option>Escort/Babysitting</option>
-            <option>Volunteer Support</option>
-            <option>Errand</option>
-            <option>Lost Item</option>
-            <option>Tutoring/Academic Help</option>
-          </optgroup>
-          <optgroup label="Tier 2">
-            <option>Food & Essentials</option>
-            <option>School Supplies</option>
-            <option>Goods Donations</option>
-          </optgroup>
-          <optgroup label="Tier 3">
-            <option>Medical Assistance</option>
-            <option>Legal & Documents</option>
-            <option>Monetary Assistance</option>
-          </optgroup>
-        </select>
+        <div class="form-group">
+          <label for="attachment">Attachment (optional)</label>
+          <input type="file" id="attachment" name="attachment" />
+        </div>
 
-        <label class="details-label">Deadline</label>
-        <input type="date" name="deadline" required />
+        <div class="form-group">
+          <label for="deadline">Deadline</label>
+          <input type="date" id="deadline" name="deadline" required />
+        </div>
 
-        <label class="details-label">Attachment (optional)</label>
-        <input type="file" name="attachment" accept="image/*,.pdf">
-
-        <div class="details-buttons">
-          <button type="submit" class="btn-approve">Submit Request</button>
+        <div class="form-group">
+          <button type="submit">Submit Request</button>
         </div>
       </form>
-
-      <!-- Confirmation Message -->
-      <?php
-      if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        echo "<p style='margin-top: 20px; color: green;'>✅ Request submitted (demo only).</p>";
-      }
-      ?>
-
-      <!-- Request Status Section -->
-      <h2 style="margin-top: 60px;">Your Submitted Requests</h2>
-
-      <div class="request-row header">
-        <span class="title">Title</span>
-        <span class="desc">Description</span>
-        <span>Category</span>
-        <span>Status</span>
-      </div>
-
-      <!-- Example static data -->
-      <div class="request-row">
-        <span class="title">Medical Help Needed</span>
-        <span class="desc">Need money for surgery meds...</span>
-        <span>Medical Assistance</span>
-        <span style="color: green;">Fulfilled</span>
-      </div>
-
-      <div class="request-row">
-        <span class="title">Groceries for Lola</span>
-        <span class="desc">Need rice, canned goods and milk</span>
-        <span>Food & Essentials</span>
-        <span style="color: orange;">Pending</span>
-      </div>
     </main>
   </div>
 </body>
