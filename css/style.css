@@ -631,161 +631,118 @@ select:focus {
 /* ------------------------------
    HELP BOARD STYLES
 --------------------------------- */
-/* help board components */
 .helpboard-grid {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-
-    padding: 120 20px;
-    width: min(90%, 1200px);
-    margin-inline: auto;
-    padding-bottom: 100px
+  column-count: 3;
+  column-gap: 20px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px 100px;
 }
 
 .helpboard {
-    display: flex;
-    padding: 16px;
-    border-radius: 10px;
-    overflow: hidden;
-    min-height: 220px;
-    box-sizing: border-box;
-}
-
-/* help board content styling */
-.helpboard-content {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  align-items: flex-start;
+  display: inline-block;
   width: 100%;
-}
-
-.helpboard-text {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  min-width: 0;
+  margin-bottom: 20px;
+  background-color: #cbdbff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
   overflow: hidden;
 }
 
-.helpboard-image {
-  width: 130px;
-  height: 130px;
+.helpboard:nth-child(3n + 1) {
+  background-color: #fff59f;
+}
+
+.helpboard:nth-child(3n + 2) {
+  background-color: #b5dfbc;
+}
+
+.helpboard:nth-child(3n) {
+  background-color: #cbdbff;
+}
+
+.helpboard:hover {
+  transform: translateY(-5px);
+}
+
+.helpboard .helpboard-image {
+  width: 100%;
+  height: auto;
   object-fit: cover;
-  flex-shrink: 0;
-  border-radius: 8px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: block;
 }
 
-.helpboard-title {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: black;
-    margin: 0;
+.helpboard .helpboard-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.helpboard-title a {
-    color: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease 0s;
+.helpboard .helpboard-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0;
+  color: #1e2f4b;
 }
 
-.helpboard-title a:hover {
-    color: rgb(110, 110, 110);
-    text-decoration: underline;
+.helpboard .helpboard-title a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s;
+  font-size: inherit;
 }
 
-.long-box .helpboard-content {
-    flex-direction: column-reverse;
-    align-items: center;
+.helpboard .helpboard-title a:hover {
+  color: #1c73ff;
+  text-decoration: underline;
 }
 
-.long-box .helpboard-image {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
+.helpboard .author {
+  font-size: 16px;
+  color: #6c89cb;
 }
 
-.short-box, .long-box p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
+.helpboard:nth-child(3n + 1) .author {
+  color: #aba044;
 }
 
-.short-box p {
-    max-height: 4.5em;
-    -webkit-line-clamp: 3;
-    line-clamp: 3; 
+.helpboard:nth-child(3n + 2) .author {
+  color: #588b60;
 }
 
-.long-box p {
-    -webkit-line-clamp: 10; 
-    line-clamp: 10;
+.helpboard:nth-child(3n) .author {
+  color: #6c89cb;
 }
 
-/* help board box styling */
-.helpboard:nth-child(3) {
-    grid-column: 4;
-    grid-row: 1 / span 2;
+.helpboard p {
+  line-height: 1.5em;
+  color: #1e2f4b;
+  font-size: 16px;
+  margin: 0;
 }
 
-.helpboard:nth-child(6) {
-    grid-column: 1;
-    grid-row: 2 / span 2;
+/* ------------------------------
+   HELP BOARD - RESPONSIVE LAYOUT
+--------------------------------- */
+@media (max-width: 1000px) {
+  .helpboard-grid {
+    column-count: 2;
+  }
 }
 
-.helpboard-text p:last-of-type {
-    font-size: 0.95em;
-    color: #1e2f4b;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3; 
-    line-height: 1.5em;
-    max-height: 4.5em;
-}
-
-.grid-col-span-2 {
-    grid-column: span 2;
-}
-
-.bg-yellow {
-    background: #fff59f
-}
-
-.bg-blue {
-    background: #cbdbff;
-}
-
-.bg-green {
-    background: #b5dfbc;
-}
-
-.text-yellow {
-    color: #aba044;
-}
-
-.text-blue {
-    color: #6c89cb;
-}
-
-.text-green {
-    color: #588b60;
+@media (max-width: 600px) {
+  .helpboard-grid {
+    column-count: 1;
+  }
 }
 
 /* ------------------------------
    HELP BOARD - SPECIFIC REQUEST
 --------------------------------- */
-/* help board - specific request */
 .req-page {
     display: flex;
     flex-direction: column;
