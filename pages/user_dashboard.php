@@ -30,7 +30,7 @@
     <aside class="sidebar">
       <ul>
         <li class="active">Dashboard</li>
-        <li>Your Requests</li>
+        <li>My Requests</li>
         <li>Profile</li>
       </ul>
     </aside>
