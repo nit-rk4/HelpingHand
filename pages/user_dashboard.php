@@ -56,6 +56,26 @@
       <div class="form-group">
         <label for="category">Category</label>
         <select id="category" name="category" required>
+            <optgroup label="Tier 1">
+                <option value="Home/Tech Help">Home/Tech Help</option>
+                <option value="Escort/Babysitting">Escort/Babysitting</option>
+                <option value="Volunteer Support">Volunteer Support</option>
+                <option value="Errand">Errand</option>
+                <option value="Lost Item">Lost Item</option>
+                <option value="Tutoring/Academic Help">Tutoring/Academic Help</option>
+            </optgroup>
+
+            <optgroup label="Tier 2">
+                <option value="Food & Essentials">Food & Essentials</option>
+                <option value="School Supplies">School Supplies</option>
+                <option value="Goods Donations">Goods Donations</option>
+            </optgroup>
+
+            <optgroup label="Tier 3">
+                <option value="Medical Assistance">Medical Assistance</option>
+                <option value="Legal & Documents">Legal & Documents</option>
+                <option value="Monetary Assistance">Monetary Assistance</option>
+            </optgroup>
         </select>
       </div>
 
