@@ -606,6 +606,28 @@ select:focus {
   margin-bottom: 20px;
 }
 
+.request-attachment {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.attachment-link {
+  color: #0077cc;
+  margin-left: 10px;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.attachment-preview {
+  margin-top: 10px;
+}
+
+.attachment-preview img {
+  max-width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
 /* ------------------------------
    HELP BOARD STYLES
 --------------------------------- */
