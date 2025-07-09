@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HelpingHand - My Requests</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-left">
+      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo">
+      <nav>
+        <ul class="nav-links">
+          <li><a href="user_dashboard.php">Dashboard</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">About Us</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="searchbar">
+      <input type="text" placeholder="Search...">
+    </div>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="user_dashboard.php">Submit Request</a></li>
+        <li class="active">My Requests</li>
+        <li><a href="#">Profile</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h1>My Submitted Requests</h1>
+      <div class="tabs-filter-container">
+        <div class="tabs">
+          <button class="tab active">All</button>
+          <button class="tab">Pending</button>
+          <button class="tab">Fulfilled</button>
+        </div>
+      </div>
+
+      <div class="requests-table">
+        <div class="request-row header">
+          <span class="title">Title</span>
+          <span class="desc">Description</span>
+          <span class="status">Status</span>
+          <span class="deadline">Deadline</span>
+        </div>
+
+        <div class="request-row">
+          <span class="title">Food Supplies Needed</span>
+          <span class="desc">Requesting rice, canned goods for my family of 5.</span>
+          <span class="status">Pending</span>
+          <span class="deadline">2025-07-20</span>
+        </div>
+
+        <div class="request-row">
+          <span class="title">Medical Assistance</span>
+          <span class="desc">Help needed for prescription refill.</span>
+          <span class="status">Fulfilled</span>
+          <span class="deadline">2025-07-10</span>
+        </div>
+
+        <div class="request-row">
+          <span class="title">Home Repair Help</span>
+          <span class="desc">Looking for assistance repairing our leaking roof.</span>
+          <span class="status">Pending</span>
+          <span class="deadline">2025-07-25</span>
+        </div>
+      </div>
+
+      <h2 style="margin-top: 40px;">Help Count Summary</h2>
+      <div class="details-wrapper">
+        <p><span class="details-label">Total Requests Submitted:</span> 3</p>
+        <p><span class="details-label">Requests Fulfilled:</span> 1</p>
+        <p><span class="details-label">Pending Requests:</span> 2</p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
