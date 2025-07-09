@@ -93,7 +93,6 @@ li, a, input, button {
 }
 
 
-
 /* ------------------------------
    USER MENU STYLES
 --------------------------------- */
@@ -118,80 +117,46 @@ li, a, input, button {
   margin-bottom: 20px;
 }
 
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .profile-section {
   padding: 20px;
   border-radius: 15px;
-  background-color: #f0f8ff;
+  background-color: #f4f7fb;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  margin-bottom: 40px;
 }
 
 .profile-section h3 {
   font-size: 20px;
   margin-bottom: 15px;
   color: #1e2f4b;
+  font-weight: 600;
 }
 
-.submit-request-wrapper {
-  padding: 20px;
-  border-radius: 15px;
-  background-color: #fff5f5;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  margin-bottom: 40px;
-}
-
-.submit-request-wrapper h3 {
-  font-size: 20px;
-  margin-bottom: 15px;
-  color: #c05757;
-}
-
-.submit-request-form {
+.profile-info {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-}
-
-.submit-request-form input,
-.submit-request-form textarea,
-.submit-request-form select {
-  width: 100%;
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background-color: #fdfdfd;
+  gap: 8px;
+  color: #333;
   font-size: 15px;
-  resize: none;
-  transition: 0.3s;
-}
-
-.submit-request-form input:focus,
-.submit-request-form textarea:focus,
-.submit-request-form select:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(192, 87, 87, 0.5);
-}
-
-.submit-request-form .button-wrapper {
-  margin-top: 10px;
-}
-
-.submit-request-form button {
-  padding: 10px 15px;
-  font-weight: 600;
-  background-color: #ffb2b2;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.submit-request-form button:hover {
-  background-color: #ff9a9a;
 }
 
 .your-requests-section {
-  margin-top: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #fffaf2;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.your-requests-section h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #1e2f4b;
+  font-weight: 600;
 }
 
 .your-requests-list {
@@ -203,7 +168,7 @@ li, a, input, button {
 .request-card {
   display: flex;
   flex-direction: column;
-  background-color: #fffaf2;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -230,6 +195,7 @@ li, a, input, button {
   color: #588b60;
 }
 
+/* Optional tag style */
 .status-tag {
   display: inline-block;
   padding: 4px 10px;
