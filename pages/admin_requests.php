@@ -27,7 +27,38 @@
       text-decoration: none;
       color: inherit;
     }
-  </style>
+
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+    }
+
+    .tier-dropdown-filter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tier-dropdown-filter label {
+      font-weight: 500;
+    }
+
+    .tier-dropdown-filter select {
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 14px;
+      max-width: 140px;
+    }
+    </style>
 </head>
 <body>
 
@@ -49,11 +80,21 @@
       <h1>User Requests</h1>
 
       <!-- Tabs -->
-      <div class="tabs-filter-container">
+      <div class="filter-bar">
         <div class="tabs">
-          <button class="tab active" onclick="filterRequests('pending', this)">Pending Requests</button>
-          <button class="tab" onclick="filterRequests('approved', this)">Approved Requests</button>
-          <button class="tab" onclick="filterRequests('rejected', this)">Rejected Requests</button>
+          <button class="tab active" onclick="filterRequests('pending', this)">Pending</button>
+          <button class="tab" onclick="filterRequests('approved', this)">Approved</button>
+          <button class="tab" onclick="filterRequests('rejected', this)">Rejected</button>
+        </div>
+
+        <div class="tier-dropdown-filter">
+          <label for="tierSelect">Filter by Tier:</label>
+          <select id="tierSelect" onchange="onTierChange()">
+            <option value="all">All Tiers</option>
+            <option value="1">Tier 1</option>
+            <option value="2">Tier 2</option>
+            <option value="3">Tier 3</option>
+          </select>
         </div>
       </div>
 
@@ -75,7 +116,7 @@
             foreach ($requests as $req) {
                 $details = getRequestDetails($conn, $req['id']);
                 $visibleMark = $req['visible_since'] ? "Yes" : "No";
-                echo "<a href='request-details.php?id={$req['id']}' class='request-row' data-status='{$req['status']}'>";
+                echo "<a href='request-details.php?id={$req['id']}' class='request-row' data-status='{$req['status']}' data-tier='{$details['tier']}'>";
                 echo "<span class='user'>" . htmlspecialchars($details['requester_name']) . "</span>";
                 echo "<span class='title'>" . htmlspecialchars($req['title']) . "</span>";
                 echo "<span class='desc'>" . htmlspecialchars($req['description']) . "</span>";
@@ -90,19 +131,33 @@
 
   <!-- Script to filter user requests by status -->
   <script>
-    function filterRequests(status, clickedBtn) {
-      document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
-      clickedBtn.classList.add("active");
+      let currentStatus = "pending";
+      let currentTier = "all";
 
-      document.querySelectorAll(".request-row[data-status]").forEach(row => {
-        row.style.display = row.getAttribute("data-status") === status ? "flex" : "none";
+      function filterRequests(status, clickedBtn) {
+        currentStatus = status;
+        document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
+        clickedBtn.classList.add("active");
+        applyFilters();
+      }
+
+      function onTierChange() {
+        currentTier = document.getElementById("tierSelect").value;
+        applyFilters();
+      }
+
+      function applyFilters() {
+        document.querySelectorAll(".request-row[data-status]").forEach(row => {
+          const statusMatch = row.getAttribute("data-status") === currentStatus;
+          const tierMatch = currentTier === "all" || row.getAttribute("data-tier") === currentTier;
+          row.style.display = (statusMatch && tierMatch) ? "flex" : "none";
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        filterRequests("pending", document.querySelector(".tab.active"));
       });
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      filterRequests("pending", document.querySelector(".tab.active"));
-    });
-  </script>
+    </script>
 
 </body>
 </html>

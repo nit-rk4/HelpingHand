@@ -21,7 +21,7 @@
     </div>
 
     <main class="index-page">
-        <img src="/HelpingHand/assets/index_logo.svg" alt="logo">
+        <img src="assets/index_logo.svg" alt="logo">
         
         <div class="index-buttons">
             <a class="index-page"><button class="button" popovertarget="login">LOGIN</button></a>
