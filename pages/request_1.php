@@ -11,28 +11,39 @@
     <?php include("navbar.php"); ?>
 
     <main class="req-page">
-        <h1 class="page-header">Request title</h1>
+        <h1 class="req-title">Request title</h1>
         <div class="container">
             <div class="content">
                 <div class="req-info">
-                    <h2>Requester Name</h2>
+                    <h2>Posted by: Requester Name</h2>
+                    <div class="category-tag">
+                        <p><strong>Category:</strong> Home and Tech help</p>
+                    </div> 
                     <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus blanditiis at quia quo molestiae fugiat. Neque quod qui similique id consectetur excepturi! Maxime iure magnam rerum incidunt! Minus, deserunt soluta?</p>
+
                 </div>
 
                 <div class="contact-info">
                     <h2>Support Requester!</h2>
                     <p>Contact information: +639 123 456 789</p>
                     <p>Email: juandelacruz@gmail.com</p>
+                    <div class="deadline-tag">
+                        <p><strong>Until:</strong> December 25, 2025</p>
+                    </div> 
+                    
                 </div>
             </div>
 
             <div class="image-container">
-                <img src="images/sample.jpg" alt="Request">
+                <img src="../assets/image.jpg" alt="Request">
             </div>
-
         </div>
 
-        <a class="button-wrapper"><button class="button">Donate</button></a>
+        <label class="help-toggle">
+            <input type="checkbox" id="toggleHelped">
+            <span class="help-button">I Helped</span>
+        </label>
+
     </main>
 
     
