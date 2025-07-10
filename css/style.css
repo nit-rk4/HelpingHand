@@ -50,7 +50,7 @@ li, a, input, button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 2%;
+  padding: 10px 2%;
   position: flex;
   width: 100%;
   top: 0;
@@ -629,7 +629,7 @@ select:focus {
 }
 
 /* ------------------------------
-   HELP BOARD STYLES
+   HELP BOARD
 --------------------------------- */
 .helpboard-grid {
   column-count: 3;
@@ -706,6 +706,15 @@ select:focus {
   color: #6c89cb;
 }
 
+.helpboard .category-tag p,
+.helpboard .deadline-tag p {
+  color: #1e2f4b;
+}
+
+.helpboard .deadline-tag strong {
+  color: #b61212;
+}
+
 .helpboard:nth-child(3n + 1) .author {
   color: #aba044;
 }
@@ -719,6 +728,13 @@ select:focus {
 }
 
 .helpboard p {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 10.5em; 
   line-height: 1.5em;
   color: #1e2f4b;
   font-size: 16px;
@@ -746,17 +762,15 @@ select:focus {
 .req-page {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding-left: 15%;
     padding-right: 15%;
-    position: relative;
     width: 100%;
 }
 
 .req-page .container {
     display: flex;
-    align-items: stretch;
-    gap: 40px;
+    align-items: center;
+    gap: 20px;
 }
 
 .req-page .image-container {
@@ -764,19 +778,22 @@ select:focus {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0;
+    margin: 0;
+    height: 400px;
 }
 
 .req-page .image-container img {
-    width: 300px;
-    max-width: 300px;
-    height: auto;
+    width: auto;
+    max-width: 400px;
+    height: 100%;
     object-fit: cover;
     border-radius: 10px;
 }
 
-.req-page .page-header {
-    padding-top: 160px;
-    padding-bottom: 50px;
+.req-page .req-title {
+    padding-top: 80px;
+    padding-bottom: 10px;
     font-size: 48px;
     text-align: left;
     color: #1e2f4b;
@@ -789,11 +806,27 @@ select:focus {
     justify-content: flex-start;
 }
 
-.req-page .content h2{
+.req-page .content h2 {
     font-size: 26px;
     font-weight: normal;
     color:#6c89cb;
     padding-bottom: 10px;
+}
+
+.req-page .category-tag p,
+.req-page .deadline-tag p {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: 18px !important;
+  color: #1e2f4b;
+}
+
+.req-page .category-tag strong {
+  color: #6c89cb;
+}
+
+.req-page .deadline-tag strong {
+  color: #b95555;
 }
 
 .req-page .content p {
@@ -805,25 +838,82 @@ select:focus {
     padding-top:20px;
 }
 
-.req-page .button-wrapper {
-  margin-top: 40px;
+.req-page .help-toggle input[type="checkbox"] {
+  display: none;
 }
 
-.req-page button {
-    padding: 10px 15px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(108, 137, 203, 1);
-    box-shadow: 0px 1px 20px rgba(100, 100, 100, 0.3);
-    border-radius: 15px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
+.req-page .help-button {
+  display: inline-block;
+  padding: 14px 24px;
+  font-size: 20px;
+  color: white;
+  background-color: #83a5f5;
+  border-radius: 15px;
+  box-shadow: 0px 1px 20px rgba(136, 136, 136, 0.8);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  user-select: none;
 }
 
-.req-page button:hover {
-    background-color: rgb(145, 165, 209);
-    box-shadow: 0px 1px 20px rgba(136, 136, 136, 0.8);
+.req-page .help-button:hover {
+  background-color: #657fbb;
+  box-shadow: 0px 1px 20px rgba(100, 100, 100, 0.3);
 }
+
+.req-page .help-toggle input[type="checkbox"]:checked + .help-button {
+  background-color: rgb(255, 135, 135);
+}
+
+
+/* ------------------------------
+   SPECIFIC REQUEST - RESPONSIVE LAYOUT
+--------------------------------- */
+
+@media (max-width: 768px) {
+  .req-page {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .req-page .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .req-page .image-container {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
+
+  .req-page .image-container img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+
+  .req-page .req-title {
+    font-size: 36px;
+    text-align: center;
+  }
+
+  .req-page .content h2 {
+    font-size: 22px;
+    text-align: left;
+  }
+
+  .req-page .content p {
+    text-align: left;
+  }
+
+  .req-page .button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 
 /* --------------------------
    INDEX 
