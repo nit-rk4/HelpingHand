@@ -1,0 +1,4 @@
+/cache/
+uploads/
+*.log
+*.tmp
