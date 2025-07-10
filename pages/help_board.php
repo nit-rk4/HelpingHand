@@ -17,48 +17,85 @@
             <div class="helpboard-content">
             <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
             <p class="author">Requester name</p>
+            <div class="category-tag">
+                <p><strong>Category:</strong>Home and Tech help</p>
+            </div> 
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
+            <div class="deadline-tag">
+                <p><strong>Until:</strong> September 10, 2025</p>
+            </div> 
+        
             </div>
         </article>
 
         <article class="helpboard">
             <div class="helpboard-content">
-            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
-            <p class="author">Requester name</p>
-            <p>Lorem ipsum dolor sit a eum atur ne facere rem quos nobis quaerat, totam accusantium.</p>
+                <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+                <p class="author">Requester name</p>
+                <div class="category-tag">
+                    <p><strong>Category:</strong>Home and Tech help</p>
+                </div> 
+                    <p>Lorem ipsum dolor sit a eum atur ne facere rem quos nobis quaerat, totam accusantium.</p>
+                <div class="deadline-tag">
+                    <p><strong>Until:</strong> September 10, 2025</p>
+                    </div> 
             </div>
         </article>
 
         <article class="helpboard">
             <img src="../assets/image.jpg" alt="sample" class="helpboard-image">
             <div class="helpboard-content">
-            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
-            <p class="author">Requester name</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
+                <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+                <p class="author">Requester name</p>
+                <div class="category-tag">
+                    <p><strong>Category:</strong>Home and Tech help</p>
+                </div> 
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
+                <div class="deadline-tag">
+                    <p><strong>Until:</strong> September 10, 2025</p>
+                </div> 
             </div>
         </article>
 
         <article class="helpboard">
             <div class="helpboard-content">
-            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
-            <p class="author">Requester name</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
+                <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+                <p class="author">Requester name</p>
+                <div class="category-tag">
+                    <p><strong>Category:</strong>Home and Tech help</p>
+                </div> 
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
+                <div class="deadline-tag">
+                    <p><strong>Until:</strong> September 10, 2025</p>
+                </div> 
             </div>
         </article>
 
         <article class="helpboard">
             <div class="helpboard-content">
-            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
-            <p class="author">Requester name</p>
-            <p>Maikli lang na text</p>
+                <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+                <p class="author">Requester name</p>
+                <div class="category-tag">
+                    <p><strong>Category:</strong>Home and Tech help</p>
+                </div> 
+                    <p>Maikli lang na text</p>
+                <div class="deadline-tag">
+                    <p><strong>Until:</strong> September 10, 2025</p>
+                </div> 
             </div>
         </article>
         
         <article class="helpboard">
             <div class="helpboard-content">
-            <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
-            <p class="author">Requester name</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. orem ipsum dolor sit amet consectetur adipisicing elit.orem ipsum dolor sit amet consectetur adipisicing elit.orem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
+                <h2 class="helpboard-title"><a class="helpboard-title" href="request_1.php">Title</a></h2>
+                <p class="author">Requester name</p>
+                <div class="category-tag">
+                    <p><strong>Category:</strong>Home and Tech help</p>
+                </div> 
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. orem ipsum dolor sit amet consectetur adipisicing elit.orem ipsum dolor sit amet consectetur adipisicing elit.orem ipsum dolor sit amet consectetur adipisicing elit. Officia sunt enim vero aliquam sequi eum molestiae consequatur aspernatur nemo quae, eaque deserunt optio facere rem quos nobis quaerat, totam accusantium.</p>
+                <div class="deadline-tag">
+                    <p><strong>Until:</strong> September 10, 2025</p>
+                </div> 
             </div>
         </article>
         
