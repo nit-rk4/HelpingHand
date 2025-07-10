@@ -168,6 +168,19 @@ function rejectRequest ($conn, $requestID){
     return mysqli_stmt_execute($stmt);
 }
 
+/** 
+ * ------------------------------------------
+ *              USER ACTIONS
+ *  ------------------------------------------
+*/
+
+function submitRequest(){}
+
+function renewRequest() {}
+
+function fulfillRequest() {}
+
+
 
 /** 
  * ------------------------------------------
