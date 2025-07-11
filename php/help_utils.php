@@ -23,7 +23,7 @@ function submitHelp($conn, $requestID, $userID, $proof_text = null, $proof_file 
     $sql = "INSERT INTO helpers (request_id, user_id, proof_text, proof_file)
             VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'iiss', $requestID, $userID, $proof_text, $proof_filePath);
+    mysqli_stmt_bind_param($stmt, 'iiss', $requestID, $userID, $proof_text, $proof_file);
     return mysqli_stmt_execute($stmt);
 }
 

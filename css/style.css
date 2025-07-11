@@ -1104,7 +1104,7 @@ select:focus {
   display: none;
 }
 
-.req-page .help-toggle input[type="checkbox"]:checked + .help-button {
+.req-page .help-toggle.active .help-button {
   background-color: rgb(255, 135, 135);
 }
 
@@ -1124,7 +1124,7 @@ select:focus {
   border: 1px solid #ccc;
 }
 
-.req-page .help-toggle input[type="checkbox"]:checked ~ .help-details {
+.req-page .help-toggle.active .help-details {
   display: flex;
 }
 
