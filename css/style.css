@@ -50,7 +50,7 @@ li, a, input, button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 2%;
+  padding: 10px 2%;
   position: flex;
   width: 100%;
   top: 0;
@@ -606,178 +606,171 @@ select:focus {
   margin-bottom: 20px;
 }
 
-/* ------------------------------
-   HELP BOARD STYLES
---------------------------------- */
-/* help board components */
-.helpboard-grid {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.request-attachment {
+  margin-top: 20px;
+  font-size: 15px;
+}
 
-    padding: 120 20px;
-    width: min(90%, 1200px);
-    margin-inline: auto;
-    padding-bottom: 100px
+.attachment-link {
+  color: #0077cc;
+  margin-left: 10px;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.attachment-preview {
+  margin-top: 10px;
+}
+
+.attachment-preview img {
+  max-width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ------------------------------
+   HELP BOARD
+--------------------------------- */
+.helpboard-grid {
+  column-count: 3;
+  column-gap: 20px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px 100px;
 }
 
 .helpboard {
-    display: flex;
-    padding: 16px;
-    border-radius: 10px;
-    overflow: hidden;
-    min-height: 220px;
-    box-sizing: border-box;
-}
-
-/* help board content styling */
-.helpboard-content {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  align-items: flex-start;
+  display: inline-block;
   width: 100%;
-}
-
-.helpboard-text {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  min-width: 0;
+  margin-bottom: 20px;
+  background-color: #cbdbff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
   overflow: hidden;
 }
 
-.helpboard-image {
-  width: 130px;
-  height: 130px;
+.helpboard:nth-child(3n + 1) {
+  background-color: #fff59f;
+}
+
+.helpboard:nth-child(3n + 2) {
+  background-color: #b5dfbc;
+}
+
+.helpboard:nth-child(3n) {
+  background-color: #cbdbff;
+}
+
+.helpboard:hover {
+  transform: translateY(-5px);
+}
+
+.helpboard .helpboard-image {
+  width: 100%;
+  height: auto;
   object-fit: cover;
-  flex-shrink: 0;
-  border-radius: 8px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: block;
 }
 
-.helpboard-title {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: black;
-    margin: 0;
+.helpboard .helpboard-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.helpboard-title a {
-    color: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease 0s;
+.helpboard .helpboard-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0;
+  color: #1e2f4b;
 }
 
-.helpboard-title a:hover {
-    color: rgb(110, 110, 110);
-    text-decoration: underline;
+.helpboard .helpboard-title a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s;
+  font-size: inherit;
 }
 
-.long-box .helpboard-content {
-    flex-direction: column-reverse;
-    align-items: center;
+.helpboard .helpboard-title a:hover {
+  color: #1c73ff;
+  text-decoration: underline;
 }
 
-.long-box .helpboard-image {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
+.helpboard .author {
+  font-size: 16px;
+  color: #6c89cb;
 }
 
-.short-box, .long-box p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
+.helpboard .category-tag p,
+.helpboard .deadline-tag p {
+  color: #1e2f4b;
 }
 
-.short-box p {
-    max-height: 4.5em;
-    -webkit-line-clamp: 3;
-    line-clamp: 3; 
+.helpboard .deadline-tag strong {
+  color: #b61212;
 }
 
-.long-box p {
-    -webkit-line-clamp: 10; 
-    line-clamp: 10;
+.helpboard:nth-child(3n + 1) .author {
+  color: #aba044;
 }
 
-/* help board box styling */
-.helpboard:nth-child(3) {
-    grid-column: 4;
-    grid-row: 1 / span 2;
+.helpboard:nth-child(3n + 2) .author {
+  color: #588b60;
 }
 
-.helpboard:nth-child(6) {
-    grid-column: 1;
-    grid-row: 2 / span 2;
+.helpboard:nth-child(3n) .author {
+  color: #6c89cb;
 }
 
-.helpboard-text p:last-of-type {
-    font-size: 0.95em;
-    color: #1e2f4b;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3; 
-    line-height: 1.5em;
-    max-height: 4.5em;
+.helpboard p {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 10.5em; 
+  line-height: 1.5em;
+  color: #1e2f4b;
+  font-size: 16px;
+  margin: 0;
 }
 
-.grid-col-span-2 {
-    grid-column: span 2;
+/* ------------------------------
+   HELP BOARD - RESPONSIVE LAYOUT
+--------------------------------- */
+@media (max-width: 1000px) {
+  .helpboard-grid {
+    column-count: 2;
+  }
 }
 
-.bg-yellow {
-    background: #fff59f
-}
-
-.bg-blue {
-    background: #cbdbff;
-}
-
-.bg-green {
-    background: #b5dfbc;
-}
-
-.text-yellow {
-    color: #aba044;
-}
-
-.text-blue {
-    color: #6c89cb;
-}
-
-.text-green {
-    color: #588b60;
+@media (max-width: 600px) {
+  .helpboard-grid {
+    column-count: 1;
+  }
 }
 
 /* ------------------------------
    HELP BOARD - SPECIFIC REQUEST
 --------------------------------- */
-/* help board - specific request */
 .req-page {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding-left: 15%;
     padding-right: 15%;
-    position: relative;
     width: 100%;
 }
 
 .req-page .container {
     display: flex;
-    align-items: stretch;
-    gap: 40px;
+    align-items: center;
+    gap: 20px;
 }
 
 .req-page .image-container {
@@ -785,19 +778,22 @@ select:focus {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0;
+    margin: 0;
+    height: 400px;
 }
 
 .req-page .image-container img {
-    width: 300px;
-    max-width: 300px;
-    height: auto;
+    width: auto;
+    max-width: 400px;
+    height: 100%;
     object-fit: cover;
     border-radius: 10px;
 }
 
-.req-page .page-header {
-    padding-top: 160px;
-    padding-bottom: 50px;
+.req-page .req-title {
+    padding-top: 80px;
+    padding-bottom: 10px;
     font-size: 48px;
     text-align: left;
     color: #1e2f4b;
@@ -810,11 +806,27 @@ select:focus {
     justify-content: flex-start;
 }
 
-.req-page .content h2{
+.req-page .content h2 {
     font-size: 26px;
     font-weight: normal;
     color:#6c89cb;
     padding-bottom: 10px;
+}
+
+.req-page .category-tag p,
+.req-page .deadline-tag p {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: 18px !important;
+  color: #1e2f4b;
+}
+
+.req-page .category-tag strong {
+  color: #6c89cb;
+}
+
+.req-page .deadline-tag strong {
+  color: #b95555;
 }
 
 .req-page .content p {
@@ -826,25 +838,82 @@ select:focus {
     padding-top:20px;
 }
 
-.req-page .button-wrapper {
-  margin-top: 40px;
+.req-page .help-toggle input[type="checkbox"] {
+  display: none;
 }
 
-.req-page button {
-    padding: 10px 15px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(108, 137, 203, 1);
-    box-shadow: 0px 1px 20px rgba(100, 100, 100, 0.3);
-    border-radius: 15px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
+.req-page .help-button {
+  display: inline-block;
+  padding: 14px 24px;
+  font-size: 20px;
+  color: white;
+  background-color: #83a5f5;
+  border-radius: 15px;
+  box-shadow: 0px 1px 20px rgba(136, 136, 136, 0.8);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  user-select: none;
 }
 
-.req-page button:hover {
-    background-color: rgb(145, 165, 209);
-    box-shadow: 0px 1px 20px rgba(136, 136, 136, 0.8);
+.req-page .help-button:hover {
+  background-color: #657fbb;
+  box-shadow: 0px 1px 20px rgba(100, 100, 100, 0.3);
 }
+
+.req-page .help-toggle input[type="checkbox"]:checked + .help-button {
+  background-color: rgb(255, 135, 135);
+}
+
+
+/* ------------------------------
+   SPECIFIC REQUEST - RESPONSIVE LAYOUT
+--------------------------------- */
+
+@media (max-width: 768px) {
+  .req-page {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .req-page .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .req-page .image-container {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
+
+  .req-page .image-container img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+
+  .req-page .req-title {
+    font-size: 36px;
+    text-align: center;
+  }
+
+  .req-page .content h2 {
+    font-size: 22px;
+    text-align: left;
+  }
+
+  .req-page .content p {
+    text-align: left;
+  }
+
+  .req-page .button-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 
 /* --------------------------
    INDEX 

@@ -65,8 +65,35 @@ $details = getRequestDetails($conn, $requestID);
     <!-- Request Description -->
     <div class="details-section">
       <h3>Request Description</h3>
-      <p><span class ="details-label">Tier:</span><?= $tier ?>  |  <span class="details-label">Category:</span><?= $category ?></p>
+      <p><span class ="details-label">Tier:</span>&nbsp;<?= $tier ?>
+      &nbsp;&nbsp;|&nbsp;&nbsp;
+      <span class="details-label">Category:</span>&nbsp;<?= $category ?></p>
       <p><?= $description ?></p>
+
+      <?php if (!empty($details['attachment_path'])): ?>
+        <div class="request-attachment">
+          <strong>Attachment:</strong>
+          <a class="attachment-link" href="../uploads/<?= htmlspecialchars($details['attachment_path']) ?>" target="_blank" rel="noopener noreferrer">
+            View Attachment
+          </a>
+
+          <?php
+            $path = "../uploads/" . $details['attachment_path'];
+            if (file_exists($path)) {
+              $mime = mime_content_type($path);
+              if (str_starts_with($mime, "image/")) {
+                echo "<div class='attachment-preview'>";
+                echo "<img src='$path' alt='Attachment Preview'>";
+                echo "</div>";
+              }
+            }
+          ?>
+        </div>
+      <?php else: ?>
+        <div class="request-attachment">
+          <strong>Attachment:</strong> None
+        </div>
+      <?php endif; ?>
     </div>
 
     <div class="details-section">

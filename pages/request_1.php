@@ -1,3 +1,15 @@
+<?php
+    require "../php/config.php";
+    require "../php/request_utils.php";
+
+    $requestID = $_GET['id'] ?? null;
+    if(!($requestID)){
+        die("Missing request ID.");
+    }
+
+    $request = getRequestDetails($conn, $requestID);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,28 +23,50 @@
     <?php include("navbar.php"); ?>
 
     <main class="req-page">
-        <h1 class="page-header">Request title</h1>
+        <h1 class="req-title"><?= htmlspecialchars($request['title']) ?></h1>
         <div class="container">
             <div class="content">
                 <div class="req-info">
-                    <h2>Requester Name</h2>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus blanditiis at quia quo molestiae fugiat. Neque quod qui similique id consectetur excepturi! Maxime iure magnam rerum incidunt! Minus, deserunt soluta?</p>
+                    <h2>Posted by: <?= htmlspecialchars($request['requester_name'])?></h2>
+                    <div class="category-tag">
+                        <p><strong>Category:</strong> <?= htmlspecialchars($request['category'])?></p>
+                    </div> 
+                    <p><?= htmlspecialchars($request['description'])?></p>
+
                 </div>
 
                 <div class="contact-info">
                     <h2>Support Requester!</h2>
-                    <p>Contact information: +639 123 456 789</p>
-                    <p>Email: juandelacruz@gmail.com</p>
+                    <p>Contact information: <?= htmlspecialchars($request['requester_contact'])?></p>
+                    <p>Email: <?= $request['requester_email']?></p>
+                    <div class="deadline-tag">
+                        <p><strong>Until:</strong><?= date("F j, Y", strtotime($request['deadline'])) ?></p>
+                    </div> 
+                    
                 </div>
             </div>
 
             <div class="image-container">
-                <img src="images/sample.jpg" alt="Request">
+                <?php
+                    $path = "../uploads/" . $request['attachment_path'];
+                    if (!empty($request['attachment_path']) && file_exists($path)){
+                        $mime = mime_content_type($path);
+                        if (str_starts_with($mime, "image/")):
+                ?>
+                    <img src="<?= $path ?>" alt="<?= htmlspecialchars($request['title'])?> Image" class = "helpboard-image">
+                <?php
+                        endif;
+                    }
+                ?>
             </div>
-
         </div>
 
-        <a class="button-wrapper"><button class="button">Donate</button></a>
+        <label class="help-toggle">
+            <input type="checkbox" id="toggleHelped">
+            <span class="help-button">I Helped</span>
+        </label>
+
+        <div style="height: 100px;"></div>
     </main>
 
     
