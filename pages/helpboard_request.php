@@ -6,9 +6,9 @@
         exit;
     }
 
-    require "/php/config.php";
-    require "/php/request_utils.php";
-    require "/php/help_utils.php";
+    require "../php/config.php";
+    require "../php/request_utils.php";
+    require "../php/help_utils.php";
 
     $requestID = $_GET['id'] ?? null;
     if(!($requestID)){

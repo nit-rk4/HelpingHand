@@ -1,7 +1,7 @@
 <?php  
-  require "/php/config.php";
-  require "/php/request_utils.php";
-  require_once "/php/maintenance.php";
+  require "../php/config.php";
+  require "../php/request_utils.php";
+  require_once "../php/maintenance.php";
   runMaintenance($conn);
 
   $requests = getVisibleRequests($conn);
