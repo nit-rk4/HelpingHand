@@ -239,7 +239,7 @@ function expireRequests($conn){
     mysqli_query($conn, $sql_deadline);
 
     // Visibility-based expiration (7-day help board expiry)
-    $sql_visbility = "UPDATE requests
+    $sql_visibility = "UPDATE requests
              SET status = 'expired', visible_since = NULL, expiration_reason = 'visibility'
              WHERE (status = 'pending' OR status = 'approved')
              AND visible_since IS NOT NULL
