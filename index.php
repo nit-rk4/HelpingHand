@@ -17,11 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user = mysqli_fetch_assoc($result)) {
         if ($password === $user['password']) {
-            $_SESSION['user'] = $user;
-            header("Location: pages/user/user_requests.php");
+            $_SESSION['user_id'] = $user['id'];
+            header("Location: pages/user/user_profile.php");
             exit;
         } else {
-            $error = "Invalid credentials.";
+            $error = "Invalid credentials. Please try again.";
         }
     } else {
         // Check in admins table only if user not found
@@ -33,14 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($admin = mysqli_fetch_assoc($result)) {
             if ($password === $admin['password']) {
-                $_SESSION['admin'] = $admin;
+                $_SESSION['user_id'] = $admin['id'];
                 header("Location: pages/admin/admin_requests.php");
                 exit;
             } else {
-                $error = "Invalid credentials.";
+                $error = "Invalid credentials. Please try again.";
             }
         } else {
-            $error = "Invalid credentials.";
+            $error = "Invalid credentials. Please try again.";
         }
     }
 }
@@ -69,9 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h4>Password</h4>
                 <input name="password" type="password" placeholder="Password" required><br />
                 <button class="button" type="submit" popovertarget="login">Login</button>
-                <?php if ($error): ?>
-                    <p style="color:red;"><?php echo $error; ?></p>
-                <?php endif; ?>
                 <button class="button" popovertarget="login" popovertargetaction="hide">Close</button>
             </form>
         </div>
@@ -82,6 +79,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="index-buttons">
             <a class="index-page"><button class="button" popovertarget="login">LOGIN</button></a>
+            <?php if ($error): ?>
+                <p style="color:red;"><?php echo $error; ?></p>
+            <?php endif; ?>
         </div>
     </main>
 
