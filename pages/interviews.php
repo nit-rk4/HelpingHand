@@ -47,38 +47,57 @@
         </div>
       </div>
 
-      <!-- Table Header -->
-      <div class="request-row header">
-        <span>Name</span>
-        <span>Date</span>
-        <span>Time</span>
-        <span>Type</span>
+      <!-- Table Headers -->
+      <div id="header-pending" class="request-row header">
+        <span>Requester</span>
+        <span>Request Title</span>
       </div>
 
-      <!-- Interview Rows Samples -->
+      <div id="header-scheduled" class="request-row header" style="display: none;">
+        <span>Requester</span>
+        <span>Request Title</span>
+        <span>Date</span>
+        <span>Time</span>
+        <span>Interviewer</span>
+      </div>
+
+      <div id="header-completed" class="request-row header" style="display: none;">
+        <span>Requester</span>
+        <span>Request Title</span>
+        <span>Date</span>
+        <span>Time</span>
+        <span>Interviewer</span>
+      </div>
+
+      <!-- Interview Rows -->
+      <!-- Pending -->
       <a href="interview-details.php?status=pending" class="request-row interview-item" data-status="pending">
-  <span>Carlos Reyes</span>
-  <span>2025-07-10</span>
-  <span>2:00 PM</span>
-  <span>In-Person</span>
-</a>
+        <span>Carlos Reyes</span>
+        <span>Scholarship application interview</span>
+      </a>
 
-<a href="interview-details.php?status=scheduled" class="request-row interview-item" data-status="scheduled">
-  <span>Ana Lopez</span>
-  <span>2025-07-12</span>
-  <span>10:00 AM</span>
-  <span>In-Person</span>
-</a>
+      <!-- Scheduled -->
+      <a href="interview-details.php?status=scheduled" class="request-row interview-item" data-status="scheduled" style="display: none;">
+        <span>Ana Lopez</span>
+        <span>Review of living conditions for aid</span>
+        <span>2025-07-12</span>
+        <span>10:00 AM</span>
+        <span>Ms. Santos</span>
+      </a>
 
-<a href="interview-details.php?status=completed" class="request-row interview-item" data-status="completed">
-  <span>Juan Dela Cruz</span>
-  <span>2025-07-01</span>
-  <span>9:00 AM</span>
-  <span>Virtual</span>
-</a>
+      <!-- Completed -->
+      <a href="interview-details.php?status=completed" class="request-row interview-item" data-status="completed" style="display: none;">
+        <span>Juan Dela Cruz</span>
+        <span>Post-support assessment</span>
+        <span>2025-07-01</span>
+        <span>9:00 AM</span>
+        <span>Mr. Reyes</span>
+      </a>
 
+    </main>
+  </div>
 
-  <!-- This block is for filtering interview status (pending, scheduled, or completed) when clicking on tab buttons. -->
+  <!-- Filter -->
   <script>
     function filterTab(status, button = null) {
       const tabs = document.querySelectorAll('.tab');
@@ -89,8 +108,14 @@
       items.forEach(item => {
         item.style.display = item.dataset.status === status ? 'flex' : 'none';
       });
+
+      // headers
+      document.getElementById('header-pending').style.display = (status === 'pending') ? 'flex' : 'none';
+      document.getElementById('header-scheduled').style.display = (status === 'scheduled') ? 'flex' : 'none';
+      document.getElementById('header-completed').style.display = (status === 'completed') ? 'flex' : 'none';
     }
 
+    // Load default tab on page load
     window.addEventListener('DOMContentLoaded', () => {
       const defaultTab = document.querySelector('.tab[data-status="pending"]');
       filterTab('pending', defaultTab);

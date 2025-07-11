@@ -551,7 +551,7 @@ select:focus {
 }
 
 .tab {
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   padding: 10px 20px;
   border: none;
   background-color: #fce2e6;
@@ -562,7 +562,9 @@ select:focus {
 
 .tab.active {
   background-color: #ffb2b2;
+  transform: scale(1.05);
 }
+
 
 /* --------------------------
    REQUEST + INTERVIEW TABLES
@@ -576,9 +578,24 @@ select:focus {
   cursor: pointer;
 }
 
-.request-row.header {
-  background-color: #fff3e6;
+#header-pending,
+#header-scheduled,
+#header-completed {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
   font-weight: bold;
+  background-color: #fff3e6;
+  border-bottom: 2px solid #eee;
+}
+
+#header-scheduled span,
+#header-pending span,
+#header-completed span {
+  flex: 1;
+  min-width: 100px;
+  font-size: 16px;
+  padding: 0 5px;
 }
 
 .request-row a {
@@ -589,8 +606,13 @@ select:focus {
 .request-row span {
   flex: 1;
   min-width: 100px;
-  padding: 0 5px;
-  font-size: 16px;
+  padding: 6px 8px;
+  font-size: 15px;
+  text-align: left;
+}
+
+.request-row span:last-child {
+  text-align: left;
 }
 
 .request-row .title {
@@ -600,16 +622,17 @@ select:focus {
 .request-row .desc {
   flex: 3;
   font-style: normal;  
-  color: #333;         
+  color: #333;
 }
 
 .request-row:hover {
   background-color: #fff0f0;
 }
 
+
 /* ------------------------------
    REQUEST DETAILS VIEW
---------------------------------- */
+------------------------------ */
 .details-wrapper {
   max-width: 900px;
   margin: 40px auto;
@@ -651,44 +674,40 @@ select:focus {
   gap: 16px;
 }
 
+
+/* ------------------------------
+   BUTTON STYLES
+------------------------------ */
 .btn-approve,
 .btn-reject,
-.btn-interview {
+.btn-interview,
+.btn-accept,
+.btn-neutral,
+.btn-confirm {
+  background-color: #ffc0c0;
+  color: #7c0000;
   padding: 12px 24px;
   font-weight: 600;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 178, 178, 0.3);
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.btn-approve {
-  background-color: #a8ffb0;
-  color: #084d0c;
-}
-
-.btn-approve:hover {
-  background-color: #7be68c;
-}
-
-.btn-reject {
-  background-color: #ffc0c0;
-  color: #7c0000;
-}
-
-.btn-reject:hover {
+.btn-approve:hover,
+.btn-reject:hover,
+.btn-interview:hover,
+.btn-accept:hover,
+.btn-neutral:hover,
+.btn-confirm:hover {
   background-color: #ff9b9b;
+  transform: scale(1.03);
 }
 
-.btn-interview {
-  background-color: #c0dbff;
-  color: #003366;
-}
-
-.btn-interview:hover {
-  background-color: #99c2ff;
-}
-
+/* ------------------------------
+   ATTACHMENTS & LINKS
+------------------------------ */
 .back-link {
   text-decoration: none;
   color: #555;
@@ -718,6 +737,46 @@ select:focus {
   border-radius: 8px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
+
+
+/* ------------------------------
+   SHARED FORM CONTAINER
+------------------------------ */
+.form-container {
+  background-color: #fff6f6;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.form-container label {
+  display: block;
+  margin-bottom: 12px;
+  color: #1e2f4b;
+  font-weight: 500;
+}
+
+.form-container input[type="date"],
+.form-container input[type="time"],
+.form-container input[type="text"] {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 2px solid #ffd6e7;
+  background-color: #fffafc;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+.form-container input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 178, 178, 0.5);
+}
+
+
 
 /* ------------------------------
    HELP BOARD
