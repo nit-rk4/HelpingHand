@@ -61,10 +61,12 @@
             </div>
         </div>
 
-            <label class="help-toggle">
-                <input type="checkbox" id="toggleHelped">
-                <span class="help-button">I Helped</span>
-            </label>
+        <label class="help-toggle">
+            <input type="checkbox" id="toggleHelped">
+            <span class="help-button">I Helped</span>
+        </label>
+
+        <div style="height: 100px;"></div>
     </main>
 
     
