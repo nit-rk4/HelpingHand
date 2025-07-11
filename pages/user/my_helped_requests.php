@@ -21,7 +21,7 @@ $requests = [
   <link rel="stylesheet" href="../../css/style.css?v=2.1">
 </head>
 <body>
-  <?php include ("../navbar.php") ?>
+  <?php include ("../navbar.php"); ?>
 
   <div class="container">
     <aside class="sidebar">
@@ -94,11 +94,6 @@ $requests = [
       </div>
     </section>
 
-    <div class="details-wrapper">
-      <p><span class="details-label">Total Requests Submitted:</span> <?= count($requests) ?></p>
-      <p><span class="details-label">Requests Fulfilled:</span> <?= count(array_filter($requests,fn($r)=>$r['status']=='fulfilled')) ?></p>
-      <p><span class="details-label">Pending Requests:</span> <?= count(array_filter($requests,fn($r)=>$r['status']=='pending')) ?></p>
-    </div>
     </main>
   </div>
   <script>

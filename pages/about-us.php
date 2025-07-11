@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>About Us - HelpingHand</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="/css/style.css" />
 
   <!-- NAVBAR -->
   <header class="navbar" id="nav-color">

@@ -29,7 +29,7 @@ $details = getRequestDetails($conn, $requestID);
 <head>
   <meta charset="UTF-8" />
   <title><?= htmlspecialchars($details['title']) ?> </title>
-  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
 
@@ -78,7 +78,7 @@ $details = getRequestDetails($conn, $requestID);
           </a>
 
           <?php
-            $path = "../../uploads/" . $details['attachment_path'];
+            $path = "/uploads/" . $details['attachment_path'];
             if (file_exists($path)) {
               $mime = mime_content_type($path);
               if (str_starts_with($mime, "image/")) {
