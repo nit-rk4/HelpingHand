@@ -96,10 +96,6 @@ li, a, input, button {
 /* ------------------------------
    USER MENU STYLES
 --------------------------------- */
-/* ------------------------------
-   USER MENU STYLES
---------------------------------- */
-
 .user-dashboard {
   display: flex;
   padding: 30px;
@@ -388,7 +384,7 @@ select:focus {
 
 .your-requests-list,
 .helped-requests-list {
-  display: flex;
+  display: flex;  
   flex-direction: column;
   gap: 15px;
 }
@@ -444,50 +440,6 @@ select:focus {
   color: #003366;
 }
 
-/* ----------------------------------
-   Responsive adjustments for mobile
----------------------------------- */
-@media screen and (max-width: 768px) {
-  .user-dashboard {
-    flex-direction: column;
-    padding: 20px;
-  }
-
-  .sidebar {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px;
-  }
-
-  .main-content.submit-center {
-    padding: 20px;
-    min-height: auto;
-  }
-
-  .main-content form {
-    padding: 20px;
-    max-width: 100%;
-  }
-
-  .form-group {
-    width: 100%;
-  }
-  
-  .button-wrapper {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .button-wrapper button {
-    width: 100%;
-    font-size: 16px;
-  }
-
-  .main-content h1 {
-    font-size: 20px;
-  }
-}
 
 /* ------------------------------
    ADMIN MENU STYLES

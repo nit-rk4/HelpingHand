@@ -21,20 +21,20 @@
     </nav>
   </header>
 
-  <div class="user-dashboard">
+  <div class="container">
     <aside class="sidebar">
-      <ul>
+    <ul>
         <li><a href="user_dashboard.php">Dashboard</a></li>
         <li><a href="user_profile.php">Profile</a></li>
         <li class="active"><a href="my_helped_requests.php">My Helped Requests</a></li>
-      </ul>
-    </aside>
+    </ul>
+  </aside>
 
     <main class="main-content">
       <h2>My Helped Requests</h2>
       <div class="my-helped-section">
         <div class="helped-requests-list">
-          <!-- Example Helped Request Card -->
+          <!-- Helped Request Card with Expandable Details -->
           <div class="request-card">
             <div class="request-title">Medical Assistance Needed</div>
             <div class="request-meta">
@@ -42,7 +42,19 @@
               <span class="requester">Requester: Maria Dela Cruz</span>
             </div>
             <div class="button-wrapper">
-              <button class="submit-btn" onclick="openHelpDetails('req1')">View Details</button>
+              <button class="submit-btn" onclick="toggleDetails('details-req1')">View Details</button>
+            </div>
+            <div class="request-details" id="details-req1" style="display: none;">
+              <p><strong>Requester:</strong> Maria Dela Cruz</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec erat ut felis sagittis aliquam.</p>
+              <p><strong>Contact:</strong> +639123456789 | maria@gmail.com</p>
+              <img src="../uploads/sample1.jpg" alt="Request Image" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
+              <div class="button-wrapper" style="margin-top: 10px;">
+                <form method="post" action="../php/confirm_help.php">
+                  <input type="hidden" name="request_id" value="1">
+                  <button class="submit-btn" type="submit">Confirm I Helped</button>
+                </form>
+              </div>
             </div>
           </div>
 
@@ -53,48 +65,31 @@
               <span class="requester">Requester: Juan Santos</span>
             </div>
             <div class="button-wrapper">
-              <button class="submit-btn" onclick="openHelpDetails('req2')">View Details</button>
+              <button class="submit-btn" onclick="toggleDetails('details-req2')">View Details</button>
+            </div>
+            <div class="request-details" id="details-req2" style="display: none;">
+              <p><strong>Requester:</strong> Juan Santos</p>
+              <p>Donec et magna nec nisl suscipit fringilla. Praesent quis arcu in lorem sodales eleifend.</p>
+              <p><strong>Contact:</strong> +639987654321 | juan@gmail.com</p>
+              <img src="../uploads/sample2.jpg" alt="Request Image" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
+              <div class="button-wrapper" style="margin-top: 10px;">
+                <form method="post" action="../php/confirm_help.php">
+                  <input type="hidden" name="request_id" value="2">
+                  <button class="submit-btn" type="submit">Confirm I Helped</button>
+                </form>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </main>
   </div>
 
-  <!-- Popover Overlays -->
-  <div class="popover-overlay" id="popover-req1">
-    <div class="popover-box">
-      <h3>Medical Assistance Needed</h3>
-      <p><strong>Requester:</strong> Maria Dela Cruz</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec erat ut felis sagittis aliquam.</p>
-      <p><strong>Contact:</strong> +639123456789 | maria@gmail.com</p>
-      <div class="button-wrapper">
-        <button class="submit-btn">Confirm I Helped</button>
-        <button class="reset-btn" onclick="closeHelpDetails('req1')">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="popover-overlay" id="popover-req2">
-    <div class="popover-box">
-      <h3>Food Donation Campaign</h3>
-      <p><strong>Requester:</strong> Juan Santos</p>
-      <p>Donec et magna nec nisl suscipit fringilla. Praesent quis arcu in lorem sodales eleifend.</p>
-      <p><strong>Contact:</strong> +639987654321 | juan@gmail.com</p>
-      <div class="button-wrapper">
-        <button class="submit-btn">Confirm I Helped</button>
-        <button class="reset-btn" onclick="closeHelpDetails('req2')">Close</button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    function openHelpDetails(id) {
-      document.getElementById('popover-' + id).style.display = 'flex';
-    }
-
-    function closeHelpDetails(id) {
-      document.getElementById('popover-' + id).style.display = 'none';
+    function toggleDetails(id) {
+      const section = document.getElementById(id);
+      section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
     }
   </script>
 </body>
