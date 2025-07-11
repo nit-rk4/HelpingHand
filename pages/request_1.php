@@ -2,14 +2,11 @@
     session_start();
 
     if(!isset($_SESSION['user'])){
-        echo "<script>
-            alert('You must be logged in to view the help board.');
-            window.location.href = '../index.php';
-        </script>";
+        header("Location: ../index.php");
         exit;
     }
 
-    require "../php/config.php";
+    require "../phnadudup/config.php";
     require "../php/request_utils.php";
     require "../php/help_utils.php";
 
