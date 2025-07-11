@@ -64,7 +64,23 @@
         <label class="help-toggle">
             <input type="checkbox" id="toggleHelped">
             <span class="help-button">I Helped</span>
+
+              <div class="help-details">
+                <!-- <form> -->
+                    <label for="help-note">How did you help?</label>
+                    <textarea id="help-note" name="help-note" rows="4" placeholder="Add details here..."></textarea>
+
+                    <label for="help-proof">Upload image proof:</label>
+                    <input type="file" id="help-proof" name="help-proof">
+
+                    <div class="verification-button">
+                        <input type="submit" value="Submit">
+                    </div>
+                <!-- </form> -->
+            </div>
         </label>
+
+        <div style="height: 100px;"></div>
 
         <div style="height: 100px;"></div>
     </main>
