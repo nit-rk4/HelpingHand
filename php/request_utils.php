@@ -183,9 +183,43 @@ function rejectRequest ($conn, $requestID){
 
 function submitRequest(){}
 
-function renewRequest() {}
+function renewRequest($conn, $originalID, $userNote, $newFile = null) {
+    $sql = "SELECT * FROM requests WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $originalID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $original = mysqli_fetch_assoc($result);
 
-function fulfillRequest() {}
+    if(!$original) return false;
+
+    $newDescription = "[RENEWAL NOTE]\n". $userNote. "\n\n[ORIGINAL]\n" . $original['description'];
+
+    $sql = "INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, status, created_at, parent_request_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', NOW(), ?)";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "isssissi",
+        $original['user_id'],
+        $original['title'],
+        $newDescription,
+        $original['category'],
+        $original['tier'],
+        $newFile,
+        $original['deadline'],
+        $originalID
+    );
+
+    return mysqli_stmt_execute($stmt);
+}
+
+function fulfillRequest($conn, $requestID) {
+    $sql = "UPDATE requests
+            SET status = 'fulfilled', visibile_since = NULL
+            WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $requestID);
+    return mysqli_stmt_execute($stmt);
+}
 
 
 
@@ -197,28 +231,24 @@ function fulfillRequest() {}
 
 //Expire requests that are past its deadline or its 7-day visibility
 function expireRequests($conn){
-    $checkSql = "SELECT id FROM requests
-                WHERE (status = 'pending' OR status = 'approved')
-                AND (
-                    deadline < CURDATE()
-                    OR (visible_since IS NOT NULL AND TIMESTAMPDIFF(DAY, visible_since, NOW()) >= 7)
-                )
-                LIMIT 1";
+    // Deadline-based expiration
+    $sql_deadline = "UPDATE requests
+             SET status = 'expired', visible_since = NULL, expiration_reason = 'deadline'
+             WHERE (status = 'pending' OR status = 'approved')
+             AND deadline < CURDATE()";
+    mysqli_query($conn, $sql_deadline);
 
-    $check = mysqli_query($conn, $checkSql);
-    if (mysqli_num_rows($check) > 0) {
-        $sql = "UPDATE requests
-                SET status = 'expired', visible_since = NULL
-                WHERE (status = 'pending' OR status = 'approved')
-                AND (
-                    deadline < CURDATE()
-                    OR (visible_since IS NOT NULL AND TIMESTAMPDIFF(DAY, visible_since, NOW()) >= 7)
-                )";
-        $stmt = mysqli_prepare($conn, $sql);
-        return mysqli_stmt_execute($stmt);
-    }
+    // Visibility-based expiration (7-day help board expiry)
+    $sql_visbility = "UPDATE requests
+             SET status = 'expired', visible_since = NULL, expiration_reason = 'visibility'
+             WHERE (status = 'pending' OR status = 'approved')
+             AND visible_since IS NOT NULL
+             AND TIMESTAMPDIFF(DAY, visible_since, NOW()) >= 7";
+    mysqli_query($conn, $sql_visibility);
+
     return true;
 }
+
 //Hide tier 1 pending requests after 2 days
 function hideTier1Requests($conn){
     $sql = "UPDATE requests
