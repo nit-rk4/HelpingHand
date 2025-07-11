@@ -1,17 +1,21 @@
 <?php 
-// /pages/my_helped_requests.php
-$statusFilter = isset($_GET['status']) ? strtolower($_GET['status']) : 'all';
+require_once "../../php/config.php";
+require_once "../../php/help_utils.php";
+require_once "../../php/maintenance.php";
+runMaintenance($conn);
 
-$requests = [
-  ['title'=>'Food Supplies Needed','desc'=>'Requesting rice, canned goods for family of 5.','status'=>'pending','deadline'=>'2025-07-20'],
-  ['title'=>'Medical Assistance','desc'=>'Help needed for prescription refill.','status'=>'fulfilled','deadline'=>'2025-07-10'],
-  ['title'=>'Home Repair Help','desc'=>'Assistance repairing leaking roof.','status'=>'pending','deadline'=>'2025-07-25'],
-  ['title'=>'Scholarship Request','desc'=>'Request rejected by admin.','status'=>'rejected','deadline'=>'2025-06-01'],
-  ['title'=>'Ongoing Aid','desc'=>'Currently being processed.','status'=>'ongoing','deadline'=>'2025-07-30'],
-  ['title'=>'Old Request','desc'=>'Expired request.','status'=>'expired','deadline'=>'2025-06-15'],
-];
+session_start();
+$userID = $_SESSION['user'] ?? null;
+
+if (!$userID){
+  header("Location: ../../index.php");
+  exit;
+}
+
+$request = getHelpedRequests($conn, $userID);
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,24 +58,18 @@ $requests = [
               <img src="../uploads/sample1.jpg" alt="Request Image" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
             </div>
           </div>
-
-          <!-- Helped Request 2 -->
-          <div class="request-card">
-            <div class="request-title">Food Donation Campaign</div>
-            <div class="request-meta">
-              <span class="status-tag">Not Verified</span>
-              <span class="requester">Requester: Juan Santos</span>
-            </div>
-            <div class="button-wrapper">
-              <button class="submit-btn" onclick="toggleDetails('details-req2')">View Details</button>
-            </div>
-            <div class="request-details" id="details-req2" style="display: none;">
-              <p><strong>Requester:</strong> Juan Santos</p>
-              <p>Donec et magna nec nisl suscipit fringilla. Praesent quis arcu in lorem sodales eleifend.</p>
-              <p><strong>Contact:</strong> +639987654321 | juan@gmail.com</p>
-              <img src="../../uploads/sample2.jpg" alt="Request Image" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
-            </div>
-          </div>
+<!-- 
+          <?php //foreach ($requests as $index => $req): ?>
+            <div class="request-card">
+              <div class="request-meta">
+                <?php //if ($req['is_verified']): ?>
+                  <span class="status-tag fulfilled">Help Verified</span>
+                <?php //else: ?>
+                  <span class="status-tag">Not Verified</span>
+                <?php //endif; ?>
+                 //anong styles gagamitin q huhu
+              </div>
+            </div> -->
 
         </div>
       </div>

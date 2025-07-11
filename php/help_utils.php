@@ -46,9 +46,13 @@ function removeHelp($conn, $requestID, $userID){
 }
 
 function getHelpedRequests($conn, $userID){
-    $sql = "SELECT r.id, r.title, h.is_verified
+    $sql = "SELECT 
+                r.id, r.title, r.description, r.category, r.attachment_path, r.deadline,
+                h.is_verified,
+                u.nme AS requester_name
             FROM helpers h
-            JOIN requests r on h.request_id = r.id
+            JOIN requests r ON h.request_id = r.id
+            JOIN users u ON r.user_id = u.id
             WHERE h.user_id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $userID);
