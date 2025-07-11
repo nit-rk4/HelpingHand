@@ -259,10 +259,10 @@ function renewRequest($conn, $originalID, $userNote, $newFile = null) {
 
     $newDescription = "[RENEWAL NOTE]\n". $userNote. "\n\n[ORIGINAL]\n" . $original['description'];
 
-    $sql = "INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, status, created_at, parent_request_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', NOW(), ?)";
+    $sql = "INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, created_at, parent_request_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "isssissi",
+    mysqli_stmt_bind_param($stmt, "issssssi",
         $original['user_id'],
         $original['title'],
         $newDescription,
