@@ -3,34 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <title>HelpingHand Admin - Interviews</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../../css/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
 
   <!-- Navbar -->
-  <header class="navbar" id="nav-color">
-    <div class="nav-left">
-      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo" />
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">About us</a></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="searchbar">
-      <input type="text" placeholder="Search interviews..." />
-    </div>
-  </header>
+  <?php include ("../navbar.php"); ?>
 
   <div class="container">
     <!-- Sidebar -->
     <aside class="sidebar">
       <ul>
         <li><a href="admin_requests.php">User Requests</a></li>
-        <li class="active"><a href="interviews.php">Interviews</a></li>
+        <li class="active"><a href="admin_interviews.php">Interviews</a></li>
       </ul>
     </aside>
 
@@ -71,7 +57,7 @@
 
       <!-- Interview Rows -->
       <!-- Pending -->
-      <a href="interview-details.php?status=pending" class="request-row interview-item" data-status="pending">
+      <a href="interview_details.php?status=pending" class="request-row interview-item" data-status="pending">
         <span>Carlos Reyes</span>
         <span>Scholarship application interview</span>
       </a>

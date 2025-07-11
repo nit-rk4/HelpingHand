@@ -20,21 +20,10 @@ $requests = [
   <meta charset="UTF-8">
   <title>User Profile - HelpingHand</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-<header class="navbar">
-  <div class="nav-left">
-    <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo">
-    <nav>
-      <ul class="nav-links">
-        <li><a href="user_dashboard.php">Dashboard</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">About Us</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+<?php include ("../navbar.php")?>
 
 <div class="container">
   <aside class="sidebar">

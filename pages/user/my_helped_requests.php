@@ -7,19 +7,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Helped Requests - HelpingHand</title>
-  <link rel="stylesheet" href="../css/style.css?v=2.1">
+  <link rel="stylesheet" href="../../css/style.css?v=2.1">
 </head>
 <body>
-  <header class="navbar">
-    <a href="/HelpingHand/"><img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo"></a>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="/HelpingHand/">Home</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">About us</a></li>
-      </ul>
-    </nav>
-  </header>
+  <?php include ("../navbar.php") ?>
 
   <div class="container">
     <aside class="sidebar">
@@ -67,7 +58,7 @@
               <p><strong>Requester:</strong> Juan Santos</p>
               <p>Donec et magna nec nisl suscipit fringilla. Praesent quis arcu in lorem sodales eleifend.</p>
               <p><strong>Contact:</strong> +639987654321 | juan@gmail.com</p>
-              <img src="../uploads/sample2.jpg" alt="Request Image" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
+              <img src="../../uploads/sample2.jpg" alt="Request Image" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
             </div>
           </div>
 

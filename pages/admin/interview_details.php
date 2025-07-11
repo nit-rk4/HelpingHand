@@ -7,30 +7,16 @@ $status = $_GET['status'] ?? 'pending';
 <head>
   <meta charset="UTF-8" />
   <title>Interview Details - HelpingHand Admin</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../../css/style.css" />
 </head>
 <body>
 
   <!-- NAVBAR -->
-  <header class="navbar" id="nav-color">
-    <div class="nav-left">
-      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo" />
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">About us</a></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="searchbar">
-      <input type="text" placeholder="Search..." />
-    </div>
-  </header>
+  <?php include("../navbar.php") ?>
 
   <!-- DETAILS WRAPPER -->
   <main class="details-wrapper">
-    <a class="back-link" href="interviews.php">← Back to Interviews</a>
+    <a class="back-link" href="admin_interviews.php">← Back to Interviews</a>
 
     <?php
     // Sample Interview Data

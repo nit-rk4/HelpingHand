@@ -1,6 +1,6 @@
 <?php
-require "../php/config.php";
-require "../php/request_utils.php";
+require "../../php/config.php";
+require "../../php/request_utils.php";
 
 $requestID = $_GET['id'] ?? null;
 
@@ -28,13 +28,13 @@ $details = getRequestDetails($conn, $requestID);
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Request Details - HelpingHand Admin</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <title><?= htmlspecialchars($details['title']) ?> </title>
+  <link rel="stylesheet" href="../../css/style.css" />
 </head>
 <body>
 
   <!-- NAVBAR -->
-  <?php include("navbar.php"); ?>
+  <?php include("../navbar.php"); ?>
 
 
   <!-- DETAILS WRAPPER -->
@@ -73,12 +73,12 @@ $details = getRequestDetails($conn, $requestID);
       <?php if (!empty($details['attachment_path'])): ?>
         <div class="request-attachment">
           <strong>Attachment:</strong>
-          <a class="attachment-link" href="../uploads/<?= htmlspecialchars($details['attachment_path']) ?>" target="_blank" rel="noopener noreferrer">
+          <a class="attachment-link" href="../../uploads/<?= htmlspecialchars($details['attachment_path']) ?>" target="_blank" rel="noopener noreferrer">
             View Attachment
           </a>
 
           <?php
-            $path = "../uploads/" . $details['attachment_path'];
+            $path = "../../uploads/" . $details['attachment_path'];
             if (file_exists($path)) {
               $mime = mime_content_type($path);
               if (str_starts_with($mime, "image/")) {

@@ -1,7 +1,7 @@
 <?php
-  require "../php/config.php";
-  require "../php/request_utils.php";
-  require_once "../php/maintenance.php";
+  require "../../php/config.php";
+  require "../../php/request_utils.php";
+  require_once "../../php/maintenance.php";
   runMaintenance($conn);
   $status = $_GET['status'] ?? 'pending';
   $tierFilter = $_GET['tier'] ?? 'all';
@@ -14,7 +14,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>HelpingHand Admin - User Requests</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../../css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
@@ -62,7 +62,7 @@
 <body>
 
   <!-- Navbar -->
-  <?php include("navbar.php"); ?>
+  <?php include("../navbar.php"); ?>
 
   <!-- Page Layout -->
   <div class="container">
@@ -70,7 +70,7 @@
     <aside class="sidebar">
       <ul>
         <li class="active"><a href="admin_requests.php">User Requests</a></li>
-        <li><a href="interviews.php">Interviews</a></li>
+        <li><a href="admin_interviews.php">Interviews</a></li>
       </ul>
     </aside>
 
@@ -109,7 +109,7 @@
       <?php
         foreach ($requests as $req) {
           $visibleMark = $req['visible_since'] ? "Yes" : "No";
-          echo "<a href='request-details.php?id={$req['id']}' class='request-row' data-status='{$req['status']}' data-tier='{$req['tier']}'>";
+          echo "<a href='request_details.php?id={$req['id']}' class='request-row' data-status='{$req['status']}' data-tier='{$req['tier']}'>";
           echo "<span class='user'>" . htmlspecialchars($req['requester_name']) . "</span>";
           echo "<span class='title'>" . htmlspecialchars($req['title']) . "</span>";
           echo "<span class='desc'>" . htmlspecialchars($req['description']) . "</span>";

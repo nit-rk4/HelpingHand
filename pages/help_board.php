@@ -37,7 +37,7 @@
 
                 <div class = "helpboard-content">
                     <h2 class="helpboard-title">
-                        <a class = "helpboard-title" href="request_1.php?id=<?= $request['id'] ?>">
+                        <a class = "helpboard-title" href="helpboard_request.php?id=<?= $request['id'] ?>">
                             <?= htmlspecialchars($request['title']) ?>
                         </a>
                     </h2>
