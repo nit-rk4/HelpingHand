@@ -7,7 +7,7 @@ $status = $_GET['status'] ?? 'pending';
 <head>
   <meta charset="UTF-8" />
   <title>Interview Details - HelpingHand Admin</title>
-  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
 

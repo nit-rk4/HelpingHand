@@ -34,7 +34,7 @@
 
             if (isset($_FILES['help_proof']) && $_FILES['help_proof']['error'] === UPLOAD_ERR_OK) {
                 $filename = basename($_FILES['help_proof']['name']);
-                $upload_path = "../uploads/" . $filename;
+                $upload_path = "/uploads/" . $filename;
                 if (move_uploaded_file($_FILES['help_proof']['tmp_name'], $upload_path)) {
                     $proof_file = $filename;
                 }
@@ -57,7 +57,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($request['title'])?></title>
-    <link rel="stylesheet" href="../css/style.css?v=1.3">
+    <link rel="stylesheet" href="/css/style.css?v=1.3">
 </head>
 
 <body>

@@ -10,18 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <header class="navbar">
-    <div class="nav-left">
-      <img class="logo" src="../../assets/logo.svg" alt="HelpingHand Logo">
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">About us</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <?php include "../navbar.php" ?>
 
   <div class="container">
     <aside class="sidebar">
