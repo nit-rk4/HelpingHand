@@ -4,10 +4,11 @@
  * ------------------------------------------
  *            FETCHING REQUESTS
  *  ------------------------------------------
-*/
+ */
 
 //Get requests from database based on status and optional tier
-function getRequestsByStatus($conn, $status, $tier = null){
+function getRequestsByStatus($conn, $status, $tier = null)
+{
     if ($tier === null || $tier === 'all') {
         $sql = "SELECT 
                     requests.id, requests.title, requests.description,
@@ -34,7 +35,7 @@ function getRequestsByStatus($conn, $status, $tier = null){
     $result = mysqli_stmt_get_result($stmt);
 
     $requests = [];
-    while ($row = mysqli_fetch_assoc($result)){
+    while ($row = mysqli_fetch_assoc($result)) {
         $requests[] = $row;
     }
 
@@ -42,7 +43,8 @@ function getRequestsByStatus($conn, $status, $tier = null){
 }
 
 //Get requests visible on the help board
-function getVisibleRequests($conn){
+function getVisibleRequests($conn)
+{
     $sql = "SELECT 
                 r.id, r.title, r.description, r.category, r.deadline, r.attachment_path,
                 u.name AS requester_name    
@@ -52,29 +54,6 @@ function getVisibleRequests($conn){
                 AND (r.deadline >= CURDATE()) 
             ORDER BY r.visible_since DESC";
     $result = mysqli_query($conn, $sql);
-    
-    $requests = [];
-    while ($row = mysqli_fetch_assoc($result)){
-        $requests[] = $row;
-    }
-
-    return $requests;
-}
-
-//Get requests of a specific user by status
-function getUserRequestsByStatus($conn, $userID, $status = 'all') {
-    if ($status === 'all') {
-        $sql = "SELECT * FROM requests WHERE user_id = ? ORDER BY created_at DESC";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'i', $userID);
-    } else {
-        $sql = "SELECT * FROM requests WHERE user_id = ? AND status = ? ORDER BY created_at DESC";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'is', $userID, $status);
-    }
-
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
 
     $requests = [];
     while ($row = mysqli_fetch_assoc($result)) {
@@ -84,8 +63,37 @@ function getUserRequestsByStatus($conn, $userID, $status = 'all') {
     return $requests;
 }
 
+//Get requests of a specific user
+function getUserRequests($conn, $userId, $statusFilter = 'all') {
+    $requests = [];
+    $sql = "SELECT id, title, description, status, deadline, category, attachment_path FROM requests WHERE user_id = ?";
+    if ($statusFilter !== 'all') {
+        $sql .= " AND status = ?";
+    }
+    $stmt = $conn->prepare($sql);
+    if ($statusFilter !== 'all') {
+        $stmt->bind_param("is", $userId, $statusFilter);
+    } else {
+        $stmt->bind_param("i", $userId);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $requests[] = [
+            'title' => $row['title'],
+            'desc' => $row['description'],
+            'status' => $row['status'],
+            'deadline' => $row['deadline'],
+            'category' => $row['category'],
+            'attachment' => $row['attachment_path'] ?? 'sample.jpg'
+        ];
+    }
+    $stmt->close();
+    return $requests;
+}
 //Get a specific request (for backend logic)
-function getRequest($conn, $requestID){
+function getRequest($conn, $requestID)
+{
     $sql = "SELECT * FROM requests WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $requestID);
@@ -96,46 +104,38 @@ function getRequest($conn, $requestID){
 }
 
 //Get full details of a request (for display purposes)
-function getRequestDetails($conn, $requestID){
+function getRequestDetails($conn, $requestID)
+{
     $sql = "SELECT r.*, 
                 u.name AS requester_name,
                 u.email AS requester_email,
                 u.contact_number AS requester_contact
             FROM requests r 
             JOIN users u on r.user_id = u.id
-            WHERE r.id = ?"; 
+            WHERE r.id = ?";
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $requestID);
     mysqli_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    if ($row = mysqli_fetch_assoc($result)){
+    if ($row = mysqli_fetch_assoc($result)) {
         return $row;
     } else {
-        return null; 
+        return null;
     }
-}
-
-function getRequestDetailsForUser($conn, $requestID, $userID){
-    $sql = "SELECT * FROM requests WHERE id = ? AND user_id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ii", $requestID, $userID);
-    mysqli_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    return mysqli_fetch_assoc($result);
 }
 
 /** 
  * ------------------------------------------
  *               ADMIN ACTIONS
  *  ------------------------------------------
-*/
+ */
 
 
 //Updates the status of request to 'approved'
-function approveRequest($conn, $requestID){
+function approveRequest($conn, $requestID)
+{
     $request = getRequest($conn, $requestID);
     if (!$request) return false; // Request not found
 
@@ -165,7 +165,8 @@ function approveRequest($conn, $requestID){
     return mysqli_stmt_execute($stmt);
 }
 
-function markForInterview   ($conn, $requestID){
+function markForInterview($conn, $requestID)
+{
     $request = getRequest($conn, $requestID);
     if (!$request) return false;
 
@@ -183,7 +184,8 @@ function markForInterview   ($conn, $requestID){
 }
 
 //Rejects a request and sets their visibility on the Help Board to 'hidden'
-function rejectRequest ($conn, $requestID){
+function rejectRequest($conn, $requestID)
+{
     $request = getRequest($conn, $requestID);
     if (!$request) return false;
 
@@ -197,11 +199,64 @@ function rejectRequest ($conn, $requestID){
  * ------------------------------------------
  *              USER ACTIONS
  *  ------------------------------------------
-*/
+ */
 
-function submitRequest(){}
+require_once '../../php/config.php';
 
-function renewRequest($conn, $originalID, $userNote, $newFile = null) {
+function submitRequest($userId, $title, $description, $category, $deadline, $attachment_path = null)
+{
+    // Assign tier based on category
+    $tier1 = [
+        "Home/Tech Help",
+        "Escort/Babysitting",
+        "Volunteer Support",
+        "Errand",
+        "Lost Item",
+        "Tutoring/Academic Help"
+    ];
+    $tier2 = [
+        "Food & Essentials",
+        "School Supplies",
+        "Goods Donations"
+    ];
+    $tier3 = [
+        "Medical Assistance",
+        "Legal & Documents",
+        "Monetary Assistance"
+    ];
+
+    if (in_array($category, $tier1)) {
+        $tier = "1";
+        $visible_since = date('Y-m-d H:i:s'); // visible immediately
+        $interview_status = "none";
+        $status = "pending";
+    } elseif (in_array($category, $tier2)) {
+        $tier = "2";
+        $visible_since = null; // needs admin approval
+        $interview_status = "pending";
+        $status = "pending";
+    } elseif (in_array($category, $tier3)) {
+        $tier = "3";
+        $visible_since = null; // needs admin approval & interview
+        $interview_status = "pending";
+        $status = "pending";
+    } else {
+        // fallback
+        $tier = "1";
+        $visible_since = date('Y-m-d H:i:s');
+        $interview_status = "none";
+        $status = "pending";
+    }
+
+    global $conn;
+    $stmt = $conn->prepare("INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, status, interview_status, visible_since, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("isssssssss", $userId, $title, $description, $category, $tier, $attachment_path, $deadline, $status, $interview_status, $visible_since);
+    $stmt->execute();
+    $stmt->close();
+}
+
+function renewRequest($conn, $originalID, $userNote, $newFile = null)
+{
     $sql = "SELECT * FROM requests WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $originalID);
@@ -209,14 +264,16 @@ function renewRequest($conn, $originalID, $userNote, $newFile = null) {
     $result = mysqli_stmt_get_result($stmt);
     $original = mysqli_fetch_assoc($result);
 
-    if(!$original) return false;
+    if (!$original) return false;
 
-    $newDescription = "[RENEWAL NOTE]\n". $userNote. "\n\n[ORIGINAL]\n" . $original['description'];
+    $newDescription = "[RENEWAL NOTE]\n" . $userNote . "\n\n[ORIGINAL]\n" . $original['description'];
 
     $sql = "INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, status, created_at, parent_request_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', NOW(), ?)";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "isssissi",
+    mysqli_stmt_bind_param(
+        $stmt,
+        "isssissi",
         $original['user_id'],
         $original['title'],
         $newDescription,
@@ -230,9 +287,10 @@ function renewRequest($conn, $originalID, $userNote, $newFile = null) {
     return mysqli_stmt_execute($stmt);
 }
 
-function fulfillRequest($conn, $requestID) {
+function fulfillRequest($conn, $requestID)
+{
     $sql = "UPDATE requests
-            SET status = 'fulfilled', visible_since = NULL
+            SET status = 'fulfilled', visibile_since = NULL
             WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $requestID);
@@ -245,10 +303,11 @@ function fulfillRequest($conn, $requestID) {
  * ------------------------------------------
  *            BACKGROUND FUNCTIONS
  *  ------------------------------------------
-*/
+ */
 
 //Expire requests that are past its deadline or its 7-day visibility
-function expireRequests($conn){
+function expireRequests($conn)
+{
     // Deadline-based expiration
     $sql_deadline = "UPDATE requests
              SET status = 'expired', visible_since = NULL, expiration_reason = 'deadline'
@@ -268,7 +327,8 @@ function expireRequests($conn){
 }
 
 //Hide tier 1 pending requests after 2 days
-function hideTier1Requests($conn){
+function hideTier1Requests($conn)
+{
     $sql = "UPDATE requests
             SET visible_since = NULL
             WHERE tier = '1'
@@ -277,6 +337,3 @@ function hideTier1Requests($conn){
                 AND TIMESTAMPDIFF(DAY, created_at, NOW()) >= 2";
     return mysqli_query($conn, $sql);
 }
- 
-
-?>
