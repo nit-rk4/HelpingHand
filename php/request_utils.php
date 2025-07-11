@@ -243,7 +243,7 @@ function submitRequest($conn, $userId, $title, $description, $category, $deadlin
     $sql = "INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, visible_since, created_at) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt,"isssssssss", $userId, $title, $description, $category, $tier, $attachment_path, $deadline, $visible_since);
+    mysqli_stmt_bind_param($stmt,"isssssss", $userId, $title, $description, $category, $tier, $attachment_path, $deadline, $visible_since);
     
     return mysqli_stmt_execute($stmt);
 }
