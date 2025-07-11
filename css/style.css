@@ -96,6 +96,10 @@ li, a, input, button {
 /* ------------------------------
    USER MENU STYLES
 --------------------------------- */
+/* ------------------------------
+   USER MENU STYLES
+--------------------------------- */
+
 .user-dashboard {
   display: flex;
   padding: 30px;
@@ -170,8 +174,8 @@ select:focus {
 
 .button-wrapper {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
+  gap: 12px;
+  justify-content: flex-end;
   margin-top: 20px;
 }
 
@@ -247,42 +251,6 @@ select:focus {
   box-shadow: 0 0 6px rgba(255, 178, 178, 0.8);
 }
 
-.button-wrapper {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-}
-
-.submit-btn {
-  background-color: #ffb2b2;
-  color: #1e2f4b;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.reset-btn {
-  background-color: #ffe6e6;
-  color: #c05757;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.submit-btn:hover {
-  background-color: #ffa2a2;
-}
-
-.reset-btn:hover {
-  background-color: #ffd1d1;
-}
-
 .help-count-section {
   text-align: center;
   margin: 30px 0;
@@ -352,6 +320,129 @@ select:focus {
 .legend-box.tier1 { background: #fff59f; }
 .legend-box.tier2 { background: #cbdbff; }
 .legend-box.tier3 { background: #ffb2b2; }
+
+/* --- Profile Tabs --- */
+.profile-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.profile-tab {
+  padding: 10px 20px;
+  border: none;
+  background-color: #fce2e6;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.profile-tab.active {
+  background-color: #ffb2b2;
+}
+
+.profile-tab:hover {
+  background-color: #ffc7c7;
+}
+
+.profile-content {
+  display: none;
+  width: 100%;
+}
+
+.profile-content.active {
+  display: block;
+}
+
+/* --- Profile Section --- */
+.profile-section {
+  margin-bottom: 40px;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #f4f7fb;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.profile-section h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #1e2f4b;
+  font-weight: 600;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #333;
+  font-size: 15px;
+}
+
+/* --- Your Requests + Help Count --- */
+.your-requests-section,
+.my-helped-section {
+  margin-top: 20px;
+}
+
+.your-requests-list,
+.helped-requests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.request-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fffaf2;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.request-card .request-title {
+  font-weight: 600;
+  font-size: 18px;
+  color: #1e2f4b;
+  margin-bottom: 8px;
+}
+
+.request-card .request-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.request-card .help-count {
+  margin-top: 10px;
+  font-weight: 500;
+  color: #588b60;
+}
+
+/* Optional tag style */
+.status-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  font-weight: 500;
+  background-color: #ffc0c0;
+  color: #7c0000;
+}
+
+.status-tag.accepted {
+  background-color: #b5dfbc;
+  color: #084d0c;
+}
+
+.status-tag.fulfilled {
+  background-color: #cbdbff;
+  color: #003366;
+}
 
 /* ----------------------------------
    Responsive adjustments for mobile
