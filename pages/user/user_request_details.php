@@ -35,6 +35,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       exit;
   }
 
+  if (isset($_POST['renew_submit'])) {
+    if ($request['status'] === 'expired' && $request['expiration_reason'] === 'visibility') {
+        $renewReason = trim($_POST['renew_reason']);
+        $newFile = null;
+
+        if (!empty($_FILES['renew_proof']['name'])) {
+            $uploadDir = "../../uploads/";
+            $filename = basename($_FILES['renew_proof']['name']);
+            $targetPath = $uploadDir . $filename;
+
+            if (move_uploaded_file($_FILES['renew_proof']['tmp_name'], $targetPath)) {
+                $newFile = $filename;
+            }
+        }
+
+        if (renewRequest($conn, $requestID, $renewReason, $newFile)) {
+            header("Location: user_request_details.php?id=$requestID&renewed=1");
+            exit;
+        } else {
+            $error = "Renewal failed. Please try again.";
+        }
+    } else {
+        $error = "This request cannot be renewed.";
+    }
+}
+
 }
 
 ?>
@@ -104,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <a href="#fulfill-modal" class="btn btn-fulfill">Mark as Fulfilled</a>
   <?php elseif ($request['status'] === 'fulfilled'): ?>
     <a href="#helpers-modal" class="btn btn-view">View Helpers</a>
-  <?php elseif ($request['status'] === 'expired'): ?>
+  <?php elseif ($request['status'] === 'expired' && $request['expiration_reason'] === 'visibility'): ?>
     <a href="#renew-modal" class="btn btn-renew">Renew Request</a>
   <?php endif; ?>
 </main>
@@ -173,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php endif; ?>
 
 <!-- Renew Modal -->
-<?php if ($request['status'] === 'expired'): ?>
+<?php if ($request['status'] === 'expired' && $request['expiration_reason'] === 'visibility'): ?>
 <div id="renew-modal" class="modal">
   <div class="modal-content">
     <a href="#" class="modal-close">&times;</a>
@@ -183,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <textarea name="renew_reason" rows="4" required></textarea>
       <label>Upload Proof (optional)</label>
       <input type="file" name="renew_proof">
-      <button type="submit" class="btn btn-renew">Submit Renewal</button>
+      <button type="submit" name= "renew_submit" class="btn btn-renew">Submit Renewal</button>
     </form>
   </div>
 </div>
