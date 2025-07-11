@@ -1,10 +1,4 @@
 <?php
-  session_start();
-  if(!isset($_SESSION['admin'])){
-    header("Location: ../index.php");
-    exit;
-  }
-  
   require "../php/config.php";
   require "../php/request_utils.php";
   require_once "../php/maintenance.php";
