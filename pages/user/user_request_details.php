@@ -19,11 +19,15 @@ if (!$request){
 }
 
 $helpers = getHelpers($conn, $requestID);
+$verifiedHelpers = [];
+if ($request['status'] === 'fulfilled') {
+    $verifiedHelpers = getVerifiedHelpers($conn, $requestID);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['verify_submit'])) {
-      $verifiedHelpers = $_POST['helpers'] ?? [];
-      foreach ($verifiedHelpers as $helperID) {
+      $toVerify = $_POST['helpers'] ?? [];
+      foreach ($toVerify as $helperID) {
           verifyHelper($conn, $requestID, intval($helperID));
       }
       fulfillRequest($conn, $requestID);
@@ -42,6 +46,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title><?= htmlspecialchars($request['title']) ?> - Request Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/style.css?v=4">
+  <style>
+    .verified-helpers-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .verified-helper-item {
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+  </style>
 </head>
 <body>
 <?php include("../navbar.php"); ?>
@@ -134,11 +149,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <div class="modal-content">
     <a href="#" class="modal-close">&times;</a>
     <h2>Helped By:</h2>
-    <ul>
-      <?php foreach ($helpers as $h): ?>
-        <li><?= $h ?></li>
-      <?php endforeach; ?>
-    </ul>
+
+    <?php if (count($verifiedHelpers) > 0): ?>
+      <ul class="verified-helpers-list">
+        <?php foreach ($verifiedHelpers as $helper): ?>
+          <li class="verified-helper-item">
+            <strong><?= htmlspecialchars($helper['username']) ?></strong><br>
+            <?php if (!empty($helper['proof_text'])): ?>
+              <em><?= htmlspecialchars($helper['proof_text']) ?></em><br>
+            <?php endif; ?>
+            <?php if (!empty($helper['proof_file'])): ?>
+              <a href="/uploads/<?= htmlspecialchars($helper['proof_file']) ?>" target="_blank">📎 View Proof</a>
+            <?php endif; ?>
+          </li>
+          <hr>
+        <?php endforeach; ?>
+      </ul>
+    <?php else: ?>
+      <p>No verified helpers yet.</p>
+    <?php endif; ?>
   </div>
 </div>
 <?php endif; ?>

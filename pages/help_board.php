@@ -1,10 +1,11 @@
-<?php  
-  require "../php/config.php";
-  require "../php/request_utils.php";
-  require_once "../php/maintenance.php";
-  runMaintenance($conn);
+<?php
+session_start();
+require "../php/config.php";
+require "../php/request_utils.php";
+require_once "../php/maintenance.php";
+runMaintenance($conn);
 
-  $requests = getVisibleRequests($conn);
+$requests = getVisibleRequests($conn);
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +25,7 @@
         <?php foreach ($requests as $request): ?>
             <article class = "helpboard">
                 <?php
-                    $path = "/uploads/" . $request['attachment_path'];
+                    $path = "../uploads/" . $request['attachment_path'];
                     if (!empty($request['attachment_path']) && file_exists($path)){
                         $mime = mime_content_type($path);
                         if (str_starts_with($mime, "image/")):

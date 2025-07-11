@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if(!isset($_SESSION['user'])){
+    if(!isset($_SESSION['user_id'])){
         header("Location: ../index.php");
         exit;
     }
@@ -15,7 +15,7 @@
         die("Missing request ID.");
     }
 
-    $userID = $_SESSION['user']['id'] ?? null;
+    $userID = $_SESSION['user_id']?? null;
     $hasHelped = false;
     
     if ($userID && $requestID){
@@ -45,7 +45,7 @@
             removeHelp($conn, $requestID, $userID);
         }
 
-        header("Location: request_1.php?id=" . $requestID);
+        header("Location: helpboard_request.php?id=" . $requestID);
         exit;
     }
 
