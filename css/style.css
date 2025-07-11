@@ -440,6 +440,23 @@ select:focus {
   color: #003366;
 }
 
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background-color: #fce2e6;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.tab.active {
+  background-color: #ffb2b2;
+}
+
+.tab:hover {
+  background-color: #ffc7c7;
+}
 
 /* ------------------------------
    ADMIN MENU STYLES

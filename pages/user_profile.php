@@ -36,9 +36,11 @@
       <h1>My Submitted Requests</h1>
       <div class="tabs-filter-container">
         <div class="tabs">
-          <button class="tab active">All</button>
-          <button class="tab">Pending</button>
+          <button class="tab active">Pending</button>
+          <button class="tab">Ongoing</button>
+          <button class="tab">Rejected</button>
           <button class="tab">Fulfilled</button>
+          <button class="tab">Expired</button>
         </div>
       </div>
 
@@ -74,25 +76,25 @@
       </div>
 
       <h2 style="margin-top: 40px;">Help Count Summary</h2>
-            <section class="help-count-section">
-  <h2>Help Count</h2>
+      <section class="help-count-section">
+        <h2>Help Count</h2>
 
-  <div class="donut-chart" role="img" aria-label="Help points distribution">
-    <div class="segment category1" style="--value: 40;"></div>
-    <div class="segment category2" style="--value: 30;"></div>
-    <div class="segment category3" style="--value: 30;"></div>
-    <div class="donut-center">
-      <span class="total">100</span>
-      <span>pts</span>
-    </div>
-  </div>
+        <div class="donut-chart" role="img" aria-label="Help points distribution">
+          <div class="segment category1" style="--value: 40;"></div>
+          <div class="segment category2" style="--value: 30;"></div>
+          <div class="segment category3" style="--value: 30;"></div>
+          <div class="donut-center">
+            <span class="total">100</span>
+            <span>pts</span>
+          </div>
+        </div>
 
-  <div class="donut-legend">
-    <div><span class="legend-box category1"></span> Category 1 (40)</div>
-    <div><span class="legend-box category2"></span> Category 2 (30)</div>
-    <div><span class="legend-box category3"></span> Category 3 (30)</div>
-  </div>
-</section>
+        <div class="donut-legend">
+          <div><span class="legend-box category1"></span> Category 1 (40)</div>
+          <div><span class="legend-box category2"></span> Category 2 (30)</div>
+          <div><span class="legend-box category3"></span> Category 3 (30)</div>
+        </div>
+      </section>
 
       <div class="details-wrapper">
         <p><span class="details-label">Total Requests Submitted:</span> 3</p>
