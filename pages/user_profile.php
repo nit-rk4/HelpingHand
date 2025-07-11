@@ -6,8 +6,62 @@
 <head>
   <meta charset="UTF-8">
   <title>User Profile - HelpingHand</title>
-  <link rel="stylesheet" href="../css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      position: relative;
+      padding: 10px 20px;
+      border: none;
+      background-color: #fce2e6;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s ease;
+    }
+
+    .tab.active {
+      background-color: #ffb2b2;
+    }
+
+    .tab:hover {
+      background-color: #ffc7c7;
+    }
+
+    /* Popover styles on hover */
+    .tab::after {
+      content: attr(data-popover);
+      position: absolute;
+      bottom: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      width: max-content;
+      max-width: 220px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .tab:hover::after {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
 </head>
 <body>
   <header class="navbar">
@@ -36,11 +90,11 @@
       <h1>My Submitted Requests</h1>
       <div class="tabs-filter-container">
         <div class="tabs">
-          <button class="tab active">Pending</button>
-          <button class="tab">Ongoing</button>
-          <button class="tab">Rejected</button>
-          <button class="tab">Fulfilled</button>
-          <button class="tab">Expired</button>
+          <button class="tab active" data-filter="pending" data-popover="Requests you submitted that are waiting for review or action.">Pending</button>
+          <button class="tab" data-filter="ongoing" data-popover="Requests currently being processed or receiving help.">Ongoing</button>
+          <button class="tab" data-filter="rejected" data-popover="Requests that were not approved or denied.">Rejected</button>
+          <button class="tab" data-filter="fulfilled" data-popover="Requests that have been successfully fulfilled.">Fulfilled</button>
+          <button class="tab" data-filter="expired" data-popover="Requests that passed their deadline without being fulfilled.">Expired</button>
         </div>
       </div>
 
@@ -52,22 +106,22 @@
           <span class="deadline">Deadline</span>
         </div>
 
-        <!-- Sample Requests -->
-        <div class="request-row">
+        <!-- Sample Requests (add data-status attributes for filtering) -->
+        <div class="request-row" data-status="pending">
           <span class="title">Food Supplies Needed</span>
           <span class="desc">Requesting rice, canned goods for my family of 5.</span>
           <span class="status">Pending</span>
           <span class="deadline">2025-07-20</span>
         </div>
 
-        <div class="request-row">
+        <div class="request-row" data-status="fulfilled">
           <span class="title">Medical Assistance</span>
           <span class="desc">Help needed for prescription refill.</span>
           <span class="status">Fulfilled</span>
           <span class="deadline">2025-07-10</span>
         </div>
 
-        <div class="request-row">
+        <div class="request-row" data-status="pending">
           <span class="title">Home Repair Help</span>
           <span class="desc">Looking for assistance repairing our leaking roof.</span>
           <span class="status">Pending</span>
@@ -103,5 +157,27 @@
       </div>
     </main>
   </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const rows = document.querySelectorAll('.request-row:not(.header)');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filter = tab.getAttribute('data-filter');
+
+        rows.forEach(row => {
+          if (row.dataset.status === filter) {
+            row.style.display = 'flex';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
