@@ -27,7 +27,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-li, a, input, button {
+li, a, input, button, textarea {
     font-family: "Plus Jakarta Sans", sans-serif;
     font-weight: 300;
     font-size: 16px;
@@ -170,8 +170,8 @@ select:focus {
 
 .button-wrapper {
   display: flex;
-  gap: 12px;
-  justify-content: flex-end;
+  gap: 1rem;
+  justify-content: center;
   margin-top: 20px;
 }
 
@@ -247,6 +247,42 @@ select:focus {
   box-shadow: 0 0 6px rgba(255, 178, 178, 0.8);
 }
 
+.button-wrapper {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.submit-btn {
+  background-color: #ffb2b2;
+  color: #1e2f4b;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.reset-btn {
+  background-color: #ffe6e6;
+  color: #c05757;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #ffa2a2;
+}
+
+.reset-btn:hover {
+  background-color: #ffd1d1;
+}
+
 .help-count-section {
   text-align: center;
   margin: 30px 0;
@@ -317,145 +353,49 @@ select:focus {
 .legend-box.tier2 { background: #cbdbff; }
 .legend-box.tier3 { background: #ffb2b2; }
 
-/* --- Profile Tabs --- */
-.profile-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
+/* ----------------------------------
+   Responsive adjustments for mobile
+---------------------------------- */
+@media screen and (max-width: 768px) {
+  .user-dashboard {
+    flex-direction: column;
+    padding: 20px;
+  }
 
-.profile-tab {
-  padding: 10px 20px;
-  border: none;
-  background-color: #fce2e6;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: 0.3s ease;
-}
+  .sidebar {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+  }
 
-.profile-tab.active {
-  background-color: #ffb2b2;
-}
+  .main-content.submit-center {
+    padding: 20px;
+    min-height: auto;
+  }
 
-.profile-tab:hover {
-  background-color: #ffc7c7;
-}
+  .main-content form {
+    padding: 20px;
+    max-width: 100%;
+  }
 
-.profile-content {
-  display: none;
-  width: 100%;
-}
+  .form-group {
+    width: 100%;
+  }
 
-.profile-content.active {
-  display: block;
-}
+  .button-wrapper {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-/* --- Profile Section --- */
-.profile-section {
-  margin-bottom: 40px;
-  padding: 20px;
-  border-radius: 15px;
-  background-color: #f4f7fb;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
+  .button-wrapper button {
+    width: 100%;
+    font-size: 16px;
+  }
 
-.profile-section h3 {
-  font-size: 20px;
-  margin-bottom: 15px;
-  color: #1e2f4b;
-  font-weight: 600;
-}
-
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  color: #333;
-  font-size: 15px;
-}
-
-/* --- Your Requests + Help Count --- */
-.your-requests-section,
-.my-helped-section {
-  margin-top: 20px;
-}
-
-.your-requests-list,
-.helped-requests-list {
-  display: flex;  
-  flex-direction: column;
-  gap: 15px;
-}
-
-.request-card {
-  display: flex;
-  flex-direction: column;
-  background-color: #fffaf2;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.request-card .request-title {
-  font-weight: 600;
-  font-size: 18px;
-  color: #1e2f4b;
-  margin-bottom: 8px;
-}
-
-.request-card .request-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-size: 14px;
-  color: #555;
-}
-
-.request-card .help-count {
-  margin-top: 10px;
-  font-weight: 500;
-  color: #588b60;
-}
-
-/* Optional tag style */
-.status-tag {
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 13px;
-  border-radius: 6px;
-  font-weight: 500;
-  background-color: #ffc0c0;
-  color: #7c0000;
-}
-
-.status-tag.accepted {
-  background-color: #b5dfbc;
-  color: #084d0c;
-}
-
-.status-tag.fulfilled {
-  background-color: #cbdbff;
-  color: #003366;
-}
-
-.tab {
-  padding: 10px 20px;
-  border: none;
-  background-color: #fce2e6;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: 0.3s ease;
-}
-
-.tab.active {
-  background-color: #ffb2b2;
-}
-
-.tab:hover {
-  background-color: #ffc7c7;
+  .main-content h1 {
+    font-size: 20px;
+  }
 }
 
 /* ------------------------------
@@ -710,17 +650,9 @@ select:focus {
   overflow: hidden;
 }
 
-.helpboard:nth-child(3n + 1) {
-  background-color: #fff59f;
-}
-
-.helpboard:nth-child(3n + 2) {
-  background-color: #b5dfbc;
-}
-
-.helpboard:nth-child(3n) {
-  background-color: #cbdbff;
-}
+.helpboard:nth-child(3n + 1) {background-color: #fff59f;}
+.helpboard:nth-child(3n + 2) {background-color: #b5dfbc;}
+.helpboard:nth-child(3n) {background-color: #cbdbff;}
 
 .helpboard:hover {
   transform: translateY(-5px);
@@ -744,7 +676,7 @@ select:focus {
 
 .helpboard .helpboard-title {
   font-size: 26px;
-  font-weight: bold;
+  font-weight: bold !important;
   margin: 0;
   color: #1e2f4b;
 }
@@ -775,17 +707,9 @@ select:focus {
   color: #b61212;
 }
 
-.helpboard:nth-child(3n + 1) .author {
-  color: #aba044;
-}
-
-.helpboard:nth-child(3n + 2) .author {
-  color: #588b60;
-}
-
-.helpboard:nth-child(3n) .author {
-  color: #6c89cb;
-}
+.helpboard:nth-child(3n + 1) .author {color: #aba044;}
+.helpboard:nth-child(3n + 2) .author {color: #588b60;}
+.helpboard:nth-child(3n) .author {color: #6c89cb;}
 
 .helpboard p {
   display: -webkit-box;
@@ -898,10 +822,7 @@ select:focus {
     padding-top:20px;
 }
 
-.req-page .help-toggle input[type="checkbox"] {
-  display: none;
-}
-
+/* "I helped" button */
 .req-page .help-button {
   display: inline-block;
   padding: 14px 24px;
@@ -920,10 +841,64 @@ select:focus {
   box-shadow: 0px 1px 20px rgba(100, 100, 100, 0.3);
 }
 
+.req-page .help-toggle input[type="checkbox"] {
+  display: none;
+}
+
 .req-page .help-toggle input[type="checkbox"]:checked + .help-button {
   background-color: rgb(255, 135, 135);
 }
 
+/* "I helped" verification */
+.req-page .help-details {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.req-page .help-details textarea {
+  resize: vertical;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.req-page .help-toggle input[type="checkbox"]:checked ~ .help-details {
+  display: flex;
+}
+
+.req-page .help-details input[type="file"] {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.req-page .verification-button {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.req-page .verification-button input[type="submit"] {
+    padding: 8px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 135, 135);
+    box-shadow: 0px 1px 10px rgba(100, 100, 100, 0.3);
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.req-page .verification-button input[type="submit"]:hover {
+  background-color: rgb(211, 113, 113);
+  box-shadow: 0px 1px 20px rgba(100, 100, 100, 0.3);
+}
 
 /* ------------------------------
    SPECIFIC REQUEST - RESPONSIVE LAYOUT
