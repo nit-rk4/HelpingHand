@@ -473,7 +473,7 @@ select:focus {
   .form-group {
     width: 100%;
   }
-
+  
   .button-wrapper {
     flex-direction: column;
     gap: 10px;
