@@ -6,7 +6,7 @@
         exit;
     }
 
-    require "../phnadudup/config.php";
+    require "../php/config.php";
     require "../php/request_utils.php";
     require "../php/help_utils.php";
 
