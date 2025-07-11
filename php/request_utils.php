@@ -43,7 +43,14 @@ function getRequestsByStatus($conn, $status, $tier = null){
 
 //Get requests visible on the help board
 function getVisibleRequests($conn){
-    $sql = "SELECT * FROM requests WHERE visible_since IS NOT NULL";
+    $sql = "SELECT 
+                r.id, r.title, r.description, r.category, r.deadline, r.attachment_path,
+                u.name AS requester_name    
+            FROM requests r
+            JOIN users u ON r.user_id = u.id
+            WHERE r.visible_since IS NOT NULL
+                AND (r.deadline >= CURDATE()) 
+            ORDER BY r.visible_since DESC";
     $result = mysqli_query($conn, $sql);
     
     $requests = [];
