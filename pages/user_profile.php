@@ -34,14 +34,13 @@
 
     <main class="main-content">
       <h1>My Submitted Requests</h1>
-      <div class="tabs-filter-container">
-        <div class="tabs">
-          <button class="tab active">Pending</button>
-          <button class="tab">Ongoing</button>
-          <button class="tab">Rejected</button>
-          <button class="tab">Fulfilled</button>
-          <button class="tab">Expired</button>
-        </div>
+     <div class="tabs">
+  <button class="tab active" data-popover="Requests you submitted that are waiting for review or action.">Pending</button>
+  <button class="tab" data-popover="Requests currently being processed or receiving help.">Ongoing</button>
+  <button class="tab" data-popover="Requests that were not approved or denied.">Rejected</button>
+  <button class="tab" data-popover="Requests that have been successfully fulfilled.">Fulfilled</button>
+  <button class="tab" data-popover="Requests that passed their deadline without being fulfilled.">Expired</button>
+</div>
       </div>
 
       <div class="requests-table">
