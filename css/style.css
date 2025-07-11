@@ -728,7 +728,7 @@ select:focus {
 
 .helpboard .helpboard-title {
   font-size: 26px;
-  font-weight: bold !important;
+  font-weight: bold;
   margin: 0;
   color: #1e2f4b;
 }
