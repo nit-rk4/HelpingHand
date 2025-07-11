@@ -1,5 +1,18 @@
 <?php
 // /pages/user_profile.php
+
+// Read status filter from URL (?status=...)
+$statusFilter = isset($_GET['status']) ? strtolower($_GET['status']) : 'all';
+
+// Example data (replace with real DB data later)
+$requests = [
+  ['title'=>'Food Supplies Needed','desc'=>'Requesting rice, canned goods for family of 5.','status'=>'pending','deadline'=>'2025-07-20'],
+  ['title'=>'Medical Assistance','desc'=>'Help needed for prescription refill.','status'=>'fulfilled','deadline'=>'2025-07-10'],
+  ['title'=>'Home Repair Help','desc'=>'Assistance repairing leaking roof.','status'=>'pending','deadline'=>'2025-07-25'],
+  ['title'=>'Scholarship Request','desc'=>'Request rejected by admin.','status'=>'rejected','deadline'=>'2025-06-01'],
+  ['title'=>'Ongoing Aid','desc'=>'Currently being processed.','status'=>'ongoing','deadline'=>'2025-07-30'],
+  ['title'=>'Old Request','desc'=>'Expired request.','status'=>'expired','deadline'=>'2025-06-15'],
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,176 +21,89 @@
   <title>User Profile - HelpingHand</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
-
-  <style>
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .tab {
-      position: relative;
-      padding: 10px 20px;
-      border: none;
-      background-color: #fce2e6;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: 0.3s ease;
-    }
-
-    .tab.active {
-      background-color: #ffb2b2;
-    }
-
-    .tab:hover {
-      background-color: #ffc7c7;
-    }
-
-    /* Popover styles on hover */
-    .tab::after {
-      content: attr(data-popover);
-      position: absolute;
-      bottom: 120%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0,0,0,0.8);
-      color: #fff;
-      padding: 8px 10px;
-      border-radius: 6px;
-      font-size: 12px;
-      width: max-content;
-      max-width: 220px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.2s ease;
-      text-align: center;
-      z-index: 10;
-    }
-
-    .tab:hover::after {
-      opacity: 1;
-      visibility: visible;
-    }
-  </style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="nav-left">
-      <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo">
-      <nav>
-        <ul class="nav-links">
-          <li><a href="user_dashboard.php">Dashboard</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">About Us</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <div class="container">
-    <aside class="sidebar">
-      <ul>
+<header class="navbar">
+  <div class="nav-left">
+    <img class="logo" src="../assets/logo.svg" alt="HelpingHand Logo">
+    <nav>
+      <ul class="nav-links">
         <li><a href="user_dashboard.php">Dashboard</a></li>
-        <li class="active"><a href="user_profile.php">Profile</a></li>
-        <li><a href="my_helped_requests.php">My Helped Requests</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">About Us</a></li>
       </ul>
-    </aside>
-
-    <main class="main-content">
-      <h1>My Submitted Requests</h1>
-      <div class="tabs-filter-container">
-        <div class="tabs">
-          <button class="tab active" data-filter="pending" data-popover="Requests you submitted that are waiting for review or action.">Pending</button>
-          <button class="tab" data-filter="ongoing" data-popover="Requests currently being processed or receiving help.">Ongoing</button>
-          <button class="tab" data-filter="rejected" data-popover="Requests that were not approved or denied.">Rejected</button>
-          <button class="tab" data-filter="fulfilled" data-popover="Requests that have been successfully fulfilled.">Fulfilled</button>
-          <button class="tab" data-filter="expired" data-popover="Requests that passed their deadline without being fulfilled.">Expired</button>
-        </div>
-      </div>
-
-      <div class="requests-table">
-        <div class="request-row header">
-          <span class="title">Title</span>
-          <span class="desc">Description</span>
-          <span class="status">Status</span>
-          <span class="deadline">Deadline</span>
-        </div>
-
-        <!-- Sample Requests (add data-status attributes for filtering) -->
-        <div class="request-row" data-status="pending">
-          <span class="title">Food Supplies Needed</span>
-          <span class="desc">Requesting rice, canned goods for my family of 5.</span>
-          <span class="status">Pending</span>
-          <span class="deadline">2025-07-20</span>
-        </div>
-
-        <div class="request-row" data-status="fulfilled">
-          <span class="title">Medical Assistance</span>
-          <span class="desc">Help needed for prescription refill.</span>
-          <span class="status">Fulfilled</span>
-          <span class="deadline">2025-07-10</span>
-        </div>
-
-        <div class="request-row" data-status="pending">
-          <span class="title">Home Repair Help</span>
-          <span class="desc">Looking for assistance repairing our leaking roof.</span>
-          <span class="status">Pending</span>
-          <span class="deadline">2025-07-25</span>
-        </div>
-      </div>
-
-      <h2 style="margin-top: 40px;">Help Count Summary</h2>
-      <section class="help-count-section">
-        <h2>Help Count</h2>
-
-        <div class="donut-chart" role="img" aria-label="Help points distribution">
-          <div class="segment category1" style="--value: 40;"></div>
-          <div class="segment category2" style="--value: 30;"></div>
-          <div class="segment category3" style="--value: 30;"></div>
-          <div class="donut-center">
-            <span class="total">100</span>
-            <span>pts</span>
-          </div>
-        </div>
-
-        <div class="donut-legend">
-          <div><span class="legend-box category1"></span> Category 1 (40)</div>
-          <div><span class="legend-box category2"></span> Category 2 (30)</div>
-          <div><span class="legend-box category3"></span> Category 3 (30)</div>
-        </div>
-      </section>
-
-      <div class="details-wrapper">
-        <p><span class="details-label">Total Requests Submitted:</span> 3</p>
-        <p><span class="details-label">Requests Fulfilled:</span> 1</p>
-        <p><span class="details-label">Pending Requests:</span> 2</p>
-      </div>
-    </main>
+    </nav>
   </div>
+</header>
 
-  <script>
-    const tabs = document.querySelectorAll('.tab');
-    const rows = document.querySelectorAll('.request-row:not(.header)');
+<div class="container">
+  <aside class="sidebar">
+    <ul>
+      <li><a href="user_dashboard.php">Dashboard</a></li>
+      <li class="active"><a href="user_profile.php">Profile</a></li>
+      <li><a href="my_helped_requests.php">My Helped Requests</a></li>
+    </ul>
+  </aside>
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
+  <main class="main-content">
+    <h1>My Submitted Requests</h1>
+    <div class="tabs-filter-container">
+      <div class="tabs">
+        <a href="?status=all" class="tab <?= $statusFilter=='all'?'active':'' ?>">All</a>
+        <a href="?status=pending" class="tab <?= $statusFilter=='pending'?'active':'' ?>">Pending</a>
+        <a href="?status=ongoing" class="tab <?= $statusFilter=='ongoing'?'active':'' ?>">Ongoing</a>
+        <a href="?status=rejected" class="tab <?= $statusFilter=='rejected'?'active':'' ?>">Rejected</a>
+        <a href="?status=fulfilled" class="tab <?= $statusFilter=='fulfilled'?'active':'' ?>">Fulfilled</a>
+        <a href="?status=expired" class="tab <?= $statusFilter=='expired'?'active':'' ?>">Expired</a>
+      </div>
+    </div>
 
-        const filter = tab.getAttribute('data-filter');
+    <div class="requests-table">
+      <div class="request-row header">
+        <span class="title">Title</span>
+        <span class="desc">Description</span>
+        <span class="status">Status</span>
+        <span class="deadline">Deadline</span>
+      </div>
+      <?php
+      foreach($requests as $req){
+        if($statusFilter=='all' || $req['status']==$statusFilter){
+          echo '<div class="request-row">';
+          echo '<span class="title">'.htmlspecialchars($req['title']).'</span>';
+          echo '<span class="desc">'.htmlspecialchars($req['desc']).'</span>';
+          echo '<span class="status">'.ucfirst($req['status']).'</span>';
+          echo '<span class="deadline">'.htmlspecialchars($req['deadline']).'</span>';
+          echo '</div>';
+        }
+      }
+      ?>
+    </div>
 
-        rows.forEach(row => {
-          if (row.dataset.status === filter) {
-            row.style.display = 'flex';
-          } else {
-            row.style.display = 'none';
-          }
-        });
-      });
-    });
-  </script>
+    <h2 style="margin-top: 40px;">Help Count Summary</h2>
+    <section class="help-count-section">
+      <h2>Help Count</h2>
+      <div class="donut-chart" role="img" aria-label="Help points distribution">
+        <div class="segment category1" style="--value: 40;"></div>
+        <div class="segment category2" style="--value: 30;"></div>
+        <div class="segment category3" style="--value: 30;"></div>
+        <div class="donut-center">
+          <span class="total">100</span>
+          <span>pts</span>
+        </div>
+      </div>
+      <div class="donut-legend">
+        <div><span class="legend-box category1"></span> Category 1 (40)</div>
+        <div><span class="legend-box category2"></span> Category 2 (30)</div>
+        <div><span class="legend-box category3"></span> Category 3 (30)</div>
+      </div>
+    </section>
+
+    <div class="details-wrapper">
+      <p><span class="details-label">Total Requests Submitted:</span> <?= count($requests) ?></p>
+      <p><span class="details-label">Requests Fulfilled:</span> <?= count(array_filter($requests,fn($r)=>$r['status']=='fulfilled')) ?></p>
+      <p><span class="details-label">Pending Requests:</span> <?= count(array_filter($requests,fn($r)=>$r['status']=='pending')) ?></p>
+    </div>
+  </main>
+</div>
 </body>
 </html>

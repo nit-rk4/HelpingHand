@@ -404,6 +404,32 @@ select:focus {
   opacity: 1;
   visibility: visible;
 }
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background-color: #fce2e6;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.tab.active {
+  background-color: #ffb2b2;
+}
+
+.tab:hover {
+  background-color: #ffc7c7;
+}
 
 /* ----------------------------------
    Responsive adjustments for mobile
