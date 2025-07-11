@@ -59,7 +59,7 @@
     </div>
 
     <div class="team-member">
-      <img src="https://static.toiimg.com/thumb/msid-119268991,width-1280,height-720,resizemode-4/119268991.jpg" alt="Denise">
+      <img src="../assets/denise.jpg" alt="Denise">
       <h3>Denise Manalang</h3>
       <p>Backend Developer</p>
       <p>Leads database management...</p>
