@@ -21,9 +21,6 @@
         </ul>
       </nav>
     </div>
-    <div class="searchbar">
-      <input type="text" placeholder="Search...">
-    </div>
   </header>
 
   <div class="container">
@@ -56,7 +53,7 @@
       <div class="form-group">
         <label for="category">Category</label>
         <select id="category" name="category" required>
-            <optgroup label="Tier 1">
+            <optgroup label="Category 1">
                 <option value="Home/Tech Help">Home/Tech Help</option>
                 <option value="Escort/Babysitting">Escort/Babysitting</option>
                 <option value="Volunteer Support">Volunteer Support</option>
@@ -65,13 +62,13 @@
                 <option value="Tutoring/Academic Help">Tutoring/Academic Help</option>
             </optgroup>
 
-            <optgroup label="Tier 2">
+            <optgroup label="Category 2">
                 <option value="Food & Essentials">Food & Essentials</option>
                 <option value="School Supplies">School Supplies</option>
                 <option value="Goods Donations">Goods Donations</option>
             </optgroup>
 
-            <optgroup label="Tier 3">
+            <optgroup label="Category 3">
                 <option value="Medical Assistance">Medical Assistance</option>
                 <option value="Legal & Documents">Legal & Documents</option>
                 <option value="Monetary Assistance">Monetary Assistance</option>

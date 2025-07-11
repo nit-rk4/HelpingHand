@@ -21,9 +21,6 @@
         </ul>
       </nav>
     </div>
-    <div class="searchbar">
-      <input type="text" placeholder="Search...">
-    </div>
   </header>
 
   <div class="container">
@@ -80,9 +77,9 @@
   <h2>Help Count</h2>
 
   <div class="donut-chart" role="img" aria-label="Help points distribution">
-    <div class="segment tier1" style="--value: 40;"></div>
-    <div class="segment tier2" style="--value: 30;"></div>
-    <div class="segment tier3" style="--value: 30;"></div>
+    <div class="segment category1" style="--value: 40;"></div>
+    <div class="segment category2" style="--value: 30;"></div>
+    <div class="segment category3" style="--value: 30;"></div>
     <div class="donut-center">
       <span class="total">100</span>
       <span>pts</span>
@@ -90,9 +87,9 @@
   </div>
 
   <div class="donut-legend">
-    <div><span class="legend-box tier1"></span> Tier 1 (40)</div>
-    <div><span class="legend-box tier2"></span> Tier 2 (30)</div>
-    <div><span class="legend-box tier3"></span> Tier 3 (30)</div>
+    <div><span class="legend-box category1"></span> Category 1 (40)</div>
+    <div><span class="legend-box category2"></span> Category 2 (30)</div>
+    <div><span class="legend-box category3"></span> Category 3 (30)</div>
   </div>
 </section>
 
