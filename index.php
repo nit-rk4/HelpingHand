@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($user = mysqli_fetch_assoc($result)) {
         if ($password === $user['password']) {
             $_SESSION['user_id'] = $user['id'];
-            header("Location: pages/user/user_profile.php");
+            header("Location: pages/user/user_requests.php");
             exit;
         } else {
             $error = "Invalid credentials. Please try again.";
