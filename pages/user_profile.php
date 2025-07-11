@@ -28,6 +28,7 @@
       <ul>
         <li><a href="user_dashboard.php">Dashboard</a></li>
         <li class="active"><a href="user_profile.php">Profile</a></li>
+        <li><a href="my_helped_requests.php">My Helped Requests</a></li>
       </ul>
     </aside>
 
