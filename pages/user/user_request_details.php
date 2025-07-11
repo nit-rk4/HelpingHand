@@ -1,12 +1,12 @@
 <?php
-// Dummy data (replace with DB later)
-$title = "Food Supplies Needed";
-$desc = "Requesting rice, canned goods for family of 5.";
-$category = "Basic Needs";
+// Read values from URL
+$title = $_GET['title'] ?? 'No title';
+$desc = $_GET['desc'] ?? 'No description';
+$category = $_GET['category'] ?? 'N/A';
 $status = $_GET['status'] ?? 'pending';
-$deadline = "2025-07-20";
-$attachment = "../uploads/sample.jpg";
-$helpers = ["User A", "User B"];
+$deadline = $_GET['deadline'] ?? 'No deadline';
+$attachment = '../uploads/' . ($_GET['attachment'] ?? '');
+$helpers = ["Juan Dela Cruz", "Maria Santos", "Pedro Reyes"]; //dummy
 ?>
 
 <!DOCTYPE html>
@@ -14,42 +14,34 @@ $helpers = ["User A", "User B"];
 <head>
   <meta charset="UTF-8" />
   <title><?= htmlspecialchars($title) ?> - Request Details</title>
-  <link rel="stylesheet" href="../css/style.css?v=2.2">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css?v=4">
 </head>
-
 <body>
 <?php include("../navbar.php"); ?>
 
 <main class="details-wrapper">
-  <a class="back-link" href="user_profile.php">← Back to My Requests</a>
+  <a href="user_profile.php" class="back-link">← Back to My Requests</a>
 
   <h1><?= htmlspecialchars($title) ?></h1>
 
   <div class="details-section">
-    <h3>Description</h3>
-    <p><?= htmlspecialchars($desc) ?></p>
-
-    <h3>Category</h3>
-    <p><?= htmlspecialchars($category) ?></p>
-
-    <h3>Status</h3>
-    <p class="status-tag"><?= ucfirst($status) ?></p>
-
-    <h3>Deadline</h3>
-    <p><?= htmlspecialchars($deadline) ?></p>
-
-    <?php if (!empty($attachment)): ?>
-      <img src="<?= $attachment ?>" alt="Request Attachment" class="request-image">
+    <p><strong>Description:</strong> <?= htmlspecialchars($desc) ?></p>
+    <p><strong>Category:</strong> <?= htmlspecialchars($category) ?></p>
+    <p><strong>Status:</strong> <?= ucfirst($status) ?></p>
+    <p><strong>Deadline:</strong> <?= htmlspecialchars($deadline) ?></p>
+    <?php if (!empty($attachment) && file_exists($attachment)): ?>
+      <img src="<?= $attachment ?>" class="request-image" alt="Attachment">
     <?php endif; ?>
   </div>
 
+  <!-- Conditional Buttons -->
   <?php if ($status === 'ongoing'): ?>
-    <a href="#fulfill-modal" class="btn-action btn-fulfill">Mark as Fulfilled</a>
+    <a href="#fulfill-modal" class="btn btn-fulfill">Mark as Fulfilled</a>
   <?php elseif ($status === 'fulfilled'): ?>
-    <a href="#helpers-modal" class="btn-action btn-view">View Helpers</a>
+    <a href="#helpers-modal" class="btn btn-view">View Helpers</a>
   <?php elseif ($status === 'expired'): ?>
-    <a href="#renew-modal" class="btn-action btn-renew">Renew Request</a>
+    <a href="#renew-modal" class="btn btn-renew">Renew Request</a>
   <?php endif; ?>
 </main>
 
@@ -58,12 +50,12 @@ $helpers = ["User A", "User B"];
 <div id="fulfill-modal" class="modal">
   <div class="modal-content">
     <a href="#" class="modal-close">&times;</a>
-    <h2>Mark as Fulfilled</h2>
+    <h2>Confirm Fulfillment</h2>
     <form method="post">
       <?php foreach ($helpers as $h): ?>
         <label><input type="checkbox" name="helpers[]" value="<?= $h ?>"> <?= $h ?></label><br>
       <?php endforeach; ?>
-      <button type="submit" class="btn-action btn-fulfill">Confirm</button>
+      <button type="submit" class="btn btn-fulfill">Confirm</button>
     </form>
   </div>
 </div>
@@ -74,7 +66,7 @@ $helpers = ["User A", "User B"];
 <div id="helpers-modal" class="modal">
   <div class="modal-content">
     <a href="#" class="modal-close">&times;</a>
-    <h2>Fulfilled By</h2>
+    <h2>Helped By:</h2>
     <ul>
       <?php foreach ($helpers as $h): ?>
         <li><?= $h ?></li>
@@ -93,14 +85,12 @@ $helpers = ["User A", "User B"];
     <form method="post" enctype="multipart/form-data">
       <label>Why do you want to renew?</label>
       <textarea name="renew_reason" rows="4" required></textarea>
-
-      <label>Upload proof (optional):</label>
+      <label>Upload Proof (optional)</label>
       <input type="file" name="renew_proof">
-
-      <button type="submit" class="btn-action btn-renew">Submit Renewal</button>
+      <button type="submit" class="btn btn-renew">Submit Renewal</button>
     </form>
   </div>
 </div>
 <?php endif; ?>
 </body>
-</html>
+</html> 

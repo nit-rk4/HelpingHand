@@ -54,18 +54,27 @@ $requests = [
         <span class="status">Status</span>
         <span class="deadline">Deadline</span>
       </div>
-      <?php
-      foreach($requests as $req){
-        if($statusFilter=='all' || $req['status']==$statusFilter){
-          echo '<div class="request-row">';
-          echo '<span class="title">'.htmlspecialchars($req['title']).'</span>';
-          echo '<span class="desc">'.htmlspecialchars($req['desc']).'</span>';
-          echo '<span class="status">'.ucfirst($req['status']).'</span>';
-          echo '<span class="deadline">'.htmlspecialchars($req['deadline']).'</span>';
-          echo '</div>';
-        }
-      }
-      ?>
+     <?php
+foreach($requests as $req){
+  if($statusFilter == 'all' || $req['status'] == $statusFilter){
+    $query = http_build_query([
+      'title' => $req['title'],
+      'desc' => $req['desc'],
+      'category' => 'Basic Needs',
+      'status' => $req['status'],
+      'deadline' => $req['deadline'],
+      'attachment' => 'sample.jpg'
+    ]);
+    echo '<a href="user_request_details.php?' . $query . '" class="request-row">';
+    echo '<span class="title">'.htmlspecialchars($req['title']).'</span>';
+    echo '<span class="desc">'.htmlspecialchars($req['desc']).'</span>';
+    echo '<span class="status">'.ucfirst($req['status']).'</span>';
+    echo '<span class="deadline">'.htmlspecialchars($req['deadline']).'</span>';
+    echo '</a>';
+  }
+}
+?>
+
 
       <div class="details-wrapper">
       <p><span class="details-label">Total Requests Submitted:</span> <?= count($requests) ?></p>
