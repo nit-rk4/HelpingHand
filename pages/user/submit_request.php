@@ -21,7 +21,7 @@ if (isset($_POST['submit-request'])) {
     }
   }
 
-  submitRequest($userId, $title, $description, $category, $deadline, $attachment_path);
+  submitRequest($conn, $userId, $title, $description, $category, $deadline, $attachment_path);
 
   header("Location: ../user/user_profile.php");
   exit();
