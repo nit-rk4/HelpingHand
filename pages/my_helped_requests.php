@@ -1,4 +1,4 @@
-<?php
+<?php 
 // /pages/my_helped_requests.php
 ?>
 <!DOCTYPE html>
@@ -23,18 +23,19 @@
 
   <div class="container">
     <aside class="sidebar">
-    <ul>
+      <ul>
         <li><a href="user_dashboard.php">Dashboard</a></li>
         <li><a href="user_profile.php">Profile</a></li>
         <li class="active"><a href="my_helped_requests.php">My Helped Requests</a></li>
-    </ul>
-  </aside>
+      </ul>
+    </aside>
 
     <main class="main-content">
       <h2>My Helped Requests</h2>
       <div class="my-helped-section">
         <div class="helped-requests-list">
-          <!-- Helped Request Card with Expandable Details -->
+          
+          <!-- Helped Request 1 -->
           <div class="request-card">
             <div class="request-title">Medical Assistance Needed</div>
             <div class="request-meta">
@@ -49,15 +50,10 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec erat ut felis sagittis aliquam.</p>
               <p><strong>Contact:</strong> +639123456789 | maria@gmail.com</p>
               <img src="../uploads/sample1.jpg" alt="Request Image" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
-              <div class="button-wrapper" style="margin-top: 10px;">
-                <form method="post" action="../php/confirm_help.php">
-                  <input type="hidden" name="request_id" value="1">
-                  <button class="submit-btn" type="submit">Confirm I Helped</button>
-                </form>
-              </div>
             </div>
           </div>
 
+          <!-- Helped Request 2 -->
           <div class="request-card">
             <div class="request-title">Food Donation Campaign</div>
             <div class="request-meta">
@@ -72,12 +68,6 @@
               <p>Donec et magna nec nisl suscipit fringilla. Praesent quis arcu in lorem sodales eleifend.</p>
               <p><strong>Contact:</strong> +639987654321 | juan@gmail.com</p>
               <img src="../uploads/sample2.jpg" alt="Request Image" style="max-width: 100%; border-radius: 10px; margin-top: 10px;">
-              <div class="button-wrapper" style="margin-top: 10px;">
-                <form method="post" action="../php/confirm_help.php">
-                  <input type="hidden" name="request_id" value="2">
-                  <button class="submit-btn" type="submit">Confirm I Helped</button>
-                </form>
-              </div>
             </div>
           </div>
 
