@@ -199,8 +199,54 @@ function rejectRequest ($conn, $requestID){
  *  ------------------------------------------
 */
 
-function submitRequest(){}
+function submitRequest($conn, $userId, $title, $description, $category, $deadline, $attachment_path = null)
+{
+    // Assign tier based on category
+    $tier1 = [
+        "Home/Tech Help",
+        "Escort/Babysitting",
+        "Volunteer Support",
+        "Errand",
+        "Lost Item",
+        "Tutoring/Academic Help"
+    ];
+    $tier2 = [
+        "Food & Essentials",
+        "School Supplies",
+        "Goods Donations"
+    ];
+    $tier3 = [
+        "Medical Assistance",
+        "Legal & Documents",
+        "Monetary Assistance"
+    ];
 
+    if (in_array($category, $tier1)) {
+        $tier = "1";
+        $visible_since = date('Y-m-d H:i:s'); // visible immediately
+
+    } elseif (in_array($category, $tier2)) {
+        $tier = "2";
+        $visible_since = null; // needs admin approval
+
+    } elseif (in_array($category, $tier3)) {
+        $tier = "3";
+        $visible_since = null; // needs admin approval & interview
+    } else {
+        // fallback
+        $tier = "1";
+        $visible_since = date('Y-m-d H:i:s');
+        $interview_status = "none";
+        $status = "pending";
+    }
+
+    $sql = "INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, visible_since, created_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt,"isssssssss", $userId, $title, $description, $category, $tier, $attachment_path, $deadline, $visible_since);
+    
+    return mysqli_stmt_execute($stmt);
+}
 function renewRequest($conn, $originalID, $userNote, $newFile = null) {
     $sql = "SELECT * FROM requests WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
