@@ -1,5 +1,16 @@
 <?php 
 // /pages/my_helped_requests.php
+$statusFilter = isset($_GET['status']) ? strtolower($_GET['status']) : 'all';
+
+$requests = [
+  ['title'=>'Food Supplies Needed','desc'=>'Requesting rice, canned goods for family of 5.','status'=>'pending','deadline'=>'2025-07-20'],
+  ['title'=>'Medical Assistance','desc'=>'Help needed for prescription refill.','status'=>'fulfilled','deadline'=>'2025-07-10'],
+  ['title'=>'Home Repair Help','desc'=>'Assistance repairing leaking roof.','status'=>'pending','deadline'=>'2025-07-25'],
+  ['title'=>'Scholarship Request','desc'=>'Request rejected by admin.','status'=>'rejected','deadline'=>'2025-06-01'],
+  ['title'=>'Ongoing Aid','desc'=>'Currently being processed.','status'=>'ongoing','deadline'=>'2025-07-30'],
+  ['title'=>'Old Request','desc'=>'Expired request.','status'=>'expired','deadline'=>'2025-06-15'],
+];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
