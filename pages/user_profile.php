@@ -6,8 +6,65 @@
 <head>
   <meta charset="UTF-8">
   <title>User Profile - HelpingHand</title>
-  <link rel="stylesheet" href="../css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    /* --- Tabs with popovers --- */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      position: relative;
+      padding: 10px 20px;
+      border: none;
+      background-color: #fce2e6;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s ease;
+    }
+
+    .tab.active {
+      background-color: #ffb2b2;
+    }
+
+    .tab:hover {
+      background-color: #ffc7c7;
+    }
+
+    /* Popover styles */
+    .tab::after {
+      content: attr(data-popover);
+      position: absolute;
+      bottom: 120%; /* above the button */
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      width: max-content;
+      max-width: 220px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .tab:hover::after,
+    .tab.show-popover::after {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
 </head>
 <body>
   <header class="navbar">
@@ -34,13 +91,14 @@
 
     <main class="main-content">
       <h1>My Submitted Requests</h1>
-     <div class="tabs">
-  <button class="tab active" data-popover="Requests you submitted that are waiting for review or action.">Pending</button>
-  <button class="tab" data-popover="Requests currently being processed or receiving help.">Ongoing</button>
-  <button class="tab" data-popover="Requests that were not approved or denied.">Rejected</button>
-  <button class="tab" data-popover="Requests that have been successfully fulfilled.">Fulfilled</button>
-  <button class="tab" data-popover="Requests that passed their deadline without being fulfilled.">Expired</button>
-</div>
+      <div class="tabs-filter-container">
+        <div class="tabs">
+          <button class="tab active" data-popover="Requests you submitted that are waiting for review or action.">Pending</button>
+          <button class="tab" data-popover="Requests currently being processed or receiving help.">Ongoing</button>
+          <button class="tab" data-popover="Requests that were not approved or denied.">Rejected</button>
+          <button class="tab" data-popover="Requests that have been successfully fulfilled.">Fulfilled</button>
+          <button class="tab" data-popover="Requests that passed their deadline without being fulfilled.">Expired</button>
+        </div>
       </div>
 
       <div class="requests-table">
@@ -102,5 +160,14 @@
       </div>
     </main>
   </div>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        tab.classList.add('show-popover');
+        setTimeout(() => tab.classList.remove('show-popover'), 2000);
+      });
+    });
+  </script>
 </body>
 </html>
