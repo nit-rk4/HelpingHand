@@ -666,6 +666,10 @@ select:focus {
   color: #333;
 }
 
+.request-row .category {
+  flex: 1.2;
+}
+
 .request-row:hover {
   background-color: #fff0f0;
 }
@@ -691,6 +695,7 @@ select:focus {
 
 .details-section {
   margin-top: 30px;
+
 }
 
 .details-section h3 {
@@ -701,6 +706,8 @@ select:focus {
 .details-section p {
   margin: 6px 0;
   color: #444;
+  margin-bottom: 10px;
+  line-height: 1.6;
 }
 
 .details-label {

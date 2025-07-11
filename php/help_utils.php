@@ -78,7 +78,7 @@ function verifyHelper($conn, $requestID, $userID){
 }
 
 function getHelpers($conn, $requestID){
-    $sql = "SELECT h.user_id, u.uersname, h.proof_text, h.proof_file, h.is_verified
+    $sql = "SELECT h.user_id, u.name, h.proof_text, h.proof_file, h.is_verified
             FROM helpers h
             JOIN users u ON h.user_id = u.id
             WHERE h.request_id = ?";

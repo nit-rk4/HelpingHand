@@ -14,13 +14,13 @@
 
   <div class="container">
     <aside class="sidebar">
-    <ul>
-        <li class="active"><a href="user_dashboard.php">Dashboard</a></li>
-        <li><a href="user_profile.php">Profile</a></li>
-        <li><a href="my_helped_requests.php">My Helped Requests</a></li>
-    </ul>
+      <ul>
+        <li><a href="submit_request.php">Submit a Request</a></li>
+        <li class="active"><a href="user_requests.php">My Requests</a></li>
+        <li><a href="my_helped_requests.php">Requests I Helped On</a></li>
+      </ul>
     </aside>
-
+    
 <main class="main-content center-request">
   <h1>Submit a New Request</h1>
   <div class="submit-request-wrapper">

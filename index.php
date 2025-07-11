@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($user = mysqli_fetch_assoc($result)) {
         if ($password === $user['password']) {
             $_SESSION['user'] = $user;
-            header("Location: pages/user_profile.php");
+            header("Location: pages/user/user_requests.php");
             exit;
         } else {
             $error = "Invalid credentials.";
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($admin = mysqli_fetch_assoc($result)) {
             if ($password === $admin['password']) {
                 $_SESSION['admin'] = $admin;
-                header("Location: pages/admin_requests.php");
+                header("Location: pages/admin/admin_requests.php");
                 exit;
             } else {
                 $error = "Invalid credentials.";

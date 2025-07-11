@@ -78,7 +78,7 @@ $details = getRequestDetails($conn, $requestID);
           </a>
 
           <?php
-            $path = "/uploads/" . $details['attachment_path'];
+            $path = "../../uploads/" . $details['attachment_path'];
             if (file_exists($path)) {
               $mime = mime_content_type($path);
               if (str_starts_with($mime, "image/")) {

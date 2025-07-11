@@ -1,21 +1,47 @@
 <?php
-// Read values from URL
-$title = $_GET['title'] ?? 'No title';
-$desc = $_GET['desc'] ?? 'No description';
-$category = $_GET['category'] ?? 'N/A';
-$status = $_GET['status'] ?? 'pending';
-$deadline = $_GET['deadline'] ?? 'No deadline';
-$attachment = '../uploads/' . ($_GET['attachment'] ?? '');
-$helpers = ["Juan Dela Cruz", "Maria Santos", "Pedro Reyes"]; //dummy
+session_start();
+
+require_once "../../php/config.php";
+require_once "../../php/request_utils.php";
+require_once "../../php/help_utils.php";
+
+$requestID = $_GET['id'] ?? null;
+$userID = $_SESSION['user'] ?? null;
+if (!$requestID || !$userID){
+  echo ("Invalid access.");
+  exit;
+}
+
+$request = getRequestDetailsForUser($conn,$requestID, $userID);
+
+if (!$request){
+  die("Request not found.");
+}
+
+$helpers = getHelpers($conn, $requestID);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (isset($_POST['verify_submit'])) {
+      $verifiedHelpers = $_POST['helpers'] ?? [];
+      foreach ($verifiedHelpers as $helperID) {
+          verifyHelper($conn, $requestID, intval($helperID));
+      }
+      fulfillRequest($conn, $requestID);
+      header("Location: user_request_details.php?id=$requestID");
+      exit;
+  }
+
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title><?= htmlspecialchars($title) ?> - Request Details</title>
+  <title><?= htmlspecialchars($request['title']) ?> - Request Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/style.css?v=4">
+  <link rel="stylesheet" href="/css/style.css?v=4">
 </head>
 <body>
 <?php include("../navbar.php"); ?>
@@ -23,46 +49,87 @@ $helpers = ["Juan Dela Cruz", "Maria Santos", "Pedro Reyes"]; //dummy
 <main class="details-wrapper">
   <a href="user_profile.php" class="back-link">← Back to My Requests</a>
 
-  <h1><?= htmlspecialchars($title) ?></h1>
+  <h1><?= htmlspecialchars($request['title']) ?></h1>
 
-  <div class="details-section">
-    <p><strong>Description:</strong> <?= htmlspecialchars($desc) ?></p>
-    <p><strong>Category:</strong> <?= htmlspecialchars($category) ?></p>
-    <p><strong>Status:</strong> <?= ucfirst($status) ?></p>
-    <p><strong>Deadline:</strong> <?= htmlspecialchars($deadline) ?></p>
-    <?php if (!empty($attachment) && file_exists($attachment)): ?>
-      <img src="<?= $attachment ?>" class="request-image" alt="Attachment">
-    <?php endif; ?>
-  </div>
+<div class="details-section">
+  <?php $displayStatus = $request['status'] === 'approved' ? 'Ongoing' : ucfirst($request['status']); ?>
+
+  <p><span class="details-label">Description:</span> <?= htmlspecialchars($request['description']) ?></p>
+  <p><span class="details-label">Category:</span> <?= htmlspecialchars($request['category']) ?></p>
+  <p><span class="details-label">Status:</span> <?= $displayStatus ?></p>
+  <p><span class="details-label">Deadline:</span> <?= htmlspecialchars($request['deadline']) ?></p>
+
+  <?php if (!empty($request['attachment_path'])): ?>
+    <div class="request-attachment">
+      <strong>Attachment:</strong>
+      <a class="attachment-link" href="../../uploads/<?= htmlspecialchars($request['attachment_path']) ?>" target="_blank" rel="noopener noreferrer">
+        View Attachment
+      </a>
+      <?php
+        $path = "../../uploads/" . $request['attachment_path'];
+        if (file_exists($path)) {
+          $mime = mime_content_type($path);
+          if (str_starts_with($mime, "image/")) {
+            echo "<div class='attachment-preview'>";
+            echo "<img src='$path' alt='Attachment Preview'>";
+            echo "</div>";
+          }
+        }
+      ?>
+    </div>
+  <?php else: ?>
+    <div class="request-attachment">
+      <strong>Attachment:</strong> None
+    </div>
+  <?php endif; ?>
+</div>
 
   <!-- Conditional Buttons -->
-  <?php if ($status === 'ongoing'): ?>
+  <?php if ($request['status'] === 'approved'): ?>
     <a href="#fulfill-modal" class="btn btn-fulfill">Mark as Fulfilled</a>
-  <?php elseif ($status === 'fulfilled'): ?>
+  <?php elseif ($request['status'] === 'fulfilled'): ?>
     <a href="#helpers-modal" class="btn btn-view">View Helpers</a>
-  <?php elseif ($status === 'expired'): ?>
+  <?php elseif ($request['status'] === 'expired'): ?>
     <a href="#renew-modal" class="btn btn-renew">Renew Request</a>
   <?php endif; ?>
 </main>
 
 <!-- Fulfill Modal -->
-<?php if ($status === 'ongoing'): ?>
+<?php if ($request['status'] === 'approved'): ?>
 <div id="fulfill-modal" class="modal">
   <div class="modal-content">
     <a href="#" class="modal-close">&times;</a>
     <h2>Confirm Fulfillment</h2>
     <form method="post">
-      <?php foreach ($helpers as $h): ?>
-        <label><input type="checkbox" name="helpers[]" value="<?= $h ?>"> <?= $h ?></label><br>
-      <?php endforeach; ?>
-      <button type="submit" class="btn btn-fulfill">Confirm</button>
+      <?php if (count($helpers) > 0): ?>
+        <?php foreach ($helpers as $h): ?>
+          <div class="helper-entry">
+            <label>
+              <input type="checkbox" name="helpers[]" value="<?= $h['user_id'] ?>">
+              <?= htmlspecialchars($h['name']) ?>
+            </label>
+
+            <?php if (!empty($h['proof_text'])): ?>
+              <p><em><?= htmlspecialchars($h['proof_text']) ?></em></p>
+            <?php endif; ?>
+
+            <?php if (!empty($h['proof_file'])): ?>
+              <a href="/uploads/<?= htmlspecialchars($h['proof_file']) ?>" target="_blank">📎 View File</a>
+            <?php endif; ?>
+          </div>
+          <hr>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p>No helpers have offered assistance yet. </p>
+      <?php endif; ?>
+      <button type="submit" name="verify_submit" class="btn btn-fulfill">Confirm</button>
     </form>
   </div>
 </div>
 <?php endif; ?>
 
 <!-- Fulfilled Modal -->
-<?php if ($status === 'fulfilled'): ?>
+<?php if ($request['status'] === 'fulfilled'): ?>
 <div id="helpers-modal" class="modal">
   <div class="modal-content">
     <a href="#" class="modal-close">&times;</a>
@@ -77,7 +144,7 @@ $helpers = ["Juan Dela Cruz", "Maria Santos", "Pedro Reyes"]; //dummy
 <?php endif; ?>
 
 <!-- Renew Modal -->
-<?php if ($status === 'expired'): ?>
+<?php if ($request['status'] === 'expired'): ?>
 <div id="renew-modal" class="modal">
   <div class="modal-content">
     <a href="#" class="modal-close">&times;</a>

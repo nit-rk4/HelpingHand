@@ -61,11 +61,18 @@ function getVisibleRequests($conn){
     return $requests;
 }
 
-//Get requests of a specific user
-function getUserRequests($conn, $userID){
-    $sql = "SELECT * FROM requests WHERE user_id = ? ORDER BY created_at DESC";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $userID);
+//Get requests of a specific user by status
+function getUserRequestsByStatus($conn, $userID, $status = 'all') {
+    if ($status === 'all') {
+        $sql = "SELECT * FROM requests WHERE user_id = ? ORDER BY created_at DESC";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 'i', $userID);
+    } else {
+        $sql = "SELECT * FROM requests WHERE user_id = ? AND status = ? ORDER BY created_at DESC";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 'is', $userID, $status);
+    }
+
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -76,6 +83,7 @@ function getUserRequests($conn, $userID){
 
     return $requests;
 }
+
 //Get a specific request (for backend logic)
 function getRequest($conn, $requestID){
     $sql = "SELECT * FROM requests WHERE id = ?";
@@ -107,6 +115,16 @@ function getRequestDetails($conn, $requestID){
     } else {
         return null; 
     }
+}
+
+function getRequestDetailsForUser($conn, $requestID, $userID){
+    $sql = "SELECT * FROM requests WHERE id = ? AND user_id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ii", $requestID, $userID);
+    mysqli_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_assoc($result);
 }
 
 /** 
@@ -214,7 +232,7 @@ function renewRequest($conn, $originalID, $userNote, $newFile = null) {
 
 function fulfillRequest($conn, $requestID) {
     $sql = "UPDATE requests
-            SET status = 'fulfilled', visibile_since = NULL
+            SET status = 'fulfilled', visible_since = NULL
             WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $requestID);
