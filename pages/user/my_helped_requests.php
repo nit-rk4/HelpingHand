@@ -64,9 +64,32 @@
 
         </div>
       </div>
+      <h2 style="margin-top: 40px;">Help Count Summary</h2>
+    <section class="help-count-section">
+      <h2>Help Count</h2>
+      <div class="donut-chart" role="img" aria-label="Help points distribution">
+        <div class="segment category1" style="--value: 40;"></div>
+        <div class="segment category2" style="--value: 30;"></div>
+        <div class="segment category3" style="--value: 30;"></div>
+        <div class="donut-center">
+          <span class="total">100</span>
+          <span>pts</span>
+        </div>
+      </div>
+      <div class="donut-legend">
+        <div><span class="legend-box category1"></span> Category 1 (40)</div>
+        <div><span class="legend-box category2"></span> Category 2 (30)</div>
+        <div><span class="legend-box category3"></span> Category 3 (30)</div>
+      </div>
+    </section>
+
+    <div class="details-wrapper">
+      <p><span class="details-label">Total Requests Submitted:</span> <?= count($requests) ?></p>
+      <p><span class="details-label">Requests Fulfilled:</span> <?= count(array_filter($requests,fn($r)=>$r['status']=='fulfilled')) ?></p>
+      <p><span class="details-label">Pending Requests:</span> <?= count(array_filter($requests,fn($r)=>$r['status']=='pending')) ?></p>
+    </div>
     </main>
   </div>
-
   <script>
     function toggleDetails(id) {
       const section = document.getElementById(id);
