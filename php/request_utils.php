@@ -4,29 +4,32 @@
  * ------------------------------------------
  *            FETCHING REQUESTS
  *  ------------------------------------------
- */
+*/
 
 //Get requests from database based on status and optional tier
-function getRequestsByStatus($conn, $status, $tier = null)
-{
+function getRequestsByStatus($conn, $status, $tier = null){
     if ($tier === null || $tier === 'all') {
         $sql = "SELECT 
                     requests.id, requests.title, requests.description,
                     requests.status, requests.tier, requests.category,
-                    requests.visible_since, users.name AS requester_name
+                    requests.visible_since, requests.deadline,
+                    users.name AS requester_name
                 FROM requests 
                 JOIN users ON requests.user_id = users.id
-                WHERE requests.status = ?";
+                WHERE requests.status = ?
+                ORDER BY requests.created_at DESC";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $status);
     } else {
         $sql = "SELECT 
                     requests.id, requests.title, requests.description,
                     requests.status, requests.tier, requests.category,
-                    requests.visible_since, users.name AS requester_name
+                    requests.visible_since, requests.deadline,
+                    users.name AS requester_name
                 FROM requests 
                 JOIN users ON requests.user_id = users.id
-                WHERE requests.status = ? AND requests.tier = ?";
+                WHERE requests.status = ? AND requests.tier = ?
+                ORDER BY requests.created_at DESC";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "si", $status, $tier);
     }
@@ -35,7 +38,7 @@ function getRequestsByStatus($conn, $status, $tier = null)
     $result = mysqli_stmt_get_result($stmt);
 
     $requests = [];
-    while ($row = mysqli_fetch_assoc($result)) {
+    while ($row = mysqli_fetch_assoc($result)){
         $requests[] = $row;
     }
 
@@ -43,8 +46,7 @@ function getRequestsByStatus($conn, $status, $tier = null)
 }
 
 //Get requests visible on the help board
-function getVisibleRequests($conn)
-{
+function getVisibleRequests($conn){
     $sql = "SELECT 
                 r.id, r.title, r.description, r.category, r.deadline, r.attachment_path,
                 u.name AS requester_name    
@@ -54,9 +56,9 @@ function getVisibleRequests($conn)
                 AND (r.deadline >= CURDATE()) 
             ORDER BY r.visible_since DESC";
     $result = mysqli_query($conn, $sql);
-
+    
     $requests = [];
-    while ($row = mysqli_fetch_assoc($result)) {
+    while ($row = mysqli_fetch_assoc($result)){
         $requests[] = $row;
     }
 
@@ -64,17 +66,10 @@ function getVisibleRequests($conn)
 }
 
 //Get requests of a specific user by status
-function getUserRequestsByStatus($conn, $userID, $status = 'all')
-{
-    if ($status === 'all') {
-        $sql = "SELECT * FROM requests WHERE user_id = ? ORDER BY created_at DESC";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'i', $userID);
-    } else {
-        $sql = "SELECT * FROM requests WHERE user_id = ? AND status = ? ORDER BY created_at DESC";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'is', $userID, $status);
-    }
+function getUserRequests($conn, $userID) {
+    $sql = "SELECT * FROM requests WHERE user_id = ? ORDER BY created_at DESC";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $userID);
 
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
@@ -88,8 +83,7 @@ function getUserRequestsByStatus($conn, $userID, $status = 'all')
 }
 
 //Get a specific request (for backend logic)
-function getRequest($conn, $requestID)
-{
+function getRequest($conn, $requestID){
     $sql = "SELECT * FROM requests WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, 'i', $requestID);
@@ -100,30 +94,28 @@ function getRequest($conn, $requestID)
 }
 
 //Get full details of a request (for display purposes)
-function getRequestDetails($conn, $requestID)
-{
+function getRequestDetails($conn, $requestID){
     $sql = "SELECT r.*, 
                 u.name AS requester_name,
                 u.email AS requester_email,
                 u.contact_number AS requester_contact
             FROM requests r 
             JOIN users u on r.user_id = u.id
-            WHERE r.id = ?";
+            WHERE r.id = ?"; 
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $requestID);
     mysqli_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    if ($row = mysqli_fetch_assoc($result)) {
+    if ($row = mysqli_fetch_assoc($result)){
         return $row;
     } else {
-        return null;
+        return null; 
     }
 }
 
-function getRequestDetailsForUser($conn, $requestID, $userID)
-{
+function getRequestDetailsForUser($conn, $requestID, $userID){
     $sql = "SELECT * FROM requests WHERE id = ? AND user_id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ii", $requestID, $userID);
@@ -137,12 +129,11 @@ function getRequestDetailsForUser($conn, $requestID, $userID)
  * ------------------------------------------
  *               ADMIN ACTIONS
  *  ------------------------------------------
- */
+*/
 
 
 //Updates the status of request to 'approved'
-function approveRequest($conn, $requestID)
-{
+function approveRequest($conn, $requestID){
     $request = getRequest($conn, $requestID);
     if (!$request) return false; // Request not found
 
@@ -161,19 +152,15 @@ function approveRequest($conn, $requestID)
     }
 
     // Update status and visibility
-    if (empty($visibleSince)) {
-        $update_sql = "UPDATE requests SET status = 'approved', visible_since = NOW() WHERE id = ?";
-    } else {
-        $update_sql = "UPDATE requests SET status = 'approved' WHERE id = ?";
-    }
+    $update_sql = "UPDATE requests SET status = 'approved', visible_since = NOW() WHERE id = ?";
+
 
     $stmt = mysqli_prepare($conn, $update_sql);
     mysqli_stmt_bind_param($stmt, 'i', $requestID);
     return mysqli_stmt_execute($stmt);
 }
 
-function markForInterview($conn, $requestID)
-{
+function markForInterview   ($conn, $requestID){
     $request = getRequest($conn, $requestID);
     if (!$request) return false;
 
@@ -191,8 +178,7 @@ function markForInterview($conn, $requestID)
 }
 
 //Rejects a request and sets their visibility on the Help Board to 'hidden'
-function rejectRequest($conn, $requestID)
-{
+function rejectRequest ($conn, $requestID){
     $request = getRequest($conn, $requestID);
     if (!$request) return false;
 
@@ -206,7 +192,7 @@ function rejectRequest($conn, $requestID)
  * ------------------------------------------
  *              USER ACTIONS
  *  ------------------------------------------
- */
+*/
 
 function submitRequest($conn, $userId, $title, $description, $category, $deadline, $attachment_path = null)
 {
@@ -252,12 +238,11 @@ function submitRequest($conn, $userId, $title, $description, $category, $deadlin
     $sql = "INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, visible_since, created_at) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "isssssss", $userId, $title, $description, $category, $tier, $attachment_path, $deadline, $visible_since);
-
+    mysqli_stmt_bind_param($stmt,"isssssss", $userId, $title, $description, $category, $tier, $attachment_path, $deadline, $visible_since);
+    
     return mysqli_stmt_execute($stmt);
 }
-function renewRequest($conn, $originalID, $userNote, $newFile = null)
-{
+function renewRequest($conn, $originalID, $userNote, $newFile = null) {
     $sql = "SELECT * FROM requests WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $originalID);
@@ -265,16 +250,14 @@ function renewRequest($conn, $originalID, $userNote, $newFile = null)
     $result = mysqli_stmt_get_result($stmt);
     $original = mysqli_fetch_assoc($result);
 
-    if (!$original) return false;
+    if(!$original) return false;
 
-    $newDescription = "[RENEWAL NOTE]\n" . $userNote . "\n\n[ORIGINAL]\n" . $original['description'];
+    $newDescription = "[RENEWAL NOTE]\n". $userNote. "\n\n[ORIGINAL]\n" . $original['description'];
 
     $sql = "INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, created_at, parent_request_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param(
-        $stmt,
-        "issssssi",
+    mysqli_stmt_bind_param($stmt, "issssssi",
         $original['user_id'],
         $original['title'],
         $newDescription,
@@ -288,8 +271,7 @@ function renewRequest($conn, $originalID, $userNote, $newFile = null)
     return mysqli_stmt_execute($stmt);
 }
 
-function fulfillRequest($conn, $requestID)
-{
+function fulfillRequest($conn, $requestID) {
     $sql = "UPDATE requests
             SET status = 'fulfilled', visible_since = NULL
             WHERE id = ?";
@@ -304,11 +286,10 @@ function fulfillRequest($conn, $requestID)
  * ------------------------------------------
  *            BACKGROUND FUNCTIONS
  *  ------------------------------------------
- */
+*/
 
 //Expire requests that are past its deadline or its 7-day visibility
-function expireRequests($conn)
-{
+function expireRequests($conn){
     // Deadline-based expiration
     $sql_deadline = "UPDATE requests
              SET status = 'expired', visible_since = NULL, expiration_reason = 'deadline'
@@ -328,8 +309,7 @@ function expireRequests($conn)
 }
 
 //Hide tier 1 pending requests after 2 days
-function hideTier1Requests($conn)
-{
+function hideTier1Requests($conn){
     $sql = "UPDATE requests
             SET visible_since = NULL
             WHERE tier = '1'
@@ -338,3 +318,6 @@ function hideTier1Requests($conn)
                 AND TIMESTAMPDIFF(DAY, created_at, NOW()) >= 2";
     return mysqli_query($conn, $sql);
 }
+ 
+
+?>
