@@ -17,7 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user = mysqli_fetch_assoc($result)) {
         if ($password === $user['password']) {
-            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['auth'] = [
+                'id' =>$user['id'],
+                'type' => 'user'
+            ];
             header("Location: pages/user/user_requests.php");
             exit;
         } else {
@@ -33,7 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($admin = mysqli_fetch_assoc($result)) {
             if ($password === $admin['password']) {
-                $_SESSION['user_id'] = $admin['id'];
+                $_SESSION['auth'] = [
+                    'id' => $admin['id'],
+                    'type' => 'admin'
+                ];
                 header("Location: pages/admin/admin_requests.php");
                 exit;
             } else {

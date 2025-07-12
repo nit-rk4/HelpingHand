@@ -1,16 +1,10 @@
-<?php 
+<?php
+require_once "../../php/auth_user.php";
 require_once "../../php/config.php";
 require_once "../../php/help_utils.php";
 require_once "../../php/maintenance.php";
 runMaintenance($conn);
 
-session_start();
-$userID = $_SESSION['user'] ?? null;
-
-if (!$userID){
-  header("Location: ../../index.php");
-  exit;
-}
 
 $request = getHelpedRequests($conn, $userID);
 

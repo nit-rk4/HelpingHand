@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once "../../php/auth_user.php";
 require_once '../../php/config.php';
 require_once '../../php/request_utils.php';
 

@@ -1,11 +1,11 @@
 <?php
-session_start();
+require_once "../../php/auth_user.php";
 require_once "../../php/config.php";
 require_once "../../php/request_utils.php";
 require_once "../../php/maintenance.php";
 runMaintenance($conn);
 
-$userID = $_SESSION['user_id'];
+$userID = $_SESSION['user']['id'];
 $statusFilter = isset($_GET['status']) ? strtolower($_GET['status']) : 'all';
 $requests = getUserRequestsByStatus($conn, $userID, $statusFilter);
 ?>

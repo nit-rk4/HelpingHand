@@ -1,16 +1,12 @@
 <?php
-session_start();
-
+require_once "../../php/auth_user.php";
 require_once "../../php/config.php";
 require_once "../../php/request_utils.php";
 require_once "../../php/help_utils.php";
 
 $requestID = $_GET['id'] ?? null;
-$userID = $_SESSION['user'] ?? null;
-if (!$requestID || !$userID){
-  echo ("Invalid access.");
-  exit;
-}
+$userID = $_SESSION['user']['id'] ?? null;
+
 
 $request = getRequestDetailsForUser($conn,$requestID, $userID);
 

@@ -1,3 +1,5 @@
+<?php require_once "../php/auth_shared.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

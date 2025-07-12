@@ -1,53 +1,47 @@
 <?php
-    session_start();
+require_once "../php/auth_shared.php";
+require_once "../php/config.php";
+require_once "../php/request_utils.php";
+require_once "../php/help_utils.php";
 
-    if(!isset($_SESSION['user_id'])){
-        header("Location: ../index.php");
-        exit;
-    }
+$requestID = $_GET['id'] ?? null;
+if(!($requestID)){
+    die("Missing request ID.");
+}
 
-    require "../php/config.php";
-    require "../php/request_utils.php";
-    require "../php/help_utils.php";
+$userID = $_SESSION['user']['id']?? null;
+$hasHelped = false;
 
-    $requestID = $_GET['id'] ?? null;
-    if(!($requestID)){
-        die("Missing request ID.");
-    }
+if ($userID && $requestID){
+    $hasHelped = hasHelped($conn, $requestID, $userID);
+}
 
-    $userID = $_SESSION['user_id']?? null;
-    $hasHelped = false;
-    
-    if ($userID && $requestID){
-        $hasHelped = hasHelped($conn, $requestID, $userID);
-    }
+$request = getRequestDetails($conn, $requestID);
 
-    $request = getRequestDetails($conn, $requestID);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_help_action'])) {
+    $userID = $_SESSION['user']['id'];
+    $action = $_POST['toggle_help_action'];
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_help_action'])) {
-        $userID = $_SESSION['user']['id'];
-        $action = $_POST['toggle_help_action'];
+    if ($action === "submit") {
+        $proof_text = trim($_POST['help_note']) ?? null;
+        $proof_file = null;
 
-        if ($action === "submit") {
-            $proof_text = trim($_POST['help_note']) ?? null;
-            $proof_file = null;
-
-            if (isset($_FILES['help_proof']) && $_FILES['help_proof']['error'] === UPLOAD_ERR_OK) {
-                $filename = basename($_FILES['help_proof']['name']);
-                $upload_path = "/uploads/" . $filename;
-                if (move_uploaded_file($_FILES['help_proof']['tmp_name'], $upload_path)) {
-                    $proof_file = $filename;
-                }
+        if (isset($_FILES['help_proof']) && $_FILES['help_proof']['error'] === UPLOAD_ERR_OK) {
+            $filename = basename($_FILES['help_proof']['name']);
+            $upload_path = "/uploads/" . $filename;
+            if (move_uploaded_file($_FILES['help_proof']['tmp_name'], $upload_path)) {
+                $proof_file = $filename;
             }
-
-            $success = submitHelp($conn, $requestID, $userID, $proof_text, $proof_file);
-        } elseif ($action === "remove") {
-            removeHelp($conn, $requestID, $userID);
         }
 
-        header("Location: helpboard_request.php?id=" . $requestID);
-        exit;
+        $success = submitHelp($conn, $requestID, $userID, $proof_text, $proof_file);
+    } elseif ($action === "remove") {
+        removeHelp($conn, $requestID, $userID);
     }
+
+    header("Location: helpboard_request.php?id=" . $requestID);
+    exit;
+}
 
 ?>
 

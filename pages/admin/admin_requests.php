@@ -1,6 +1,7 @@
 <?php
-  require "../../php/config.php";
-  require "../../php/request_utils.php";
+  require_once "../../php/auth_admin.php";
+  require_once "../../php/config.php";
+  require_once "../../php/request_utils.php";
   require_once "../../php/maintenance.php";
   runMaintenance($conn);
   $status = $_GET['status'] ?? 'pending';
