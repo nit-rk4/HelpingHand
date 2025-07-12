@@ -26,13 +26,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_help_action'])
         $proof_text = trim($_POST['help_note']) ?? null;
         $proof_file = null;
 
-        if (isset($_FILES['help_proof']) && $_FILES['help_proof']['error'] === UPLOAD_ERR_OK) {
-            $filename = basename($_FILES['help_proof']['name']);
-            $upload_path = "/uploads/" . $filename;
-            if (move_uploaded_file($_FILES['help_proof']['tmp_name'], $upload_path)) {
-                $proof_file = $filename;
+    if (isset($_FILES['help_proof']) && $_FILES['help_proof']['error'] === UPLOAD_ERR_OK) {
+        $originalName = basename($_FILES['help_proof']['name']);
+        $ext = pathinfo($originalName, PATHINFO_EXTENSION); //Extracting extension
+        $safeExt = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $ext)); //Cleaning up extension
+
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf']; //Supported file types
+
+        if (in_array($safeExt, $allowedExtensions)) {
+            $timestamp = date("Ymd_His");
+            $newName = "help_{$requestID}_user_{$userID}_{$timestamp}." . $safeExt; 
+
+            $uploadDir = __DIR__ . "/../../uploads/";
+            $targetPath = $uploadDir . $newName;
+
+            if (move_uploaded_file($_FILES['help_proof']['tmp_name'], $targetPath)) {
+                $proof_file = $newName;
             }
+        } else {
+            $uploadError = "Invalid file type. Only JPG, JPEG, PNG, and GIF are allowed.";
         }
+    }
 
         $success = submitHelp($conn, $requestID, $userID, $proof_text, $proof_file);
     } elseif ($action === "remove") {
