@@ -7,7 +7,11 @@ runMaintenance($conn);
 
 $userID = $_SESSION['auth']['id'];
 $statusFilter = isset($_GET['status']) ? strtolower($_GET['status']) : 'all';
-$requests = getUserRequestsByStatus($conn, $userID, $statusFilter);
+$allRequests = getUserRequests($conn, $userID);
+$requests = $statusFilter === 'all'
+    ? $allRequests
+    : array_filter($allRequests, fn($r) => $r['status'] === $statusFilter);
+
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +70,7 @@ $requests = getUserRequestsByStatus($conn, $userID, $statusFilter);
     <?php endforeach; ?>
 
       <div class="details-wrapper">
-      <p><span class="details-label">Total Requests Submitted:</span> <?= count($requests) ?></p>
+      <p><span class="details-label">Total Requests Submitted:</span> <?= count($allRequests) ?></p>
       <p><span class="details-label">Requests Fulfilled:</span> <?= count(array_filter($requests,fn($r)=>$r['status']=='fulfilled')) ?></p>
       <p><span class="details-label">Pending Requests:</span> <?= count(array_filter($requests,fn($r)=>$r['status']=='pending')) ?></p>
     </div>

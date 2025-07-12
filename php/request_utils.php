@@ -15,7 +15,8 @@ function getRequestsByStatus($conn, $status, $tier = null){
                     requests.visible_since, users.name AS requester_name
                 FROM requests 
                 JOIN users ON requests.user_id = users.id
-                WHERE requests.status = ?";
+                WHERE requests.status = ?
+                ORDER BY created_at DESC";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $status);
     } else {
@@ -25,7 +26,8 @@ function getRequestsByStatus($conn, $status, $tier = null){
                     requests.visible_since, users.name AS requester_name
                 FROM requests 
                 JOIN users ON requests.user_id = users.id
-                WHERE requests.status = ? AND requests.tier = ?";
+                WHERE requests.status = ? AND requests.tier = ?
+                ORDER BY created_at DESC";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "si", $status, $tier);
     }
@@ -62,16 +64,10 @@ function getVisibleRequests($conn){
 }
 
 //Get requests of a specific user by status
-function getUserRequestsByStatus($conn, $userID, $status = 'all') {
-    if ($status === 'all') {
-        $sql = "SELECT * FROM requests WHERE user_id = ? ORDER BY created_at DESC";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'i', $userID);
-    } else {
-        $sql = "SELECT * FROM requests WHERE user_id = ? AND status = ? ORDER BY created_at DESC";
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'is', $userID, $status);
-    }
+function getUserRequests($conn, $userID) {
+    $sql = "SELECT * FROM requests WHERE user_id = ? ORDER BY created_at DESC";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $userID);
 
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
@@ -154,11 +150,8 @@ function approveRequest($conn, $requestID){
     }
 
     // Update status and visibility
-    if (empty($visibleSince)) {
-        $update_sql = "UPDATE requests SET status = 'approved', visible_since = NOW() WHERE id = ?";
-    } else {
-        $update_sql = "UPDATE requests SET status = 'approved' WHERE id = ?";
-    }
+    $update_sql = "UPDATE requests SET status = 'approved', visible_since = NOW() WHERE id = ?";
+
 
     $stmt = mysqli_prepare($conn, $update_sql);
     mysqli_stmt_bind_param($stmt, 'i', $requestID);
