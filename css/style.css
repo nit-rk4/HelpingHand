@@ -399,6 +399,7 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 15px;
 }
 
 
@@ -1323,6 +1324,12 @@ input[type="file"] {
     width: 100%;
 }
 
+.req-page .back-container{
+    display: flex;
+    flex-direction: column;
+    padding-top: 100px;
+}
+
 .req-page .container {
     display: flex;
     align-items: center;
@@ -1348,11 +1355,10 @@ input[type="file"] {
 }
 
 .req-page .req-title {
-    padding-top: 80px;
-    padding-bottom: 10px;
     font-size: 48px;
     text-align: left;
     color: #1e2f4b;
+    margin:0;
 }
 
 .req-page .content {

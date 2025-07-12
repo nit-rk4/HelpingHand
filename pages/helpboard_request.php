@@ -72,6 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_help_action'])
     <?php include("navbar.php"); ?>
 
     <main class="req-page">
+        <div class="back-container">
+            <a class="back-link" href="help_board.php">← Back to Help Board</a>
+        </div>
         <h1 class="req-title"><?= htmlspecialchars($request['title']) ?></h1>
         <div class="container">
             <div class="content">
