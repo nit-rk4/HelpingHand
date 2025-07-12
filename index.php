@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h4>Password</h4>
                 <input name="password" type="password" placeholder="Password" required><br />
                 <button class="button" type="submit" popovertarget="login">Login</button>
-                <button class="button" popovertarget="login" popovertargetaction="hide">Close</button>
+                <button class="button" type="button" popovertarget="login" popovertargetaction="hide">Close</button>
             </form>
         </div>
     </div>
