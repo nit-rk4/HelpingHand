@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>HelpingHand Admin - Interviews</title>
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="../../css/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
+
 <body>
 
   <!-- Navbar -->
-  <?php include ("../navbar.php"); ?>
+  <?php include("../navbar.php"); ?>
 
   <div class="container">
     <!-- Sidebar -->
@@ -56,29 +58,44 @@
       </div>
 
       <!-- Interview Rows -->
-      <!-- Pending -->
-      <a href="interview_details.php?status=pending" class="request-row interview-item" data-status="pending">
-        <span>Carlos Reyes</span>
-        <span>Scholarship application interview</span>
-      </a>
+      <?php
+      require_once "../../php/config.php";
+      require_once "../../php/interview_utils.php";
+      // Fetch interviews by status
+      $pendingInterviews = getInterviewsByStatus($conn, 'pending');
+      $scheduledInterviews = getInterviewsByStatus($conn, 'scheduled');
+      $completedInterviews = getInterviewsByStatus($conn, 'done');
+      ?>
 
-      <!-- Scheduled -->
-      <a href="interview-details.php?status=scheduled" class="request-row interview-item" data-status="scheduled" style="display: none;">
-        <span>Ana Lopez</span>
-        <span>Review of living conditions for aid</span>
-        <span>2025-07-12</span>
-        <span>10:00 AM</span>
-        <span>Ms. Santos</span>
-      </a>
+      <!-- Pending Interviews -->
+      <?php foreach ($pendingInterviews as $interview): ?>
+        <a href="#" data-interview-id="<?= $interview['id'] ?>" class="request-row interview-item" data-status="pending">
+          <span><?= htmlspecialchars($interview['requester_name']) ?></span>
+          <span><?= htmlspecialchars($interview['request_title']) ?></span>
+        </a>
+      <?php endforeach; ?>
 
-      <!-- Completed -->
-      <a href="interview-details.php?status=completed" class="request-row interview-item" data-status="completed" style="display: none;">
-        <span>Juan Dela Cruz</span>
-        <span>Post-support assessment</span>
-        <span>2025-07-01</span>
-        <span>9:00 AM</span>
-        <span>Mr. Reyes</span>
-      </a>
+      <!-- Scheduled Interviews -->
+      <?php foreach ($scheduledInterviews as $interview): ?>
+        <a href="#" data-interview-id="<?= $interview['id'] ?>" class="request-row interview-item" data-status="scheduled" style="display: none;">
+          <span><?= htmlspecialchars($interview['requester_name']) ?></span>
+          <span><?= htmlspecialchars($interview['request_title']) ?></span>
+          <span><?= htmlspecialchars($interview['date']) ?></span>
+          <span><?= htmlspecialchars($interview['time']) ?></span>
+          <span><?= htmlspecialchars($interview['interviewer']) ?></span>
+        </a>
+      <?php endforeach; ?>
+
+      <!-- Completed Interviews -->
+      <?php foreach ($completedInterviews as $interview): ?>
+        <a href="#" data-interview-id="<?= $interview['id'] ?>" class="request-row interview-item" data-status="completed" style="display: none;">
+          <span><?= htmlspecialchars($interview['requester_name']) ?></span>
+          <span><?= htmlspecialchars($interview['request_title']) ?></span>
+          <span><?= htmlspecialchars($interview['date']) ?></span>
+          <span><?= htmlspecialchars($interview['time']) ?></span>
+          <span><?= htmlspecialchars($interview['interviewer']) ?></span>
+        </a>
+      <?php endforeach; ?>
 
     </main>
   </div>
@@ -101,12 +118,23 @@
       document.getElementById('header-completed').style.display = (status === 'completed') ? 'flex' : 'none';
     }
 
-    // Load default tab on page load
+    // Load default tab and attach click event on page load
     window.addEventListener('DOMContentLoaded', () => {
       const defaultTab = document.querySelector('.tab[data-status="pending"]');
       filterTab('pending', defaultTab);
+
+      // Save interview ID to session and redirect
+      document.querySelectorAll('.interview-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          const interviewId = this.getAttribute('data-interview-id');
+          // Directly redirect with id in URL
+          window.location.href = 'interview_details.php?id=' + interviewId;
+        });
+      });
     });
   </script>
 
 </body>
+
 </html>
