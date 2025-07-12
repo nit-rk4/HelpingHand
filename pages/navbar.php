@@ -6,7 +6,7 @@
             <?php if ($_SESSION['auth']['type'] === 'admin'): ?>
                 <li><a href="/pages/admin/admin_requests.php">Dashboard</a></li>
             <?php else: ?>
-                <li><a href="/pages/admin/user_requests.php">Dashboard</a></li>
+                <li><a href="/pages/user/user_requests.php">Dashboard</a></li>
             <?php endif;?>
             <li><a href="/pages/about-us.php">About us</a></li>
             <li><a href="/php/logout.php">Log Out</a></li>
