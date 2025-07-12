@@ -12,22 +12,24 @@ function getRequestsByStatus($conn, $status, $tier = null){
         $sql = "SELECT 
                     requests.id, requests.title, requests.description,
                     requests.status, requests.tier, requests.category,
-                    requests.visible_since, users.name AS requester_name
+                    requests.visible_since, requests.deadline,
+                    users.name AS requester_name
                 FROM requests 
                 JOIN users ON requests.user_id = users.id
                 WHERE requests.status = ?
-                ORDER BY created_at DESC";
+                ORDER BY requests.created_at DESC";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $status);
     } else {
         $sql = "SELECT 
                     requests.id, requests.title, requests.description,
                     requests.status, requests.tier, requests.category,
-                    requests.visible_since, users.name AS requester_name
+                    requests.visible_since, requests.deadline,
+                    users.name AS requester_name
                 FROM requests 
                 JOIN users ON requests.user_id = users.id
                 WHERE requests.status = ? AND requests.tier = ?
-                ORDER BY created_at DESC";
+                ORDER BY requests.created_at DESC";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "si", $status, $tier);
     }

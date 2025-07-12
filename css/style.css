@@ -553,6 +553,9 @@ select:focus {
 .btn-fulfill { background-color: #28a745; color: white; }
 .btn-renew { background-color: #ffc107; color: black; }
 .btn-view { background-color: #007bff; color: white; }
+.btn-disabled { background-color: #ccc; color: #666; cursor: not-allowed;}
+
+.note { font-size: 0.9em; color: #888;}
 
 /* Modal system */
 .modal {

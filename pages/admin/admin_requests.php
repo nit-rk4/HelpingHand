@@ -14,7 +14,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>HelpingHand Admin - User Requests</title>
+  <title>Admin Dashboard - User Requests</title>
   <link rel="stylesheet" href="/css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -103,8 +103,9 @@
         <span class="Requester">Requester</span>
         <span class="title">Title</span>
         <span class="desc">Description</span>
-        <span class="desc">Category</span>
-        <span class="desc">Visible</span>
+        <span class="category">Category</span>
+        <span class="category">Deadline</span>
+        <span class="category">Visible</span>
       </div>
 
       <?php
@@ -114,8 +115,9 @@
           echo "<span class='user'>" . htmlspecialchars($req['requester_name']) . "</span>";
           echo "<span class='title'>" . htmlspecialchars($req['title']) . "</span>";
           echo "<span class='desc'>" . htmlspecialchars($req['description']) . "</span>";
-          echo "<span class='desc'>" . htmlspecialchars($req['category']) . "</span>";
-          echo "<span class='desc'>{$visibleMark}</span>";
+          echo "<span class='category'>" . htmlspecialchars($req['category']) . "</span>";
+          echo "<span class='category'>" . htmlspecialchars($req['deadline']) . "</span>";
+          echo "<span class='category'>{$visibleMark}</span>";
           echo "</a>";
         }
       ?>
