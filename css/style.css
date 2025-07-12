@@ -27,7 +27,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-li, a, input, button, textarea {
+li, a, input, button, textarea, select {
     font-family: "Plus Jakarta Sans", sans-serif;
     font-weight: 300;
     font-size: 16px;
