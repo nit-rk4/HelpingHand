@@ -4,6 +4,7 @@ require_once 'php/config.php';
 
 $error = "";
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST["username"]);
     $password = $_POST["password"];
@@ -16,9 +17,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_stmt_get_result($stmt);
 
     if ($user = mysqli_fetch_assoc($result)) {
-        if ($password === $user['password']) {
+        if (password_verify($password, $user['password'])) {
             $_SESSION['auth'] = [
-                'id' =>$user['id'],
+                'id' => $user['id'],
+                'type' => 'user'
+            ];
+            header("Location: pages/user/user_requests.php");
+            exit;
+        } else if ($password === $user['password']) { // plaintext fallback, auto-upgrade
+            $hashed = password_hash($password, PASSWORD_DEFAULT);
+            $update = mysqli_prepare($conn, "UPDATE users SET password=? WHERE id=?");
+            mysqli_stmt_bind_param($update, "si", $hashed, $user['id']);
+            mysqli_stmt_execute($update);
+            $_SESSION['auth'] = [
+                'id' => $user['id'],
                 'type' => 'user'
             ];
             header("Location: pages/user/user_requests.php");
@@ -35,7 +47,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = mysqli_stmt_get_result($stmt);
 
         if ($admin = mysqli_fetch_assoc($result)) {
-            if ($password === $admin['password']) {
+            if (password_verify($password, $admin['password'])) {
+                $_SESSION['auth'] = [
+                    'id' => $admin['id'],
+                    'type' => 'admin'
+                ];
+                header("Location: pages/admin/admin_requests.php");
+                exit;
+            } else if ($password === $admin['password']) { // plaintext fallback, auto-upgrade
+                $hashed = password_hash($password, PASSWORD_DEFAULT);
+                $update = mysqli_prepare($conn, "UPDATE admins SET password=? WHERE id=?");
+                mysqli_stmt_bind_param($update, "si", $hashed, $admin['id']);
+                mysqli_stmt_execute($update);
                 $_SESSION['auth'] = [
                     'id' => $admin['id'],
                     'type' => 'admin'
@@ -75,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h4>Password</h4>
                 <input name="password" type="password" placeholder="Password" required><br />
                 <button class="button" type="submit" popovertarget="login">Login</button>
-                <button class="button" type="button" popovertarget="login" popovertargetaction="hide">Close</button>
+                <button class="button" popovertarget="login" popovertargetaction="hide">Close</button>
             </form>
         </div>
     </div>
