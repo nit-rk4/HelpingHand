@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8" />
   <title><?= htmlspecialchars($request['title']) ?> - Request Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/style.css?v=4">
+  <link rel="stylesheet" href="/css/style.css?v=5">
   <style>
     .verified-helpers-list {
       list-style-type: none;
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include("../navbar.php"); ?>
 
 <main class="details-wrapper">
-  <a href="user_profile.php" class="back-link">← Back to My Requests</a>
+  <a href="user_requests.php" class="back-link">← Back to My Requests</a>
 
   <h1><?= htmlspecialchars($request['title']) ?></h1>
 

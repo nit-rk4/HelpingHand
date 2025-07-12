@@ -283,6 +283,108 @@ select:focus {
   background-color: #ffd1d1;
 }
 
+/* ----------------------------------
+        Helped Requests Section
+---------------------------------- */
+.my-helped-section {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 16px;
+}
+
+.helped-requests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.request-card {
+  display: block;
+  overflow: visible;
+  background-color: #fffaf0; /* soft yellowish */
+  border: 1px solid #f0e5cb;
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease;
+  position: relative;
+}
+
+.request-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.request-meta {
+  font-size: 0.85rem;
+  color: #555;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.status-tag {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+}
+
+.status-tag.fulfilled {
+  background-color: #4CAF50; /* green */
+}
+
+.status-tag.pending {
+  background-color: #ff9800; /* orange */
+}
+
+.status-tag.unverified {
+  background-color: #e57373; /* red/pink */
+}
+
+.request-details {
+  display: none;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed #ccc;
+  font-size: 0.85rem;
+  color: #444;
+  animation: fadeIn 0.3s ease;
+}
+
+.request-details img {
+  margin-top: 8px;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* THIS vertically centers the button */
+  gap: 12px;
+}
+
+.request-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-helped-section .submit-btn{
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 15px;
+}
+
+/* ----------------------------------
+         Help Count Section
+---------------------------------- */
+
 .help-count-section {
   text-align: center;
   margin: 30px 0;
@@ -294,22 +396,12 @@ select:focus {
   height: 160px;
   margin: 0 auto;
   border-radius: 50%;
-  background: conic-gradient(
-    var(--tier1-color) 0 calc(var(--tier1-val)),
-    var(--tier2-color) calc(var(--tier1-val)) calc(var(--tier1-val) + var(--tier2-val)),
-    var(--tier3-color) calc(var(--tier1-val) + var(--tier2-val)) 100%
-  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.segment {
-  --tier1-val: calc(var(--value) * 1%);
-  --tier2-val: calc(var(--value) * 1%);
-  --tier3-val: calc(var(--value) * 1%);
-}
 
-.tier1     { --tier1-color: #fff59f; --tier1-val: calc(var(--value) * 1%); }
-.tier2     { --tier2-color: #cbdbff; --tier2-val: calc(var(--value) * 1%); }
-.tier3     { --tier3-color: #ffb2b2; --tier3-val: calc(var(--value) * 1%); }
 
 .donut-center {
   position: absolute;
@@ -349,9 +441,12 @@ select:focus {
   border-radius: 3px;
 }
 
-.legend-box.tier1 { background: #fff59f; }
-.legend-box.tier2 { background: #cbdbff; }
-.legend-box.tier3 { background: #ffb2b2; }
+.legend-box.goods-essentials { background-color: #ffb347; }
+.legend-box.community-help { background-color: #87cefa; }
+.legend-box.knowledge-sharing { background-color: #90ee90; }
+.legend-box.medical-legal { background-color: #f67280; }
+.legend-box.financial-aid { background-color: #9b59b6; }
+.legend-box.others { background-color: #95a5a6; }
 
 .tabs {
   display: flex;
@@ -633,6 +728,8 @@ input[type="file"] {
   display: block;
   margin-bottom: 16px;
 }
+
+
 
 /* ---------- Animation ---------- */
 @keyframes fadeIn {

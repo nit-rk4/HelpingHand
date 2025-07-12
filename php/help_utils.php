@@ -47,9 +47,9 @@ function removeHelp($conn, $requestID, $userID){
 
 function getHelpedRequests($conn, $userID){
     $sql = "SELECT 
-                r.id, r.title, r.description, r.category, r.attachment_path, r.deadline,
-                h.is_verified,
-                u.nme AS requester_name
+                r.id, r.title, r.description, r.status, r.category,
+                h.is_verified, h.proof_text, h.proof_file,
+                u.name AS requester_name, u.contact_number AS requester_contact, u.email AS requester_email
             FROM helpers h
             JOIN requests r ON h.request_id = r.id
             JOIN users u ON r.user_id = u.id
@@ -67,6 +67,34 @@ function getHelpedRequests($conn, $userID){
     return $requests;
 }
 
+function categorizeHelp($category) {
+    switch ($category) {
+        case 'Food & Essentials':
+        case 'Goods Donations':
+        case 'School Supplies':
+            return 'Goods & Essentials';
+
+        case 'Escort/Babysitting':
+        case 'Volunteer Support':
+        case 'Errand':
+        case 'Lost Item':
+            return 'Community Help';
+
+        case 'Tutoring/Academic Help':
+        case 'Home & Tech Help':
+            return 'Knowledge Sharing';
+
+        case 'Medical Assistance':
+        case 'Legal & Documents':
+            return 'Medical & Legal';
+
+        case 'Monetary Assistance':
+            return 'Financial Aid';
+
+        default:
+            return 'Others';
+    }
+}
 
 /** 
  * -------------------------------------------
