@@ -229,8 +229,8 @@ function submitRequest($conn, $userId, $title, $description, $category, $deadlin
         $visible_since = null; // needs admin approval & interview
     } else {
         // fallback
-        $tier = "1";
-        $visible_since = date('Y-m-d H:i:s');
+        $tier = "2";
+        $visible_since = null;
         $interview_status = "none";
         $status = "pending";
     }
