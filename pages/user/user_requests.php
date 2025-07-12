@@ -26,7 +26,7 @@ $requests = getUserRequestsByStatus($conn, $userID, $statusFilter);
     <ul>
       <li><a href="submit_request.php">Submit a Request</a></li>
       <li class="active"><a href="user_requests.php">My Requests</a></li>
-      <li><a href="my_helped_requests.php">Requests I Helped On</a></li>
+      <li><a href="my_helped_requests.php">My Contributions</a></li>
     </ul>
   </aside>
 
