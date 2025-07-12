@@ -185,7 +185,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <a href="/uploads/<?= htmlspecialchars($helper['proof_file']) ?>" target="_blank">📎 View Proof</a>
             <?php endif; ?>
           </li>
-          <hr>
         <?php endforeach; ?>
       </ul>
     <?php else: ?>
