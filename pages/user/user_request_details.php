@@ -128,98 +128,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Conditional Buttons -->
   <?php if ($request['status'] === 'approved'): ?>
     <a href="#fulfill-modal" class="btn btn-fulfill">Mark as Fulfilled</a>
+
   <?php elseif ($request['status'] === 'fulfilled'): ?>
     <a href="#helpers-modal" class="btn btn-view">View Helpers</a>
+
   <?php elseif ($request['status'] === 'expired' && $request['expiration_reason'] === 'visibility'): ?>
     <a href="#renew-modal" class="btn btn-renew">Renew Request</a>
+
+  <?php elseif ($request['status'] === 'expired' && $request['expiration_reason'] === 'deadline'): ?>
+    <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem;">
+      <button class="btn btn-disabled" disabled style="cursor: not-allowed; opacity: 0.6;">Renew Request</button>
+      <p class="note">This request expired because its deadline passed. Please submit a new request instead.</p>
+    </div>
   <?php endif; ?>
-</main>
 
 <!-- Fulfill Modal -->
 <?php if ($request['status'] === 'approved'): ?>
-<div id="fulfill-modal" class="modal">
-  <div class="modal-content">
-    <a href="#" class="modal-close">&times;</a>
-    <h2>Confirm Fulfillment</h2>
-    <form method="post">
-      <?php if (count($helpers) > 0): ?>
-        <?php foreach ($helpers as $h): ?>
-          <div class="helper-entry">
-            <label>
-              <input type="checkbox" name="helpers[]" value="<?= $h['user_id'] ?>">
-              <?= htmlspecialchars($h['name']) ?>
-            </label>
+  <div id="fulfill-modal" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close">&times;</a>
+      <h2>Confirm Fulfillment</h2>
+      <form method="post">
+        <?php if (count($helpers) > 0): ?>
+          <?php foreach ($helpers as $h): ?>
+            <div class="helper-entry">
+              <label>
+                <input type="checkbox" name="helpers[]" value="<?= $h['user_id'] ?>">
+                <?= htmlspecialchars($h['name']) ?>
+              </label>
 
-            <?php if (!empty($h['proof_text'])): ?>
-              <p><em><?= htmlspecialchars($h['proof_text']) ?></em></p>
-            <?php endif; ?>
+              <?php if (!empty($h['proof_text'])): ?>
+                <p><em><?= htmlspecialchars($h['proof_text']) ?></em></p>
+              <?php endif; ?>
 
-            <?php if (!empty($h['proof_file'])): ?>
-              <a href="/uploads/<?= htmlspecialchars($h['proof_file']) ?>" target="_blank">📎 View File</a>
-            <?php endif; ?>
-          </div>
-          <hr>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <p>No helpers have offered assistance yet. </p>
-      <?php endif; ?>
-      <button type="submit" name="verify_submit" class="btn btn-fulfill">Confirm</button>
-    </form>
+              <?php if (!empty($h['proof_file'])): ?>
+                <a href="/uploads/<?= htmlspecialchars($h['proof_file']) ?>" target="_blank">📎 View File</a>
+              <?php endif; ?>
+            </div>
+            <hr>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>No helpers have offered assistance yet. </p>
+        <?php endif; ?>
+        <button type="submit" name="verify_submit" class="btn btn-fulfill">Confirm</button>
+      </form>
+    </div>
   </div>
-</div>
 <?php endif; ?>
 
 <!-- Fulfilled Modal -->
 <?php if ($request['status'] === 'fulfilled'): ?>
-<div id="helpers-modal" class="modal">
-  <div class="modal-content">
-    <a href="#" class="modal-close">&times;</a>
-    <h2>Helped By:</h2>
+  <div id="helpers-modal" class="modal">
+    <div class="modal-content">
+      <a href="#" class="modal-close">&times;</a>
+      <h2>Helped By:</h2>
 
-    <?php if (count($verifiedHelpers) > 0): ?>
-      <ul class="verified-helpers-list">
-        <?php foreach ($verifiedHelpers as $helper): ?>
-          <li class="verified-helper-item">
-            <strong><?= htmlspecialchars($helper['name']) ?></strong><br>
-            <?php if (!empty($helper['proof_text'])): ?>
-              <em><?= htmlspecialchars($helper['proof_text']) ?></em><br>
-            <?php endif; ?>
-            <?php if (!empty($helper['proof_file'])): ?>
-              <a href="/uploads/<?= htmlspecialchars($helper['proof_file']) ?>" target="_blank">📎 View Proof</a>
-            <?php endif; ?>
-          </li>
-        <?php endforeach; ?>
-      </ul>
-    <?php else: ?>
-      <p>No verified helpers yet.</p>
-    <?php endif; ?>
+      <?php if (count($verifiedHelpers) > 0): ?>
+        <ul class="verified-helpers-list">
+          <?php foreach ($verifiedHelpers as $helper): ?>
+            <li class="verified-helper-item">
+              <strong><?= htmlspecialchars($helper['name']) ?></strong><br>
+              <?php if (!empty($helper['proof_text'])): ?>
+                <em><?= htmlspecialchars($helper['proof_text']) ?></em><br>
+              <?php endif; ?>
+              <?php if (!empty($helper['proof_file'])): ?>
+                <a href="/uploads/<?= htmlspecialchars($helper['proof_file']) ?>" target="_blank">📎 View Proof</a>
+              <?php endif; ?>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      <?php else: ?>
+        <p>No verified helpers yet.</p>
+      <?php endif; ?>
+    </div>
   </div>
-</div>
 <?php endif; ?>
 
 <!-- Renew Modal -->
 <div id="renew-modal" class="modal">
-  <?php if ($request['status'] === 'expired'): ?>
-    <?php if ($request['expiration_reason'] === 'visibility'): ?>
-      <div id="renew-modal" class="modal">
-        <div class="modal-content">
-          <a href="#" class="modal-close">&times;</a>
-          <h2>Renew Request</h2>
-          <form method="post" enctype="multipart/form-data">
-            <label>Why do you want to renew?</label>
-            <textarea name="renew_reason" rows="4" required></textarea>
-            <label>Upload Proof (optional)</label>
-            <input type="file" name="renew_proof">
-            <button type="submit" name= "renew_submit" class="btn btn-renew">Submit Renewal</button>
-          </form>
-        </div>
-      </div>
-    <?php else:?>
-    <button class="btn btn-disabled" disabled>Renewal Not Available</button>
-    <p class="note">This request expired due to its deadline and cannot be renewed.</p>
-    <?php endif; ?>
-  <?php endif; ?>
-</div>
+  <div class="modal-content">
+    <a href="#" class="modal-close">&times;</a>
 
+    <?php if ($request['status'] === 'expired' && $request['expiration_reason'] === 'visibility'): ?>
+      <h2>Renew Request</h2>
+      <form method="post" enctype="multipart/form-data">
+        <label>Why do you want to renew?</label>
+        <textarea name="renew_reason" rows="4" required></textarea>
+        <label>Upload Proof (optional)</label>
+        <input type="file" name="renew_proof">
+        <button type="submit" name="renew_submit" class="btn btn-renew">Submit Renewal</button>
+      </form>
+    <?php endif; ?>
+    
+  </div>
+</div>
 </body>
 </html> 
