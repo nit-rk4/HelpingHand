@@ -54,11 +54,6 @@ $requests = getVisibleRequests($conn);
                 </div>
             </article>
         <?php endforeach; ?>
-
-        
     </main>
-
-
-
 </body>
 </html>
