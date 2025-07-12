@@ -120,27 +120,25 @@ if (isset($_POST['submit-request'])) {
           <div class="form-group">
             <label for="category">Category</label>
             <select id="category" name="category" required>
-              <optgroup label="Category 1">
                 <option value="Home/Tech Help">Home/Tech Help</option>
                 <option value="Escort/Babysitting">Escort/Babysitting</option>
                 <option value="Volunteer Support">Volunteer Support</option>
                 <option value="Errand">Errand</option>
                 <option value="Lost Item">Lost Item</option>
                 <option value="Tutoring/Academic Help">Tutoring/Academic Help</option>
-              </optgroup>
-
-              <optgroup label="Category 2">
                 <option value="Food & Essentials">Food & Essentials</option>
                 <option value="School Supplies">School Supplies</option>
                 <option value="Goods Donations">Goods Donations</option>
-              </optgroup>
-
-              <optgroup label="Category 3">
                 <option value="Medical Assistance">Medical Assistance</option>
                 <option value="Legal & Documents">Legal & Documents</option>
                 <option value="Monetary Assistance">Monetary Assistance</option>
-              </optgroup>
+                <option value="Others">Others (please specify)</option>
             </select>
+          </div>
+          
+          <div class="form-group" id="other-category-group" style="display: none;">
+            <label for="other_category">Please specify:</label>
+            <input type="text" id="other_category" name="other_category" placeholder="Enter custom category...">
           </div>
 
           <div class="form-group">
@@ -156,6 +154,22 @@ if (isset($_POST['submit-request'])) {
       </div>
     </main>
   </div>
+
+  <script>
+    const categorySelect = document.getElementById('category');
+    const otherCategoryGroup = document.getElementById('other-category-group');
+    const otherCategoryInput = document.getElementById('other_category');
+
+    categorySelect.addEventListener('change', function () {
+      if (this.value === 'Others') {
+        otherCategoryGroup.style.display = 'block';
+        otherCategoryInput.required = true;
+      } else {
+        otherCategoryGroup.style.display = 'none';
+        otherCategoryInput.required = false;
+      }
+    });
+  </script>
 </body>
 
 </html>
