@@ -86,7 +86,7 @@ $interviews = getInterviewsByStatus($conn, $status);
     }
   </script>
 
-  
 
 </body>
+
 </html>
