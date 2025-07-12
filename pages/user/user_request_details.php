@@ -198,25 +198,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php endif; ?>
 
 <!-- Renew Modal -->
-<?php if ($request['status'] === 'expired'): ?>
-  <?php if ($request['expiration_reason'] === 'visibility'): ?>
-    <div id="renew-modal" class="modal">
-      <div class="modal-content">
-        <a href="#" class="modal-close">&times;</a>
-        <h2>Renew Request</h2>
-        <form method="post" enctype="multipart/form-data">
-          <label>Why do you want to renew?</label>
-          <textarea name="renew_reason" rows="4" required></textarea>
-          <label>Upload Proof (optional)</label>
-          <input type="file" name="renew_proof">
-          <button type="submit" name= "renew_submit" class="btn btn-renew">Submit Renewal</button>
-        </form>
+<div id="renew-modal" class="modal">
+  <?php if ($request['status'] === 'expired'): ?>
+    <?php if ($request['expiration_reason'] === 'visibility'): ?>
+      <div id="renew-modal" class="modal">
+        <div class="modal-content">
+          <a href="#" class="modal-close">&times;</a>
+          <h2>Renew Request</h2>
+          <form method="post" enctype="multipart/form-data">
+            <label>Why do you want to renew?</label>
+            <textarea name="renew_reason" rows="4" required></textarea>
+            <label>Upload Proof (optional)</label>
+            <input type="file" name="renew_proof">
+            <button type="submit" name= "renew_submit" class="btn btn-renew">Submit Renewal</button>
+          </form>
+        </div>
       </div>
-    </div>
-  <?php else:?>
+    <?php else:?>
     <button class="btn btn-disabled" disabled>Renewal Not Available</button>
     <p class="note">This request expired due to its deadline and cannot be renewed.</p>
+    <?php endif; ?>
   <?php endif; ?>
-<?php endif; ?>
+</div>
+
 </body>
 </html> 

@@ -1009,6 +1009,11 @@ input[type="file"] {
   transform: scale(1.03);
 }
 
+.btn-approve:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
 /* ------------------------------
    ATTACHMENTS & LINKS
 ------------------------------ */

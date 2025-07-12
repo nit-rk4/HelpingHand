@@ -51,6 +51,7 @@ $details = getRequestDetails($conn, $requestID);
     $description = $details['description'];
     $category = $details['category'];
     $tier = $details['tier'];
+    $interviewStatus = $details['interview_status'];
     ?>
 
     <h2><?= $title ?></h2>
@@ -109,7 +110,16 @@ $details = getRequestDetails($conn, $requestID);
     <!-- Action Buttons or Status Display -->
     <?php if ($status === 'pending'): ?>
       <form method="post" class="details-buttons">
-        <button type="submit" name="approve" class="btn-approve">APPROVE</button>
+
+        <?php if ($tier === '3' && $interviewStatus !== 'done'): ?>
+          <p style="color: red; font-weight: bold; margin-bottom: 10px;">
+            ⚠ You must conduct the interview before approving a Tier 3 request.
+          </p>
+          <button type="submit" name="approve" class="btn-approve" disabled>APPROVE</button>
+        <?php else: ?>
+          <button type="submit" name="approve" class="btn-approve">APPROVE</button>
+        <?php endif; ?>
+
         <button type="submit" name="reject" class="btn-reject">REJECT</button>
         <button type="submit" name="mark_interview" class="btn-interview">FOR INTERVIEW</button>
       </form>

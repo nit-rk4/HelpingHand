@@ -11,7 +11,7 @@ function runMaintenance($conn) {
 
     $now = time();
     $lastRun = file_exists($file) ? (int)file_get_contents($file) : 0;
-    $interval = 10 * 60; // 10 minutes
+    $interval = 1; // 10 minutes
 
     if (($now - $lastRun) >= $interval) {
         expireRequests($conn);
