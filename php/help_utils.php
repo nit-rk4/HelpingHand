@@ -87,7 +87,7 @@ function getHelpers($conn, $requestID){
             JOIN users u ON h.user_id = u.id
             WHERE h.request_id = ?";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $requestId);
+    mysqli_stmt_bind_param($stmt, 'i', $requestID);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -100,7 +100,7 @@ function getHelpers($conn, $requestID){
 }
 
 function getVerifiedHelpers($conn, $requestID){
-    $sql = "SELECT h.user_id, u.username, h.proof_text, h.proof_file
+    $sql = "SELECT h.user_id, u.name, h.proof_text, h.proof_file
             FROM helpers h
             JOIN users u ON h.user_id = u.id
             WHERE h.request_id = ? AND h.is_verified = 1";

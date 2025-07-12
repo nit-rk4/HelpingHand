@@ -15,6 +15,7 @@ if (!$request){
 }
 
 $helpers = getHelpers($conn, $requestID);
+
 $verifiedHelpers = [];
 if ($request['status'] === 'fulfilled') {
     $verifiedHelpers = getVerifiedHelpers($conn, $requestID);
@@ -90,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="details-section">
   <?php $displayStatus = $request['status'] === 'approved' ? 'Ongoing' : ucfirst($request['status']); ?>
-
+  
   <p><span class="details-label">Description:</span> <?= htmlspecialchars($request['description']) ?></p>
   <p><span class="details-label">Category:</span> <?= htmlspecialchars($request['category']) ?></p>
   <p><span class="details-label">Status:</span> <?= $displayStatus ?></p>
@@ -176,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <ul class="verified-helpers-list">
         <?php foreach ($verifiedHelpers as $helper): ?>
           <li class="verified-helper-item">
-            <strong><?= htmlspecialchars($helper['username']) ?></strong><br>
+            <strong><?= htmlspecialchars($helper['name']) ?></strong><br>
             <?php if (!empty($helper['proof_text'])): ?>
               <em><?= htmlspecialchars($helper['proof_text']) ?></em><br>
             <?php endif; ?>
