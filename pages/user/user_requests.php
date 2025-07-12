@@ -5,7 +5,7 @@ require_once "../../php/request_utils.php";
 require_once "../../php/maintenance.php";
 runMaintenance($conn);
 
-$userID = $_SESSION['user']['id'];
+$userID = $_SESSION['auth']['id'];
 $statusFilter = isset($_GET['status']) ? strtolower($_GET['status']) : 'all';
 $requests = getUserRequestsByStatus($conn, $userID, $statusFilter);
 ?>

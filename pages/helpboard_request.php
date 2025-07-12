@@ -9,7 +9,7 @@ if(!($requestID)){
     die("Missing request ID.");
 }
 
-$userID = $_SESSION['user']['id']?? null;
+$userID = $_SESSION['auth']['id']?? null;
 $hasHelped = false;
 
 if ($userID && $requestID){
@@ -19,7 +19,7 @@ if ($userID && $requestID){
 $request = getRequestDetails($conn, $requestID);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_help_action'])) {
-    $userID = $_SESSION['user']['id'];
+    $userID = $_SESSION['auth']['id'];
     $action = $_POST['toggle_help_action'];
 
     if ($action === "submit") {
@@ -96,27 +96,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_help_action'])
             </div>
         </div>
 
-        <form method="POST" enctype="multipart/form-data" id="helpForm">
-            <input type="hidden" name="toggle_help_action" value="<?= $hasHelped ? 'remove' : 'submit' ?>">
+        <!-- Only show "I Helped" button to users(not admins) that don't own the request -->
+        <?php if (($_SESSION['auth']['type']) === 'user' && $_SESSION['auth']['id'] !== $request['user_id']):?> 
+            <form method="POST" enctype="multipart/form-data" id="helpForm">
+                <input type="hidden" name="toggle_help_action" value="<?= $hasHelped ? 'remove' : 'submit' ?>">
 
-            <label class="help-toggle <?= $hasHelped ? 'active' : '' ?>" id="helpToggle">
-                <span class="help-button"><?= $hasHelped ? 'Helped!' : 'I Helped' ?></span>
-            </label>
+                <label class="help-toggle <?= $hasHelped ? 'active' : '' ?>" id="helpToggle">
+                    <span class="help-button"><?= $hasHelped ? 'Helped!' : 'I Helped' ?></span>
+                </label>
 
-            <?php if (!$hasHelped): ?>
-            <div class="help-details" id="helpDetails" style="display:none;">
-                <label for="help-note">How did you help?</label>
-                <textarea id="help-note" name="help_note" rows="4" placeholder="Add details here..."></textarea>
+                <?php if (!$hasHelped): ?>
+                <div class="help-details" id="helpDetails" style="display:none;">
+                    <label for="help-note">How did you help?</label>
+                    <textarea id="help-note" name="help_note" rows="4" placeholder="Add details here..."></textarea>
 
-                <label for="help-proof">Upload image proof:</label>
-                <input type="file" id="help-proof" name="help_proof">
+                    <label for="help-proof">Upload image proof:</label>
+                    <input type="file" id="help-proof" name="help_proof">
 
-                <div class="verification-button">
-                    <input type="submit" value="Submit">
+                    <div class="verification-button">
+                        <input type="submit" value="Submit">
+                    </div>
                 </div>
-            </div>
-            <?php endif; ?>
-        </form>
+                <?php endif; ?>
+            </form>
+        <?php endif; ?>
 
         <div style="height: 100px;"></div>
 

@@ -5,7 +5,7 @@ require_once "../../php/request_utils.php";
 require_once "../../php/help_utils.php";
 
 $requestID = $_GET['id'] ?? null;
-$userID = $_SESSION['user']['id'] ?? null;
+$userID = $_SESSION['auth']['id'] ?? null;
 
 
 $request = getRequestDetailsForUser($conn,$requestID, $userID);
