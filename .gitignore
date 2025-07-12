@@ -1,6 +1,8 @@
-cache/*
 uploads/*
 !uploads/.gitkeep
+
+cache/*
 !cache/.gitkeep
+
 *.log
 *.tmp
