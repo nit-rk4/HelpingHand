@@ -29,35 +29,35 @@
       <img src="../assets/ysa.png" alt="Ysa">
       <h3>Ysabel Delos Santos</h3>
       <p>Frontend Developer</p>
-      <p>Specializes in....</p>
+      <p>Handles request browsing, help buttons, reports, proof of help</p>
     </div>
 
     <div class="team-member">
       <img src="../assets/deanne.jpg" alt="Deanne">
       <h3>Deanne Centeno</h3>
       <p>Frontend Developer</p>
-      <p>Focuses on design systems...</p>
+      <p>Handles user dashboard, request form, request status, and fulfillment</p>
     </div>
 
     <div class="team-member">
       <img src="../assets/tavi.jpg" alt="Tavi">
       <h3>Octavia Gatmaytan</h3>
       <p>Frontend Developer</p>
-      <p>Handles animations...</p>
+      <p>Handles admin dashboard, approvals, filters, reports, and interviews</p>
     </div>
 
     <div class="team-member">
       <img src="../assets/denise.png" alt="Denise">
       <h3>Denise Manalang</h3>
       <p>Backend Developer</p>
-      <p>Leads database management...</p>
+      <p>Handles approvals, fulfillment, helper tracking, reporting system</p>
     </div>
 
     <div class="team-member">
       <img src="../assets/ezekiel.jpg" alt="Eze">
       <h3>Ezekiel Ibasco</h3>
       <p>Backend Developer</p>
-      <p>walang ambag... eme</p>
+      <p>Handles registration, login, request submission, request expiration</p>
     </div>
   </div>
 </div>

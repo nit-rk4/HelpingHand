@@ -37,12 +37,12 @@ if (isset($_POST['submit-request'])) {
         $filetype = mime_content_type($_FILES['attachment']['tmp_name']);
         $ext = strtolower(pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION));
         if (in_array($filetype, $allowed_types) && in_array($ext, $allowed_exts)) {
-          $uploadDir = '../../assets/uploads/';
+          $uploadDir = '../../uploads/';
           $date = date('Y-m-d');
           $new_filename = "request_{$request_id}_{$userId}_{$date}.{$ext}";
           $targetFile = $uploadDir . $new_filename;
           if (move_uploaded_file($_FILES['attachment']['tmp_name'], $targetFile)) {
-            $attachment_path = 'assets/uploads/' . $new_filename;
+            $attachment_path = '../../uploads/' . $new_filename;
             // Update request with attachment path
             $stmt = mysqli_prepare($conn, "UPDATE requests SET attachment_path=? WHERE id=?");
             mysqli_stmt_bind_param($stmt, 'si', $attachment_path, $request_id);

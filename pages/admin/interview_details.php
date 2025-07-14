@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if (isset($_POST['mark_done'])) {
     completeInterview($conn, $interview_id, $notes);
-    header("Location: interview_details.php?id=$interview_id&status=completed");
+    header("Location: interview_details.php?id=$interview_id&status=done");
     exit;
   }
 
@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
       </script>
 
-      <?php elseif ($status === 'completed'): ?>
+      <?php elseif ($status === 'done'): ?>
         <!-- Completed Interview -->
         <div class="details-section">
           <h3>Interview Details</h3>
