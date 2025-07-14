@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
   <meta charset="UTF-8" />
-  <title>Interview Details - HelpingHand Admin</title>
+  <title>User Interview - <?= htmlspecialchars($interview['title'])?> </title>
   <link rel="stylesheet" href="../../css/style.css" />
 </head>
 
