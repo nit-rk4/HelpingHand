@@ -26,14 +26,14 @@
   <h2>Meet Our Team</h2>
   <div class="team-members">
     <div class="team-member">
-      <img src="https://img.redbull.com/images/c_crop,x_246,y_0,h_720,w_540/c_fill,w_450,h_600/q_auto:low,f_auto/redbullcom/2020/10/30/yrn6erzpnmlqnosjeaws/valorant-operator-killjoy" alt="Ysa">
+      <img src="../assets/ysa.png" alt="Ysa">
       <h3>Ysabel Delos Santos</h3>
       <p>Frontend Developer</p>
       <p>Specializes in....</p>
     </div>
 
     <div class="team-member">
-      <img src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/08b3d8822544bd327ebed0768c8b90fcec83d1a5-616x822.png?auto=format&fit=fill&q=80&w=457" alt="Deanne">
+      <img src="../assets/deanne.jpg" alt="Deanne">
       <h3>Deanne Centeno</h3>
       <p>Frontend Developer</p>
       <p>Focuses on design systems...</p>
@@ -47,14 +47,14 @@
     </div>
 
     <div class="team-member">
-      <img src="../assets/denise.jpg" alt="Denise">
+      <img src="../assets/denise.png" alt="Denise">
       <h3>Denise Manalang</h3>
       <p>Backend Developer</p>
       <p>Leads database management...</p>
     </div>
 
     <div class="team-member">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQ8rJ-ntQaiqxsmeqMm9SeIqHSsANvhkdsA&s" alt="Eze">
+      <img src="../assets/ezekiel.jpg" alt="Eze">
       <h3>Ezekiel Ibasco</h3>
       <p>Backend Developer</p>
       <p>walang ambag... eme</p>
