@@ -50,6 +50,11 @@ $details = getRequestDetails($conn, $requestID);
     $phone = $details['requester_contact'];
     $description = $details['description'];
     $category = $details['category'];
+
+    if ($details['category'] === 'Others' && !empty($details['custom_category'])) {
+      $category = "Others (" . htmlspecialchars($details['custom_category']) . ")";
+    }
+
     $tier = $details['tier'];
     $interviewStatus = $details['interview_status'];
     ?>
@@ -97,6 +102,7 @@ $details = getRequestDetails($conn, $requestID);
         </div>
       <?php endif; ?>
     </div>
+
 
     <div class="details-section">
       <p><strong>Status:</strong>

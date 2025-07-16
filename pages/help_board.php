@@ -43,9 +43,16 @@ $requests = getVisibleRequests($conn);
                         </a>
                     </h2>
 
+                    <?php
+                    $category = $request['category'];
+                    if ($request['category'] === 'Others' && !empty($request['custom_category'])){
+                        $category = $request['custom_category'];
+                    }
+                    ?>
+
                     <p class = "author"><?= htmlspecialchars($request['requester_name']) ?></p>
                     <div class="category-tag">
-                        <p><strong>Category:</strong><?= htmlspecialchars($request['category']) ?></p>
+                        <p><strong>Category:</strong><?= htmlspecialchars($category) ?></p>
                     </div>
                     <p><?= nl2br(htmlspecialchars($request['description'])) ?></p>
                     <div class="deadline-tag">

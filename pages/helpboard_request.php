@@ -75,18 +75,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['toggle_help_action'])
         <div class="back-container">
             <a class="back-link" href="help_board.php">← Back to Help Board</a>
         </div>
+        <?php
+        $category = $request['category'];
+        if ($request['category'] === 'Others' && !empty($request['custom_category'])) {
+            $category = $request['custom_category']; // show only the custom category for users
+        }
+        ?>
+
         <h1 class="req-title"><?= htmlspecialchars($request['title']) ?></h1>
         <div class="container">
             <div class="content">
                 <div class="req-info">
                     <h2>Posted by: <?= htmlspecialchars($request['requester_name'])?></h2>
                     <div class="category-tag">
-                        <p><strong>Category:</strong> <?= htmlspecialchars($request['category'])?></p>
+                        <p><strong>Category:</strong> <?= htmlspecialchars($category) ?></p>
                     </div> 
-                    <p><?= htmlspecialchars($request['description'])?></p>
-
+                    <p><?= htmlspecialchars($request['description']) ?></p>
                 </div>
-
+                
                 <div class="contact-info">
                     <h2>Support Requester!</h2>
                     <p>Contact information: <?= htmlspecialchars($request['requester_contact'])?></p>

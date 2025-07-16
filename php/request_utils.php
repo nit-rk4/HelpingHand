@@ -194,7 +194,7 @@ function rejectRequest ($conn, $requestID){
  *  ------------------------------------------
 */
 
-function submitRequest($conn, $userId, $title, $description, $category, $deadline, $attachment_path = null)
+function submitRequest($conn, $userId, $title, $description, $category, $custom_category, $deadline, $attachment_path = null)
 {
     // Assign tier based on category
     $tier1 = [
@@ -231,15 +231,24 @@ function submitRequest($conn, $userId, $title, $description, $category, $deadlin
         // fallback
         $tier = "2";
         $visible_since = null;
-        $interview_status = "none";
-        $status = "pending";
     }
 
-    $sql = "INSERT INTO requests (user_id, title, description, category, tier, attachment_path, deadline, visible_since, created_at) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+    $sql = "INSERT INTO requests (user_id, title, description, category, custom_category, tier, attachment_path, deadline, visible_since, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt,"isssssss", $userId, $title, $description, $category, $tier, $attachment_path, $deadline, $visible_since);
+    mysqli_stmt_bind_param($stmt, "isssssss", 
+        $userId,           
+        $title,            
+        $description,     
+        $category,         
+        $custom_category,  
+        $tier,             
+        $attachment_path, 
+        $deadline,        
+        $visible_since     
+    );
     
+
     return mysqli_stmt_execute($stmt);
 }
 function renewRequest($conn, $originalID, $userNote, $newFile = null) {

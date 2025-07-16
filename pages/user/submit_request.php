@@ -11,6 +11,8 @@ if (isset($_POST['submit-request'])) {
   $title = $_POST['title'];
   $description = $_POST['description'];
   $category = $_POST['category'];
+  $custom_category = ($category === 'Others') ? ($_POST['other_category'] ?? null) : null;;
+
   $deadline = $_POST['deadline'];
   $attachment_path = null;
 
@@ -27,8 +29,7 @@ if (isset($_POST['submit-request'])) {
   $allowed_exts = ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
 
   // Insert request first to get request id
-  require_once '../../php/request_utils.php';
-  $result = submitRequest($conn, $userId, $title, $description, $category, $deadline, null);
+  $result = submitRequest($conn, $userId, $title, $description, $category, $custom_category, $deadline, null);
   if ($result) {
     $request_id = mysqli_insert_id($conn);
     // Handle file upload if needed
